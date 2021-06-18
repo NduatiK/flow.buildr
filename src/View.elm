@@ -5,6 +5,7 @@ import Colors
 import Element exposing (..)
 import Element.Background as Background
 import Element.Font as Font
+import UI.VisualEffects
 
 
 type alias View msg =
@@ -62,8 +63,10 @@ toBrowserDocument view =
                 ]
             , Background.color Colors.white
             , Font.color Colors.black
+            , UI.VisualEffects.addGooFilter
             ]
           <|
-            column [ width fill, height fill ] view.body
+            column [ width fill, height fill ]
+                view.body
         ]
     }
