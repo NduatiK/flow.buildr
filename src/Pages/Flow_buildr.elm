@@ -1,4 +1,4 @@
-module Pages.Home_ exposing (Model, Msg, page)
+module Pages.Flow_buildr exposing (Model, Msg, page)
 
 import Colors
 import Effect exposing (Effect)
@@ -8,7 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import FeatherIcons
-import Gen.Params.Home_ exposing (Params)
+import Gen.Params.Flow_buildr exposing (Params)
 import Material.Icons
 import Material.Icons.Types
 import MaterialIcons

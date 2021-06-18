@@ -13,6 +13,7 @@ module UI exposing
     , getSizeOfWindow
     , grayText
     , green
+    , gridIcon
     , layout
     , loader
     , orange
@@ -24,7 +25,7 @@ module UI exposing
     , transparent
     , white
     , withAlpha
-    , wrapButtonChild, gridIcon
+    , wrapButtonChild
     )
 
 import Browser.Dom
@@ -48,7 +49,7 @@ sidebarPages : List SidebarElement
 sidebarPages =
     [ Logo
     , Page ( "Home", FeatherIcons.target, A )
-    , Page ( "Home", FeatherIcons.gitPullRequest, Home_ )
+    , Page ( "Home", FeatherIcons.gitPullRequest, Flow_buildr )
     , Page ( "Home", FeatherIcons.settings, A )
     , Page ( "Home", FeatherIcons.pieChart, A )
     , Page ( "Home", FeatherIcons.code, A )
