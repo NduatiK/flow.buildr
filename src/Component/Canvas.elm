@@ -21,6 +21,7 @@ import Grid
 import Html exposing (Html, div)
 import Html.Attributes exposing (style)
 import Material.Icons
+import Material.Icons.Round
 import MaterialIcons
 
 
@@ -55,6 +56,7 @@ centerY viewHeight =
 type Msg
     = ZoomIn
     | ZoomOut
+    | ResetZoom
 
 
 update msg (Model model) =
@@ -67,6 +69,11 @@ update msg (Model model) =
 
             ZoomOut ->
                 ( { model | scale = model.scale - 0.1 }
+                , Effect.none
+                )
+
+            ResetZoom ->
+                ( { model | scale = 1 }
                 , Effect.none
                 )
 
@@ -91,65 +98,7 @@ renderCanvas viewWidth canvasModel { count, viewHeight } =
         , E.height E.fill
         , E.pointer
         , E.inFront
-            (E.column
-                [ E.alignBottom
-                , E.alignLeft
-                , Element.Background.color Colors.white
-                , E.paddingXY 4 4
-                , E.spacing 6
-                , E.moveUp 30
-                , E.moveRight 40
-                , Element.Border.rounded 4
-                , Element.Border.shadow
-                    { offset = ( 0, 4 )
-                    , size = 4
-                    , blur = 4 * 2
-                    , color = Colors.withAlpha 0.05 Colors.black
-                    }
-                ]
-                [ Element.Input.button
-                    [ E.padding 6
-                    , Element.Border.rounded 2
-                    ]
-                    { label =
-                        MaterialIcons.material [ E.centerX, E.centerY ]
-                            { icon = Material.Icons.add
-                            , size = 24
-                            , color = Colors.grey
-                            }
-                    , onPress =
-                        if model.scale > 1.6 then
-                            Nothing
-
-                        else
-                            Just ZoomIn
-                    }
-                , E.el
-                    [ E.width (E.px 20)
-                    , E.centerX
-                    , Element.Background.color Colors.grey
-                    , E.height (E.px 1)
-                    ]
-                    E.none
-                , Element.Input.button
-                    [ E.padding 6
-                    , Element.Border.rounded 2
-                    ]
-                    { label =
-                        MaterialIcons.material [ E.centerX, E.centerY ]
-                            { icon = Material.Icons.zoom_out
-                            , size = 24
-                            , color = Colors.grey
-                            }
-                    , onPress =
-                        if scale < 0.7 then
-                            Nothing
-
-                        else
-                            Just ZoomOut
-                    }
-                ]
-            )
+            (viewChrome model)
         ]
     <|
         E.html <|
@@ -168,6 +117,96 @@ renderCanvas viewWidth canvasModel { count, viewHeight } =
                     ++ [ render model count width height
                        ]
                 )
+
+
+viewChrome model =
+    E.column
+        [ E.alignBottom
+        , E.alignLeft
+        , E.moveUp 30
+        , E.moveRight 40
+        , E.spacing 12
+        ]
+        [ E.el
+            [ E.padding 6
+            , Element.Border.rounded 6
+            , Element.Background.color Colors.white
+            , Element.Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+          <|
+            Element.Input.button
+                [ E.padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ E.centerX, E.centerY ]
+                        { icon = Material.Icons.Round.zoom_out_map
+                        , size = 22
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    Just ResetZoom
+                }
+        , E.column
+            [ Element.Background.color Colors.white
+            , E.padding 6
+            , E.spacing 6
+            , Element.Border.rounded 6
+            , Element.Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+            [ Element.Input.button
+                [ E.padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ E.centerX, E.centerY ]
+                        { icon = Material.Icons.add
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale > 1.6 then
+                        Nothing
+
+                    else
+                        Just ZoomIn
+                }
+            , E.el
+                [ E.width (E.px 20)
+                , E.centerX
+                , Element.Background.color Colors.grey
+                , E.height (E.px 1)
+                ]
+                E.none
+            , Element.Input.button
+                [ E.padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ E.centerX, E.centerY ]
+                        { icon = Material.Icons.zoom_out
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale < 0.7 then
+                        Nothing
+
+                    else
+                        Just ZoomOut
+                }
+            ]
+        ]
 
 
 gridSize =

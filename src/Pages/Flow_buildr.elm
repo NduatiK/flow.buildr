@@ -177,7 +177,8 @@ subscriptions model =
                         else
                             NoOp
                     )
-        , Browser.Events.onAnimationFrameDelta Frame
+
+        -- , Browser.Events.onAnimationFrameDelta Frame
         ]
 
 
@@ -501,7 +502,7 @@ calculateOffset mids i pickedUpFlowAction =
                         offset =
                             fn path.current - fn path.start
                     in
-                    ( abs offset > 60
+                    ( abs offset > 55
                     , offset + mids
                     )
             in
