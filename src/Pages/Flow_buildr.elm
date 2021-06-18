@@ -2,7 +2,7 @@ module Pages.Flow_buildr exposing (Model, Msg, page)
 
 import Browser.Events
 import Colors
-import Component.Canvas
+import Component.Canvas as CanvasComponent
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -46,6 +46,7 @@ type alias Model =
     , viewWidth : Int
     , viewHeight : Int
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
+    , canvasState : CanvasComponent.Model
     }
 
 
@@ -56,6 +57,7 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
+      , canvasState = CanvasComponent.init
       }
     , Effect.fromCmd (UI.getSizeOfWindow GotWindowSize)
     )
@@ -83,6 +85,8 @@ type Msg
     = NoOp
     | Frame Float
     | GotWindowSize Int Int
+      ---
+    | CanvasMsg CanvasComponent.Msg
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
@@ -127,6 +131,29 @@ update msg model =
             ( { model | pickedUpFlowAction = Nothing }
             , Effect.none
             )
+
+        CanvasMsg msg_ ->
+            let
+                ( updatedCanvasState, canvasEffect ) =
+                    CanvasComponent.update msg_ model.canvasState
+                        |> Tuple.mapSecond (Effect.map CanvasMsg)
+
+                ( updatedModel, effect ) =
+                    updateWithCanvasMsg msg_ { model | canvasState = updatedCanvasState }
+            in
+            ( updatedModel
+            , Effect.batch
+                [ canvasEffect
+                , effect
+                ]
+            )
+
+
+updateWithCanvasMsg : CanvasComponent.Msg -> Model -> ( Model, Effect Msg )
+updateWithCanvasMsg msg model =
+    case msg of
+        _ ->
+            ( model, Effect.none )
 
 
 
@@ -219,13 +246,26 @@ viewActionBar model =
         , width (px actionBarWidth)
         , htmlAttribute (Html.Attributes.style "z-index" "2")
         , padding 32
+        , Border.shadow
+            { offset = ( 0, 0 )
+            , size = 0
+            , blur = 8
+            , color = Colors.withAlpha 0.1 Colors.black
+            }
         , behindContent
             (paragraph
                 [ Font.size 12
                 , alignBottom
                 , padding 32
                 ]
-                [ text (Debug.toString model) ]
+                [ text
+                    (Debug.toString
+                        { count = model.count
+                        , pickedUpFlowAction = model.pickedUpFlowAction
+                        , state = model.canvasState
+                        }
+                    )
+                ]
             )
         ]
         [ row [ width fill ]
@@ -255,12 +295,12 @@ viewActionBar model =
                         centerDist =
                             (54 - childSize) / 2
 
-                        parentSize =
+                        ( parentSize, offset ) =
                             if useFilter then
-                                58
+                                ( 58, -2 )
 
                             else
-                                54
+                                ( 54, 0 )
 
                         childSize =
                             40
@@ -268,6 +308,21 @@ viewActionBar model =
                     el
                         [ width (px 54)
                         , height (px 54)
+                        , behindContent
+                            (el
+                                [ width (px 52)
+                                , centerX
+                                , height (px 52)
+                                , centerY
+                                , Border.width 2
+                                , Border.color Colors.grey
+                                , Background.color (Colors.withAlpha 0.05 Colors.black)
+                                , Border.dashed
+                                , Border.rounded 50
+                                ]
+                                none
+                            )
+                        , htmlAttribute (Html.Attributes.style "z-index" "10")
                         ]
                     <|
                         el
@@ -279,12 +334,12 @@ viewActionBar model =
                                 moveDown moveDownDist
 
                               else
-                                transparent False
+                                moveDown offset
                             , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
                                 moveRight moveRightDist
 
                               else
-                                transparent False
+                                moveRight offset
                             , htmlAttribute
                                 (Html.Attributes.style "filter"
                                     "url('#goo')"
@@ -296,6 +351,7 @@ viewActionBar model =
                             , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease")
                             , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease")
                             , behindContent
+                                -- , inFront
                                 (el
                                     [ width (px childSize)
                                     , height (px childSize)
@@ -445,10 +501,8 @@ calculateOffset mids i pickedUpFlowAction =
                         offset =
                             fn path.current - fn path.start
                     in
-                    ( abs offset > 50
-                    , offset
-                        + mids
-                      -- - 14
+                    ( abs offset > 60
+                    , offset + mids
                     )
             in
             if selI == i then
@@ -474,30 +528,9 @@ viewCanvas model =
         [ height fill
         , width fill
         , htmlAttribute (Html.Attributes.style "z-index" "1")
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , Background.color Colors.lightGrey
-                ]
-                none
-            )
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , alpha 0.4
-                , Background.tiled "dist/DotGrid.png"
-                ]
-                none
-            )
-        , Border.innerShadow
-            { offset = ( -2, 0 )
-            , size = 0
-            , blur = 2
-            , color = Colors.black
-            }
-        , inFront (Component.Canvas.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model)
+        , inFront <|
+            Element.map CanvasMsg <|
+                CanvasComponent.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model.canvasState model
         , inFront (viewCanvasHeader model)
         ]
         none
