@@ -21822,7 +21822,7 @@ var $author$project$UI$VisualEffects$addGooFilter = $mdgriffith$elm_ui$Element$i
 										_List_fromArray(
 											[
 												$elm$svg$Svg$Attributes$in_('SourceGraphic'),
-												$elm$svg$Svg$Attributes$stdDeviation('14'),
+												$elm$svg$Svg$Attributes$stdDeviation('8'),
 												$elm$svg$Svg$Attributes$result('blur')
 											]),
 										_List_Nil),
