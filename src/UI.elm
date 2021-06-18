@@ -21,6 +21,7 @@ module UI exposing
     , raisedEl
     , red
     , showIf
+    , sidebarWidth
     , textColor
     , transparent
     , white
@@ -59,6 +60,10 @@ sidebarPages =
 layout : Route -> Palette -> Element msg -> Element msg
 layout currentRoute palette child =
     customLayout currentRoute palette [] child
+
+
+sidebarWidth =
+    78
 
 
 customLayout : Route -> Palette -> List (Attribute msg) -> Element msg -> Element msg
@@ -110,7 +115,7 @@ sidebar sidebarAttr currentRoute palette =
             , Background.color bgColor
             , Border.color (withAlpha 0.1 bdColor)
             ]
-        |> el ([ height fill ] ++ sidebarAttr)
+        |> el ([ height fill, width (px sidebarWidth) ] ++ sidebarAttr)
 
 
 bdPages : Route -> List SidebarElement -> Palette -> List (Element msg)
