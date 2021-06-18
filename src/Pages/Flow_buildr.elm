@@ -96,7 +96,7 @@ update msg model =
             ( model, Effect.none )
 
         Frame _ ->
-            ( { model | count = model.count + 0.1 }, Effect.none )
+            ( { model | count = model.count + 0.01 }, Effect.none )
 
         GotWindowSize w h ->
             ( { model

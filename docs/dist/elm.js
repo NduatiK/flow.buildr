@@ -11645,7 +11645,7 @@ var $author$project$Pages$Flow_buildr$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count + 0.1}),
+						{count: model.count + 0.01}),
 					$author$project$Effect$none);
 			case 'GotWindowSize':
 				var w = msg.a;
@@ -19912,10 +19912,14 @@ var $author$project$Component$Canvas$centerX = function (viewWidth) {
 var $author$project$Component$Canvas$centerY = function (viewHeight) {
 	return viewHeight / 2;
 };
-var $elm$core$Basics$pi = _Basics_pi;
-var $elm$core$Basics$degrees = function (angleInDegrees) {
-	return (angleInDegrees * $elm$core$Basics$pi) / 180;
-};
+var $joakin$elm_canvas$Canvas$Internal$Canvas$Circle = F2(
+	function (a, b) {
+		return {$: 'Circle', a: a, b: b};
+	});
+var $joakin$elm_canvas$Canvas$circle = F2(
+	function (pos, radius) {
+		return A2($joakin$elm_canvas$Canvas$Internal$Canvas$Circle, pos, radius);
+	});
 var $avh4$elm_color$Color$hsla = F4(
 	function (hue, sat, light, alpha) {
 		var _v0 = _Utils_Tuple3(hue, sat, light);
@@ -19937,10 +19941,7 @@ var $avh4$elm_color$Color$hsl = F3(
 	function (h, s, l) {
 		return A4($avh4$elm_color$Color$hsla, h, s, l, 1.0);
 	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$Rotate = function (a) {
-	return {$: 'Rotate', a: a};
-};
-var $joakin$elm_canvas$Canvas$Settings$Advanced$rotate = $joakin$elm_canvas$Canvas$Settings$Advanced$Rotate;
+var $elm$core$Debug$log = _Debug_log;
 var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands = function (a) {
 	return {$: 'SettingCommands', a: a};
 };
@@ -20043,9 +20044,13 @@ var $joakin$elm_canvas$Canvas$Settings$Advanced$Translate = F2(
 var $joakin$elm_canvas$Canvas$Settings$Advanced$translate = $joakin$elm_canvas$Canvas$Settings$Advanced$Translate;
 var $author$project$Component$Canvas$render = F3(
 	function (count, width, height) {
+		var x = 0;
 		var size = 100;
-		var x = -(size / 2);
 		var y = -(size / 2);
+		var color = A2(
+			$elm$core$Debug$log,
+			'c',
+			($elm$core$Basics$round(count * 10) % 100) / 100);
 		return A2(
 			$joakin$elm_canvas$Canvas$shapes,
 			_List_fromArray(
@@ -20056,23 +20061,16 @@ var $author$project$Component$Canvas$render = F3(
 							A2(
 							$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
 							$author$project$Component$Canvas$centerX(width),
-							$author$project$Component$Canvas$centerY(height)),
-							$joakin$elm_canvas$Canvas$Settings$Advanced$rotate(
-							$elm$core$Basics$degrees(count * 3))
+							$author$project$Component$Canvas$centerY(height))
 						])),
 					$joakin$elm_canvas$Canvas$Settings$fill(
-					A3(
-						$avh4$elm_color$Color$hsl,
-						$elm$core$Basics$degrees(count),
-						0.3,
-						0.7))
+					A3($avh4$elm_color$Color$hsl, color, 0.7, 0.7))
 				]),
 			_List_fromArray(
 				[
-					A3(
-					$joakin$elm_canvas$Canvas$rect,
+					A2(
+					$joakin$elm_canvas$Canvas$circle,
 					_Utils_Tuple2(x, y),
-					size,
 					size)
 				]));
 	});
@@ -20130,6 +20128,7 @@ var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc = F6(
 					$elm$json$Json$Encode$bool(anticlockwise)
 				]));
 	});
+var $elm$core$Basics$pi = _Basics_pi;
 var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$circle = F3(
 	function (x, y, r) {
 		return A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc, x, y, r, 0, 2 * $elm$core$Basics$pi, false);

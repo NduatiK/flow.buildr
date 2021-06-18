@@ -62,16 +62,23 @@ render count width height =
             100
 
         x =
-            -(size / 2)
+            0
 
+        -- -(size / 2)
         y =
             -(size / 2)
+
+        color =
+            toFloat (remainderBy 100 (round (count * 10)))
+                / 100
+                |> Debug.log "c"
     in
     shapes
         [ transform
             [ translate (centerX width) (centerY height)
-            , rotate (degrees (count * 3))
+
+            -- , rotate (degrees (count * 3))
             ]
-        , fill (Color.hsl (degrees count) 0.3 0.7)
+        , fill (Color.hsl color 0.7 0.7)
         ]
-        [ rect ( x, y ) size size ]
+        [ circle ( x, y ) size ]
