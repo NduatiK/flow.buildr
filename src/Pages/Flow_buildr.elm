@@ -96,7 +96,7 @@ update msg model =
             ( model, Effect.none )
 
         Frame _ ->
-            ( { model | count = model.count + 1 }, Effect.none )
+            ( { model | count = model.count + 0.1 }, Effect.none )
 
         GotWindowSize w h ->
             ( { model
@@ -217,6 +217,7 @@ viewActionBar model =
     column
         [ height fill
         , width (px actionBarWidth)
+        , htmlAttribute (Html.Attributes.style "z-index" "2")
         , padding 32
         , behindContent
             (paragraph
@@ -472,6 +473,7 @@ viewCanvas model =
     el
         [ height fill
         , width fill
+        , htmlAttribute (Html.Attributes.style "z-index" "1")
         , behindContent
             (el
                 [ height fill
@@ -495,8 +497,8 @@ viewCanvas model =
             , blur = 2
             , color = Colors.black
             }
-        , inFront (viewCanvasHeader model)
         , inFront (Component.Canvas.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model)
+        , inFront (viewCanvasHeader model)
         ]
         none
 
@@ -582,27 +584,31 @@ viewCanvasHeader model =
                     , size = 24
                     , color = Colors.withAlpha 0.4 Colors.black
                     }
-        , row
-            [ centerY
-            , spacing 8
-            , paddingXY 16 8
-            , Font.size 16
-            , Font.color Colors.white
-            , Border.rounded 6
-            , alignRight
-            , Background.color Colors.purple
-            , Border.shadow
-                { offset = ( 0, 4 )
-                , size = 4
-                , blur = 4 * 2
-                , color = Colors.withAlpha 0.05 Colors.black
-                }
-            ]
-            [ text "Publish Flow"
-            , MaterialIcons.material [ centerX, centerY ]
-                { icon = Material.Icons.arrow_right
-                , size = 24
-                , color = Colors.white
-                }
-            ]
+        , link [ alignRight ]
+            { url = "#"
+            , label =
+                row
+                    [ centerY
+                    , spacing 8
+                    , paddingXY 16 8
+                    , Font.size 16
+                    , Font.color Colors.white
+                    , Border.rounded 6
+                    , alignRight
+                    , Background.color Colors.purple
+                    , Border.shadow
+                        { offset = ( 0, 4 )
+                        , size = 4
+                        , blur = 4 * 2
+                        , color = Colors.withAlpha 0.05 Colors.black
+                        }
+                    ]
+                    [ text "Publish Flow"
+                    , MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.arrow_right
+                        , size = 24
+                        , color = Colors.white
+                        }
+                    ]
+            }
         ]

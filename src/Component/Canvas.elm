@@ -38,7 +38,8 @@ renderCanvas viewWidth { count, viewHeight } =
         --     [
         Canvas.toHtml
             ( viewWidth, viewHeight )
-            [ Html.Attributes.style "display" "flex" ]
+            [ Html.Attributes.style "display" "flex"
+            ]
             [ clearScreen width height
             , render count width height
             ]
@@ -50,7 +51,7 @@ renderCanvas viewWidth { count, viewHeight } =
 
 clearScreen width height =
     shapes
-        [--  fill Color.red
+        [ fill (Color.rgba 0 0 0 0)
         ]
         [ rect ( 0, 0 ) width height ]
 
@@ -58,7 +59,7 @@ clearScreen width height =
 render count width height =
     let
         size =
-            width / 3
+            100
 
         x =
             -(size / 2)
@@ -71,6 +72,6 @@ render count width height =
             [ translate (centerX width) (centerY height)
             , rotate (degrees (count * 3))
             ]
-        , fill (Color.hsl (degrees (count / 4)) 0.3 0.7)
+        , fill (Color.hsl (degrees count) 0.3 0.7)
         ]
         [ rect ( x, y ) size size ]

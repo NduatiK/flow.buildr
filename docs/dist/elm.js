@@ -11645,7 +11645,7 @@ var $author$project$Pages$Flow_buildr$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count + 1}),
+						{count: model.count + 0.1}),
 					$author$project$Effect$none);
 			case 'GotWindowSize':
 				var w = msg.a;
@@ -19382,6 +19382,8 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$width(
 				$mdgriffith$elm_ui$Element$px($author$project$Pages$Flow_buildr$actionBarWidth)),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'z-index', '2')),
 				$mdgriffith$elm_ui$Element$padding(32),
 				$mdgriffith$elm_ui$Element$behindContent(
 				A2(
@@ -19740,6 +19742,16 @@ var $mdgriffith$elm_ui$Element$Border$innerShadow = function (almostShade) {
 			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
 };
 var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
+var $joakin$elm_canvas$Canvas$Internal$Canvas$Fill = function (a) {
+	return {$: 'Fill', a: a};
+};
+var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp = function (a) {
+	return {$: 'SettingDrawOp', a: a};
+};
+var $joakin$elm_canvas$Canvas$Settings$fill = function (color) {
+	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
+		$joakin$elm_canvas$Canvas$Internal$Canvas$Fill(color));
+};
 var $joakin$elm_canvas$Canvas$Internal$Canvas$Rect = F3(
 	function (a, b, c) {
 		return {$: 'Rect', a: a, b: b, c: c};
@@ -19754,9 +19766,6 @@ var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableShapes = function (a) {
 var $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified = {$: 'NotSpecified'};
 var $joakin$elm_canvas$Canvas$Renderable = function (a) {
 	return {$: 'Renderable', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Fill = function (a) {
-	return {$: 'Fill', a: a};
 };
 var $joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke = F2(
 	function (a, b) {
@@ -19883,7 +19892,11 @@ var $author$project$Component$Canvas$clearScreen = F2(
 	function (width, height) {
 		return A2(
 			$joakin$elm_canvas$Canvas$shapes,
-			_List_Nil,
+			_List_fromArray(
+				[
+					$joakin$elm_canvas$Canvas$Settings$fill(
+					A4($avh4$elm_color$Color$rgba, 0, 0, 0, 0))
+				]),
 			_List_fromArray(
 				[
 					A3(
@@ -19902,13 +19915,6 @@ var $author$project$Component$Canvas$centerY = function (viewHeight) {
 var $elm$core$Basics$pi = _Basics_pi;
 var $elm$core$Basics$degrees = function (angleInDegrees) {
 	return (angleInDegrees * $elm$core$Basics$pi) / 180;
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp = function (a) {
-	return {$: 'SettingDrawOp', a: a};
-};
-var $joakin$elm_canvas$Canvas$Settings$fill = function (color) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
-		$joakin$elm_canvas$Canvas$Internal$Canvas$Fill(color));
 };
 var $avh4$elm_color$Color$hsla = F4(
 	function (hue, sat, light, alpha) {
@@ -20037,7 +20043,7 @@ var $joakin$elm_canvas$Canvas$Settings$Advanced$Translate = F2(
 var $joakin$elm_canvas$Canvas$Settings$Advanced$translate = $joakin$elm_canvas$Canvas$Settings$Advanced$Translate;
 var $author$project$Component$Canvas$render = F3(
 	function (count, width, height) {
-		var size = width / 3;
+		var size = 100;
 		var x = -(size / 2);
 		var y = -(size / 2);
 		return A2(
@@ -20057,7 +20063,7 @@ var $author$project$Component$Canvas$render = F3(
 					$joakin$elm_canvas$Canvas$Settings$fill(
 					A3(
 						$avh4$elm_color$Color$hsl,
-						$elm$core$Basics$degrees(count / 4),
+						$elm$core$Basics$degrees(count),
 						0.3,
 						0.7))
 				]),
@@ -20958,34 +20964,41 @@ var $author$project$Pages$Flow_buildr$viewCanvasHeader = function (model) {
 							size: 24
 						}))),
 				A2(
-				$mdgriffith$elm_ui$Element$row,
+				$mdgriffith$elm_ui$Element$link,
 				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$centerY,
-						$mdgriffith$elm_ui$Element$spacing(8),
-						A2($mdgriffith$elm_ui$Element$paddingXY, 16, 8),
-						$mdgriffith$elm_ui$Element$Font$size(16),
-						$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
-						$mdgriffith$elm_ui$Element$Border$rounded(6),
-						$mdgriffith$elm_ui$Element$alignRight,
-						$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$purple),
-						$mdgriffith$elm_ui$Element$Border$shadow(
-						{
-							blur: 4 * 2,
-							color: A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black),
-							offset: _Utils_Tuple2(0, 4),
-							size: 4
-						})
-					]),
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$text('Publish Flow'),
-						A2(
-						$author$project$MaterialIcons$material,
+					[$mdgriffith$elm_ui$Element$alignRight]),
+				{
+					label: A2(
+						$mdgriffith$elm_ui$Element$row,
 						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						{color: $author$project$Colors$white, icon: $icidasset$elm_material_icons$Material$Icons$arrow_right, size: 24})
-					]))
+							[
+								$mdgriffith$elm_ui$Element$centerY,
+								$mdgriffith$elm_ui$Element$spacing(8),
+								A2($mdgriffith$elm_ui$Element$paddingXY, 16, 8),
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+								$mdgriffith$elm_ui$Element$Border$rounded(6),
+								$mdgriffith$elm_ui$Element$alignRight,
+								$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$purple),
+								$mdgriffith$elm_ui$Element$Border$shadow(
+								{
+									blur: 4 * 2,
+									color: A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black),
+									offset: _Utils_Tuple2(0, 4),
+									size: 4
+								})
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('Publish Flow'),
+								A2(
+								$author$project$MaterialIcons$material,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								{color: $author$project$Colors$white, icon: $icidasset$elm_material_icons$Material$Icons$arrow_right, size: 24})
+							])),
+					url: '#'
+				})
 			]));
 };
 var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
@@ -20995,6 +21008,8 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 			[
 				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'z-index', '1')),
 				$mdgriffith$elm_ui$Element$behindContent(
 				A2(
 					$mdgriffith$elm_ui$Element$el,
@@ -21024,9 +21039,9 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 					size: 0
 				}),
 				$mdgriffith$elm_ui$Element$inFront(
-				$author$project$Pages$Flow_buildr$viewCanvasHeader(model)),
+				A2($author$project$Component$Canvas$renderCanvas, (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth, model)),
 				$mdgriffith$elm_ui$Element$inFront(
-				A2($author$project$Component$Canvas$renderCanvas, (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth, model))
+				$author$project$Pages$Flow_buildr$viewCanvasHeader(model))
 			]),
 		$mdgriffith$elm_ui$Element$none);
 };
