@@ -9,6 +9,7 @@ module Component.Canvas exposing
 import Canvas exposing (..)
 import Canvas.Settings exposing (..)
 import Canvas.Settings.Advanced exposing (..)
+import Canvas.Settings.Text
 import Canvas.Texture exposing (Texture)
 import Color
 import Colors
@@ -16,6 +17,7 @@ import Effect
 import Element as E
 import Element.Background
 import Element.Border
+import Element.Font
 import Element.Input
 import Grid
 import Html exposing (Html, div)
@@ -84,7 +86,7 @@ update msg (Model model) =
 
 renderCanvas viewWidth canvasModel { count, viewHeight } =
     let
-        (Model ({ scale } as model)) =
+        (Model model) =
             canvasModel
 
         width =
@@ -114,8 +116,7 @@ renderCanvas viewWidth canvasModel { count, viewHeight } =
                 , Html.Attributes.style "cursor" "grab"
                 ]
                 (clearScreen model width height
-                    ++ [ render model count width height
-                       ]
+                    ++ render model count width height
                 )
 
 
@@ -170,7 +171,7 @@ viewChrome model =
                 ]
                 { label =
                     MaterialIcons.material [ E.centerX, E.centerY ]
-                        { icon = Material.Icons.add
+                        { icon = Material.Icons.zoom_in
                         , size = 24
                         , color = Colors.grey
                         }
@@ -219,12 +220,12 @@ gridSizef =
 
 clearScreen : InternalModel -> Float -> Float -> List Renderable
 clearScreen model width height =
-    shapes
-        [ fill (Color.rgb 244 243 246)
-        ]
-        [ rect ( 0, 0 ) width height
-        ]
-        :: clear ( 0, 0 ) width height
+    clear ( 0, 0 ) width height
+        :: shapes
+            [ fill (Color.rgb 244 243 246)
+            ]
+            [ rect ( 0, 0 ) width height
+            ]
         :: Grid.fold2d
             { rows = ceiling ((width / model.scale) / gridSize)
             , cols = ceiling ((height / model.scale) / gridSize)
@@ -246,35 +247,45 @@ renderItem scale ( col, row ) lines =
             , colf * gridSizef * scale
             )
 
-        ( u, v ) =
-            ( colf / (gridSizef - 1)
-            , rowf / (gridSizef - 1)
-            )
+        -- |> Debug.log ""
     in
     shapes
         [ fill Color.black
         ]
-        [ rect ( x - 1.2 / 2, y - 1.2 / 2 ) 1.2 1.2 ]
+        [ rect ( x - 1.2 / 2, y - 1.2 / 2 ) 1.2 1.2
+        ]
         :: lines
 
 
 render model count width height =
     let
         size =
-            100
+            50
 
         x =
             0
 
         -- -(size / 2)
         y =
-            -(size / 2)
+            -(height / 3)
 
         color =
             toFloat (remainderBy 100 (round (count * 10)))
                 / 100
     in
-    shapes
+    [ text
+        [ Canvas.Settings.Text.font { size = 30, family = "DM Sans" }
+        , stroke Color.black
+        , fill Color.black
+        , transform
+            [ translate (centerX width) (centerY height)
+            , scale model.scale model.scale
+            ]
+        , Canvas.Settings.Text.align Canvas.Settings.Text.Center
+        ]
+        ( x, y )
+        "render model count width heigght"
+    , shapes
         [ transform
             [ translate (centerX width) (centerY height)
             , scale model.scale model.scale
@@ -283,4 +294,8 @@ render model count width height =
             ]
         , fill (Color.hsl color 0.7 0.7)
         ]
-        [ circle ( x, y ) size ]
+        [ circle ( x, y + 60 ) 40
+
+        -- , rect ( 0, 0 ) width height
+        ]
+    ]

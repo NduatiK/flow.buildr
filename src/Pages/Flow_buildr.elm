@@ -19,6 +19,7 @@ import Json.Decode as Decode
 import Material.Icons
 import Material.Icons.Types
 import MaterialIcons
+import Model.Actions as Actions exposing (Actions(..))
 import Page
 import Request
 import Shared
@@ -300,29 +301,25 @@ viewActionBar model =
         , el [ height (px 16) ] none
         , column [ spacing 12 ]
             (List.indexedMap
-                (\i ( state, icon, message ) ->
+                (\i action ->
+                    let
+                        { color, icon, title } =
+                            Actions.config action
+                    in
                     row [ spacing 12 ] <|
-                        [ renderDragableAction model 44 (i + 3) ( state, icon )
-                        , el [ Font.size 15, Font.medium ] (text message)
+                        [ renderDragableAction model 44 (i + 3) ( color, icon )
+                        , el [ Font.size 15, Font.medium ] (text title)
                         ]
                 )
-                -- [ ( Active Colors.purple, Material.Icons.smartphone, "Phone Call" )
-                -- , ( Active Colors.darkBlue, Material.Icons.access_time, "Wait" )
-                -- , ( Active Colors.blue, Material.Icons.message, "Say" )
-                -- , ( Active Colors.teal, Material.Icons.alt_route, "Redirect" )
-                -- , ( Active Colors.green, Material.Icons.dialpad, "Phone Keyboard" )
-                -- , ( Active Colors.lime, Material.Icons.record_voice_over, "Record Call Audio" )
-                [ ( Colors.purple, Material.Icons.smartphone, "Phone Call" )
-                , ( Colors.darkBlue, Material.Icons.access_time, "Wait" )
-                , ( Colors.blue, Material.Icons.message, "Say" )
-                , ( Colors.teal, Material.Icons.alt_route, "Redirect" )
-                , ( Colors.green, Material.Icons.dialpad, "Phone Keyboard" )
-                , ( Colors.lime, Material.Icons.record_voice_over, "Record Call Audio" )
-                , ( Colors.orange, Material.Icons.translate, "Translate" )
-                , ( Colors.grey, Material.Icons.exit_to_app, "Unsubscribe from Group" )
-
-                -- , ( Disabled, Material.Icons.translate, "Translate" )
-                -- , ( Disabled, Material.Icons.exit_to_app, "Unsubscribe from Group" )
+                [ Actions.PhoneCall
+                , Actions.Wait
+                , Actions.Say
+                , Actions.Redirect
+                , Actions.PhoneKeyboard
+                , Actions.RecordCallAudio
+                , Actions.Translate
+                , Actions.UnsubscribeFromGroup
+                , Actions.MakePayment
                 ]
             )
         , el
@@ -528,7 +525,7 @@ renderDragableAction model defaultSize i ( color, icon ) =
             calculateOffset (toFloat defaultSize) centerDist i model.pickedUpFlowAction
 
         centerDist =
-            (toFloat defaultSize - childSize) / 2
+            (toFloat defaultSize - toFloat childSize) / 2
 
         ( parentSize, offset ) =
             if useFilter then
@@ -538,7 +535,7 @@ renderDragableAction model defaultSize i ( color, icon ) =
                 ( defaultSize, 0 )
 
         childSize =
-            40
+            round (toFloat defaultSize * 40 / 54)
 
         colorExploded =
             Element.toRgb color

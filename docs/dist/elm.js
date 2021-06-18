@@ -17942,6 +17942,16 @@ var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 	});
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onMove = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousemove', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onUp = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mouseup', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
+var $author$project$Model$Actions$MakePayment = {$: 'MakePayment'};
+var $author$project$Model$Actions$PhoneCall = {$: 'PhoneCall'};
+var $author$project$Model$Actions$PhoneKeyboard = {$: 'PhoneKeyboard'};
+var $author$project$Model$Actions$RecordCallAudio = {$: 'RecordCallAudio'};
+var $author$project$Model$Actions$Redirect = {$: 'Redirect'};
+var $author$project$Model$Actions$Say = {$: 'Say'};
+var $author$project$Model$Actions$Translate = {$: 'Translate'};
+var $author$project$Model$Actions$UnsubscribeFromGroup = {$: 'UnsubscribeFromGroup'};
+var $author$project$Model$Actions$Wait = {$: 'Wait'};
+var $author$project$Pages$Flow_buildr$actionBarWidth = 300;
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
 var $avh4$elm_color$Color$toCssString = function (_v0) {
 	var r = _v0.a;
@@ -18003,38 +18013,6 @@ var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
 					nodes)
 				]));
 	});
-var $icidasset$elm_material_icons$Material$Icons$access_time = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z')
-				]),
-			_List_Nil)
-		]));
-var $author$project$Pages$Flow_buildr$actionBarWidth = 300;
 var $icidasset$elm_material_icons$Material$Icons$add = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -18066,6 +18044,47 @@ var $mdgriffith$elm_ui$Internal$Model$Bottom = {$: 'Bottom'};
 var $mdgriffith$elm_ui$Element$alignBottom = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Bottom);
 var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
 var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
+var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
+var $mdgriffith$elm_ui$Element$behindContent = function (element) {
+	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
+};
+var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
+var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
+var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
+var $author$project$Model$Actions$Text = function (a) {
+	return {$: 'Text', a: a};
+};
+var $icidasset$elm_material_icons$Material$Icons$access_time = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z')
+				]),
+			_List_Nil)
+		]));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
 var $icidasset$elm_material_icons$Material$Icons$alt_route = A2(
@@ -18098,31 +18117,8 @@ var $icidasset$elm_material_icons$Material$Icons$alt_route = A2(
 					_List_Nil)
 				]))
 		]));
-var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
-var $mdgriffith$elm_ui$Element$behindContent = function (element) {
-	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
-};
-var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
-var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
-var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
-var $author$project$UI$customIcon = F3(
-	function (icon, size, iconColor) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$color(iconColor)
-				]),
-			$mdgriffith$elm_ui$Element$html(
-				A2(
-					$feathericons$elm_feather$FeatherIcons$toHtml,
-					_List_Nil,
-					A2(
-						$feathericons$elm_feather$FeatherIcons$withStrokeWidth,
-						2.4,
-						A2($feathericons$elm_feather$FeatherIcons$withSize, size, icon)))));
-	});
 var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
+var $author$project$Colors$darkGreen = A3($mdgriffith$elm_ui$Element$rgb255, 0, 150, 136);
 var $icidasset$elm_material_icons$Material$Icons$dialpad = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -18173,6 +18169,276 @@ var $icidasset$elm_material_icons$Material$Icons$exit_to_app = A2(
 		]));
 var $author$project$Colors$green = A3($mdgriffith$elm_ui$Element$rgb255, 110, 228, 193);
 var $author$project$Colors$grey = A3($mdgriffith$elm_ui$Element$rgb255, 143, 139, 168);
+var $author$project$Colors$lime = A3($mdgriffith$elm_ui$Element$rgb255, 214, 228, 40);
+var $icidasset$elm_material_icons$Material$Icons$message = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
+var $icidasset$elm_material_icons$Material$Icons$payment = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$record_voice_over = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$circle,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$cx('9'),
+					$elm$svg$Svg$Attributes$cy('9'),
+					$elm$svg$Svg$Attributes$r('4')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76-9.64l-1.68 1.69c.84 1.18.84 2.71 0 3.89l1.68 1.69c2.02-2.02 2.02-5.07 0-7.27zM20.07 2l-1.63 1.63c2.77 3.02 2.77 7.56 0 10.74L20.07 16c3.9-3.89 3.91-9.95 0-14z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$smartphone = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Colors$teal = A3($mdgriffith$elm_ui$Element$rgb255, 84, 218, 210);
+var $icidasset$elm_material_icons$Material$Icons$translate = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Model$Actions$config = function (action) {
+	switch (action.$) {
+		case 'PhoneCall':
+			return {
+				color: $author$project$Colors$purple,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$smartphone,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Phone Call'
+			};
+		case 'Wait':
+			return {
+				color: $author$project$Colors$darkBlue,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$access_time,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Wait'
+			};
+		case 'Say':
+			return {
+				color: $author$project$Colors$blue,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$message,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Say'
+			};
+		case 'Redirect':
+			return {
+				color: $author$project$Colors$teal,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$alt_route,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Redirect'
+			};
+		case 'PhoneKeyboard':
+			return {
+				color: $author$project$Colors$green,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$dialpad,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Phone Keyboard'
+			};
+		case 'RecordCallAudio':
+			return {
+				color: $author$project$Colors$lime,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$record_voice_over,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Record Call Audio'
+			};
+		case 'Translate':
+			return {
+				color: $author$project$Colors$orange,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$translate,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Translate'
+			};
+		case 'UnsubscribeFromGroup':
+			return {
+				color: $author$project$Colors$grey,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$exit_to_app,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Unsubscribe from Group'
+			};
+		default:
+			return {
+				color: $author$project$Colors$darkGreen,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$payment,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Trigger Payment'
+			};
+	}
+};
+var $author$project$UI$customIcon = F3(
+	function (icon, size, iconColor) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Font$color(iconColor)
+				]),
+			$mdgriffith$elm_ui$Element$html(
+				A2(
+					$feathericons$elm_feather$FeatherIcons$toHtml,
+					_List_Nil,
+					A2(
+						$feathericons$elm_feather$FeatherIcons$withStrokeWidth,
+						2.4,
+						A2($feathericons$elm_feather$FeatherIcons$withSize, size, icon)))));
+	});
 var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
 var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
 var $author$project$UI$gridIcon = $feathericons$elm_feather$FeatherIcons$customIcon(
@@ -18227,7 +18493,6 @@ var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
 	return {$: 'HiddenLabel', a: a};
 };
 var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
-var $author$project$Colors$lime = A3($mdgriffith$elm_ui$Element$rgb255, 214, 228, 40);
 var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
 	return {$: 'Color', a: a};
 };
@@ -18258,31 +18523,6 @@ var $author$project$MaterialIcons$material = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
-var $icidasset$elm_material_icons$Material$Icons$message = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z')
-				]),
-			_List_Nil)
-		]));
-var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
 var $mdgriffith$elm_ui$Element$paddingXY = F2(
 	function (x, y) {
 		if (_Utils_eq(x, y)) {
@@ -18339,39 +18579,6 @@ var $mdgriffith$elm_ui$Element$Input$Placeholder = F2(
 		return {$: 'Placeholder', a: a, b: b};
 	});
 var $mdgriffith$elm_ui$Element$Input$placeholder = $mdgriffith$elm_ui$Element$Input$Placeholder;
-var $icidasset$elm_material_icons$Material$Icons$record_voice_over = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$circle,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$cx('9'),
-					$elm$svg$Svg$Attributes$cy('9'),
-					$elm$svg$Svg$Attributes$r('4')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76-9.64l-1.68 1.69c.84 1.18.84 2.71 0 3.89l1.68 1.69c2.02-2.02 2.02-5.07 0-7.27zM20.07 2l-1.63 1.63c2.77 3.02 2.77 7.56 0 10.74L20.07 16c3.9-3.89 3.91-9.95 0-14z')
-				]),
-			_List_Nil)
-		]));
 var $author$project$Pages$Flow_buildr$ClickedDownOnFlowAction = F2(
 	function (a, b) {
 		return {$: 'ClickedDownOnFlowAction', a: a, b: b};
@@ -18462,7 +18669,7 @@ var $author$project$Pages$Flow_buildr$renderDragableAction = F4(
 		var color = _v0.a;
 		var icon = _v0.b;
 		var colorExploded = $mdgriffith$elm_ui$Element$toRgb(color);
-		var childSize = 40;
+		var childSize = $elm$core$Basics$round((defaultSize * 40) / 54);
 		var centerDist = (defaultSize - childSize) / 2;
 		var _v1 = A4($author$project$Pages$Flow_buildr$calculateOffset, defaultSize, centerDist, i, model.pickedUpFlowAction);
 		var _v2 = _v1.a;
@@ -18579,31 +18786,6 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $icidasset$elm_material_icons$Material$Icons$smartphone = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z')
-				]),
-			_List_Nil)
-		]));
-var $author$project$Colors$teal = A3($mdgriffith$elm_ui$Element$rgb255, 84, 218, 210);
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
 	return {$: 'TextInputNode', a: a};
 };
@@ -19386,30 +19568,6 @@ var $mdgriffith$elm_ui$Element$Input$text = $mdgriffith$elm_ui$Element$Input$tex
 		type_: $mdgriffith$elm_ui$Element$Input$TextInputNode('text')
 	});
 var $elm$core$Debug$toString = _Debug_toString;
-var $icidasset$elm_material_icons$Material$Icons$translate = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z')
-				]),
-			_List_Nil)
-		]));
 var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
@@ -19575,10 +19733,11 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 				A2(
 					$elm$core$List$indexedMap,
 					F2(
-						function (i, _v0) {
-							var state = _v0.a;
-							var icon = _v0.b;
-							var message = _v0.c;
+						function (i, action) {
+							var _v0 = $author$project$Model$Actions$config(action);
+							var color = _v0.color;
+							var icon = _v0.icon;
+							var title = _v0.title;
 							return A2(
 								$mdgriffith$elm_ui$Element$row,
 								_List_fromArray(
@@ -19592,7 +19751,7 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 										model,
 										44,
 										i + 3,
-										_Utils_Tuple2(state, icon)),
+										_Utils_Tuple2(color, icon)),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -19600,20 +19759,11 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 												$mdgriffith$elm_ui$Element$Font$size(15),
 												$mdgriffith$elm_ui$Element$Font$medium
 											]),
-										$mdgriffith$elm_ui$Element$text(message))
+										$mdgriffith$elm_ui$Element$text(title))
 									]));
 						}),
 					_List_fromArray(
-						[
-							_Utils_Tuple3($author$project$Colors$purple, $icidasset$elm_material_icons$Material$Icons$smartphone, 'Phone Call'),
-							_Utils_Tuple3($author$project$Colors$darkBlue, $icidasset$elm_material_icons$Material$Icons$access_time, 'Wait'),
-							_Utils_Tuple3($author$project$Colors$blue, $icidasset$elm_material_icons$Material$Icons$message, 'Say'),
-							_Utils_Tuple3($author$project$Colors$teal, $icidasset$elm_material_icons$Material$Icons$alt_route, 'Redirect'),
-							_Utils_Tuple3($author$project$Colors$green, $icidasset$elm_material_icons$Material$Icons$dialpad, 'Phone Keyboard'),
-							_Utils_Tuple3($author$project$Colors$lime, $icidasset$elm_material_icons$Material$Icons$record_voice_over, 'Record Call Audio'),
-							_Utils_Tuple3($author$project$Colors$orange, $icidasset$elm_material_icons$Material$Icons$translate, 'Translate'),
-							_Utils_Tuple3($author$project$Colors$grey, $icidasset$elm_material_icons$Material$Icons$exit_to_app, 'Unsubscribe from Group')
-						]))),
+						[$author$project$Model$Actions$PhoneCall, $author$project$Model$Actions$Wait, $author$project$Model$Actions$Say, $author$project$Model$Actions$Redirect, $author$project$Model$Actions$PhoneKeyboard, $author$project$Model$Actions$RecordCallAudio, $author$project$Model$Actions$Translate, $author$project$Model$Actions$UnsubscribeFromGroup, $author$project$Model$Actions$MakePayment]))),
 				A2(
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
@@ -19847,12 +19997,9 @@ var $author$project$Component$Canvas$renderItem = F3(
 		var _v1 = _Utils_Tuple2(col, row);
 		var colf = _v1.a;
 		var rowf = _v1.b;
-		var _v2 = _Utils_Tuple2(colf / ($author$project$Component$Canvas$gridSizef - 1), rowf / ($author$project$Component$Canvas$gridSizef - 1));
-		var u = _v2.a;
-		var v = _v2.b;
-		var _v3 = _Utils_Tuple2((rowf * $author$project$Component$Canvas$gridSizef) * scale, (colf * $author$project$Component$Canvas$gridSizef) * scale);
-		var x = _v3.a;
-		var y = _v3.b;
+		var _v2 = _Utils_Tuple2((rowf * $author$project$Component$Canvas$gridSizef) * scale, (colf * $author$project$Component$Canvas$gridSizef) * scale);
+		var x = _v2.a;
+		var y = _v2.b;
 		return A2(
 			$elm$core$List$cons,
 			A2(
@@ -19879,28 +20026,28 @@ var $author$project$Component$Canvas$clearScreen = F3(
 	function (model, width, height) {
 		return A2(
 			$elm$core$List$cons,
-			A2(
-				$joakin$elm_canvas$Canvas$shapes,
-				_List_fromArray(
-					[
-						$joakin$elm_canvas$Canvas$Settings$fill(
-						A3($avh4$elm_color$Color$rgb, 244, 243, 246))
-					]),
-				_List_fromArray(
-					[
-						A3(
-						$joakin$elm_canvas$Canvas$rect,
-						_Utils_Tuple2(0, 0),
-						width,
-						height)
-					])),
+			A3(
+				$joakin$elm_canvas$Canvas$clear,
+				_Utils_Tuple2(0, 0),
+				width,
+				height),
 			A2(
 				$elm$core$List$cons,
-				A3(
-					$joakin$elm_canvas$Canvas$clear,
-					_Utils_Tuple2(0, 0),
-					width,
-					height),
+				A2(
+					$joakin$elm_canvas$Canvas$shapes,
+					_List_fromArray(
+						[
+							$joakin$elm_canvas$Canvas$Settings$fill(
+							A3($avh4$elm_color$Color$rgb, 244, 243, 246))
+						]),
+					_List_fromArray(
+						[
+							A3(
+							$joakin$elm_canvas$Canvas$rect,
+							_Utils_Tuple2(0, 0),
+							width,
+							height)
+						])),
 				A3(
 					$joakin$elm_grid$Grid$fold2d,
 					{
@@ -19911,6 +20058,49 @@ var $author$project$Component$Canvas$clearScreen = F3(
 					_List_Nil)));
 	});
 var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cursorPointer);
+var $joakin$elm_canvas$Canvas$Settings$Text$Center = {$: 'Center'};
+var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand = function (a) {
+	return {$: 'SettingCommand', a: a};
+};
+var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field = F2(
+	function (name, value) {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'type',
+					$elm$json$Json$Encode$string('field')),
+					_Utils_Tuple2(
+					'name',
+					$elm$json$Json$Encode$string(name)),
+					_Utils_Tuple2('value', value)
+				]));
+	});
+var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$textAlign = function (align) {
+	return A2(
+		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
+		'textAlign',
+		$elm$json$Json$Encode$string(align));
+};
+var $joakin$elm_canvas$Canvas$Settings$Text$textAlignToString = function (alignment) {
+	switch (alignment.$) {
+		case 'Left':
+			return 'left';
+		case 'Right':
+			return 'right';
+		case 'Center':
+			return 'center';
+		case 'Start':
+			return 'start';
+		default:
+			return 'end';
+	}
+};
+var $joakin$elm_canvas$Canvas$Settings$Text$align = function (alignment) {
+	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand(
+		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$textAlign(
+			$joakin$elm_canvas$Canvas$Settings$Text$textAlignToString(alignment)));
+};
 var $author$project$Component$Canvas$centerX = function (viewWidth) {
 	return viewWidth / 2;
 };
@@ -19925,6 +20115,19 @@ var $joakin$elm_canvas$Canvas$circle = F2(
 	function (pos, radius) {
 		return A2($joakin$elm_canvas$Canvas$Internal$Canvas$Circle, pos, radius);
 	});
+var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$font = function (f) {
+	return A2(
+		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
+		'font',
+		$elm$json$Json$Encode$string(f));
+};
+var $joakin$elm_canvas$Canvas$Settings$Text$font = function (_v0) {
+	var size = _v0.size;
+	var family = _v0.family;
+	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand(
+		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$font(
+			$elm$core$String$fromInt(size) + ('px ' + family)));
+};
 var $avh4$elm_color$Color$hsla = F4(
 	function (hue, sat, light, alpha) {
 		var _v0 = _Utils_Tuple3(hue, sat, light);
@@ -19951,6 +20154,26 @@ var $joakin$elm_canvas$Canvas$Settings$Advanced$Scale = F2(
 		return {$: 'Scale', a: a, b: b};
 	});
 var $joakin$elm_canvas$Canvas$Settings$Advanced$scale = $joakin$elm_canvas$Canvas$Settings$Advanced$Scale;
+var $joakin$elm_canvas$Canvas$Settings$stroke = function (color) {
+	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
+		$joakin$elm_canvas$Canvas$Internal$Canvas$Stroke(color));
+};
+var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableText = function (a) {
+	return {$: 'DrawableText', a: a};
+};
+var $joakin$elm_canvas$Canvas$text = F3(
+	function (settings, point, str) {
+		return A2(
+			$joakin$elm_canvas$Canvas$addSettingsToRenderable,
+			settings,
+			$joakin$elm_canvas$Canvas$Renderable(
+				{
+					commands: _List_Nil,
+					drawOp: $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified,
+					drawable: $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableText(
+						{maxWidth: $elm$core$Maybe$Nothing, point: point, text: str})
+				}));
+	});
 var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands = function (a) {
 	return {$: 'SettingCommands', a: a};
 };
@@ -20053,33 +20276,57 @@ var $joakin$elm_canvas$Canvas$Settings$Advanced$Translate = F2(
 var $joakin$elm_canvas$Canvas$Settings$Advanced$translate = $joakin$elm_canvas$Canvas$Settings$Advanced$Translate;
 var $author$project$Component$Canvas$render = F4(
 	function (model, count, width, height) {
+		var y = -(height / 3);
 		var x = 0;
-		var size = 100;
-		var y = -(size / 2);
+		var size = 50;
 		var color = ($elm$core$Basics$round(count * 10) % 100) / 100;
-		return A2(
-			$joakin$elm_canvas$Canvas$shapes,
-			_List_fromArray(
-				[
-					$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
-					_List_fromArray(
-						[
-							A2(
-							$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
-							$author$project$Component$Canvas$centerX(width),
-							$author$project$Component$Canvas$centerY(height)),
-							A2($joakin$elm_canvas$Canvas$Settings$Advanced$scale, model.scale, model.scale)
-						])),
-					$joakin$elm_canvas$Canvas$Settings$fill(
-					A3($avh4$elm_color$Color$hsl, color, 0.7, 0.7))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$joakin$elm_canvas$Canvas$circle,
-					_Utils_Tuple2(x, y),
-					size)
-				]));
+		return _List_fromArray(
+			[
+				A3(
+				$joakin$elm_canvas$Canvas$text,
+				_List_fromArray(
+					[
+						$joakin$elm_canvas$Canvas$Settings$Text$font(
+						{family: 'DM Sans', size: 30}),
+						$joakin$elm_canvas$Canvas$Settings$stroke($avh4$elm_color$Color$black),
+						$joakin$elm_canvas$Canvas$Settings$fill($avh4$elm_color$Color$black),
+						$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
+						_List_fromArray(
+							[
+								A2(
+								$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
+								$author$project$Component$Canvas$centerX(width),
+								$author$project$Component$Canvas$centerY(height)),
+								A2($joakin$elm_canvas$Canvas$Settings$Advanced$scale, model.scale, model.scale)
+							])),
+						$joakin$elm_canvas$Canvas$Settings$Text$align($joakin$elm_canvas$Canvas$Settings$Text$Center)
+					]),
+				_Utils_Tuple2(x, y),
+				'render model count width heigght'),
+				A2(
+				$joakin$elm_canvas$Canvas$shapes,
+				_List_fromArray(
+					[
+						$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
+						_List_fromArray(
+							[
+								A2(
+								$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
+								$author$project$Component$Canvas$centerX(width),
+								$author$project$Component$Canvas$centerY(height)),
+								A2($joakin$elm_canvas$Canvas$Settings$Advanced$scale, model.scale, model.scale)
+							])),
+						$joakin$elm_canvas$Canvas$Settings$fill(
+						A3($avh4$elm_color$Color$hsl, color, 0.7, 0.7))
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$joakin$elm_canvas$Canvas$circle,
+						_Utils_Tuple2(x, y + 60),
+						40)
+					]))
+			]);
 	});
 var $elm$html$Html$canvas = _VirtualDom_node('canvas');
 var $joakin$elm_canvas$Canvas$cnvs = A2($elm$html$Html$canvas, _List_Nil, _List_Nil);
@@ -20362,20 +20609,6 @@ var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fill = function (fil
 				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillRuleToString(fillRule))
 			]));
 };
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field = F2(
-	function (name, value) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'type',
-					$elm$json$Json$Encode$string('field')),
-					_Utils_Tuple2(
-					'name',
-					$elm$json$Json$Encode$string(name)),
-					_Utils_Tuple2('value', value)
-				]));
-	});
 var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle = function (color) {
 	return A2(
 		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
@@ -20821,6 +21054,37 @@ var $mdgriffith$elm_ui$Element$Input$button = F2(
 				_List_fromArray(
 					[label])));
 	});
+var $icidasset$elm_material_icons$Material$Icons$zoom_in = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z')
+				]),
+			_List_Nil)
+		]));
 var $icidasset$elm_material_icons$Material$Icons$zoom_out = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -20942,7 +21206,7 @@ var $author$project$Component$Canvas$viewChrome = function (model) {
 								$author$project$MaterialIcons$material,
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$add, size: 24}),
+								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_in, size: 24}),
 							onPress: (model.scale > 1.6) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just($author$project$Component$Canvas$ZoomIn)
 						}),
 						A2(
@@ -20983,7 +21247,6 @@ var $author$project$Component$Canvas$renderCanvas = F3(
 		var height = viewHeight;
 		var _v1 = canvasModel;
 		var model = _v1.a;
-		var scale = model.scale;
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
 			_List_fromArray(
@@ -21005,10 +21268,7 @@ var $author$project$Component$Canvas$renderCanvas = F3(
 						]),
 					_Utils_ap(
 						A3($author$project$Component$Canvas$clearScreen, model, width, height),
-						_List_fromArray(
-							[
-								A4($author$project$Component$Canvas$render, model, count, width, height)
-							])))));
+						A4($author$project$Component$Canvas$render, model, count, width, height)))));
 	});
 var $icidasset$elm_material_icons$Material$Icons$arrow_right = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
