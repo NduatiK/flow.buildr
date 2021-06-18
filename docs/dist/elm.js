@@ -19387,7 +19387,20 @@ var $author$project$Gen$Pages$static = F2(
 				})
 		};
 	});
-var $author$project$Pages$NotFound$view = $author$project$View$placeholder('Page not found.');
+var $author$project$Pages$NotFound$view = {
+	body: _List_fromArray(
+		[
+			A2(
+			$mdgriffith$elm_ui$Element$link,
+			_List_fromArray(
+				[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+			{
+				label: $mdgriffith$elm_ui$Element$text('Lost? Click here to return to the app'),
+				url: $author$project$Gen$Route$toHref($author$project$Gen$Route$Flow_buildr)
+			})
+		]),
+	title: 'Page not found.'
+};
 var $author$project$Gen$Pages$pages = {
 	a: A3($author$project$Gen$Pages$bundle, $author$project$Pages$A$page, $author$project$Gen$Model$A, $author$project$Gen$Msg$A),
 	flow_buildr: A3($author$project$Gen$Pages$bundle, $author$project$Pages$Flow_buildr$page, $author$project$Gen$Model$Flow_buildr, $author$project$Gen$Msg$Flow_buildr),
