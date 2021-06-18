@@ -273,7 +273,6 @@ render model count width height =
         color =
             toFloat (remainderBy 100 (round (count * 10)))
                 / 100
-                |> Debug.log "c"
     in
     shapes
         [ transform

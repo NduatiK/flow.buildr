@@ -22,6 +22,8 @@ import MaterialIcons
 import Page
 import Request
 import Shared
+import Svg
+import Svg.Attributes
 import UI
 import View exposing (View)
 
@@ -288,132 +290,7 @@ viewActionBar model =
             ]
           <|
             List.indexedMap
-                (\i ( color, icon ) ->
-                    let
-                        ( ( moveRightDist, moveDownDist ), useFilter ) =
-                            calculateOffset centerDist i model.pickedUpFlowAction
-
-                        centerDist =
-                            (54 - childSize) / 2
-
-                        ( parentSize, offset ) =
-                            if useFilter then
-                                ( 58, -2 )
-
-                            else
-                                ( 54, 0 )
-
-                        childSize =
-                            40
-                    in
-                    el
-                        [ width (px 54)
-                        , height (px 54)
-                        , behindContent
-                            (el
-                                [ width (px 52)
-                                , centerX
-                                , height (px 52)
-                                , centerY
-                                , Border.width 2
-                                , Border.color Colors.grey
-                                , Background.color (Colors.withAlpha 0.05 Colors.black)
-                                , Border.dashed
-                                , Border.rounded 50
-                                ]
-                                none
-                            )
-                        , htmlAttribute (Html.Attributes.style "z-index" "10")
-                        ]
-                    <|
-                        el
-                            [ width (px parentSize)
-                            , height (px parentSize)
-                            , Border.rounded 50
-                            , Background.color color
-                            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
-                                moveDown moveDownDist
-
-                              else
-                                moveDown offset
-                            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
-                                moveRight moveRightDist
-
-                              else
-                                moveRight offset
-                            , htmlAttribute
-                                (Html.Attributes.style "filter"
-                                    "url('#goo')"
-                                )
-                            , htmlAttribute
-                                (Html.Attributes.style "-webkit-filter"
-                                    "url('#goo')"
-                                )
-                            , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease")
-                            , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease")
-                            , behindContent
-                                -- , inFront
-                                (el
-                                    [ width (px childSize)
-                                    , height (px childSize)
-                                    , if useFilter then
-                                        moveDown moveDownDist
-
-                                      else
-                                        moveDown centerDist
-                                    , if useFilter then
-                                        moveRight moveRightDist
-
-                                      else
-                                        moveRight centerDist
-                                    , if useFilter then
-                                        Border.glow color 1
-
-                                      else
-                                        transparent False
-                                    , Border.color color
-                                    , Border.rounded 22
-                                    , Background.color color
-
-                                    -- , Background.color Colors.black
-                                    , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease")
-                                    , htmlAttribute (Html.Attributes.style "transition" "transform 0.2s ease")
-                                    , htmlAttribute
-                                        (Html.Attributes.style "filter"
-                                            "url('#goo')"
-                                        )
-                                    , htmlAttribute
-                                        (Html.Attributes.style "-webkit-filter"
-                                            "url('#goo')"
-                                        )
-                                    ]
-                                    none
-                                )
-                            , if model.pickedUpFlowAction == Nothing then
-                                Html.Events.Extra.Mouse.onDown
-                                    ((\x ->
-                                        ( Tuple.first x.pagePos
-                                          --  - Tuple.first x.offsetPos
-                                        , Tuple.second x.pagePos
-                                          -- - Tuple.second x.offsetPos
-                                        )
-                                     )
-                                        >> ClickedDownOnFlowAction (FlowAction i)
-                                    )
-                                    |> htmlAttribute
-
-                              else
-                                transparent False
-                            ]
-                            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
-                            (MaterialIcons.material [ centerX, centerY ]
-                                { icon = icon
-                                , size = 20
-                                , color = Colors.white
-                                }
-                            )
-                )
-            <|
+                (renderDragableAction model 54)
                 [ ( Colors.purple, Material.Icons.smartphone )
                 , ( Colors.blue, Material.Icons.message )
                 , ( Colors.green, Material.Icons.dialpad )
@@ -425,43 +302,27 @@ viewActionBar model =
             (List.indexedMap
                 (\i ( state, icon, message ) ->
                     row [ spacing 12 ] <|
-                        [ el
-                            [ width (px 44)
-                            , height (px 44)
-                            , Border.rounded 22
-                            , Background.color
-                                (case state of
-                                    Active color ->
-                                        color
-
-                                    Disabled ->
-                                        Colors.withAlpha 0.3 Colors.grey
-                                )
-                            ]
-                            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
-                            (MaterialIcons.material [ centerX, centerY ]
-                                { icon = icon
-                                , size = 20
-                                , color =
-                                    case state of
-                                        Active _ ->
-                                            Colors.white
-
-                                        Disabled ->
-                                            Colors.grey
-                                }
-                            )
+                        [ renderDragableAction model 44 (i + 3) ( state, icon )
                         , el [ Font.size 15, Font.medium ] (text message)
                         ]
                 )
-                [ ( Active Colors.purple, Material.Icons.smartphone, "Phone Call" )
-                , ( Active Colors.darkBlue, Material.Icons.access_time, "Wait" )
-                , ( Active Colors.blue, Material.Icons.message, "Say" )
-                , ( Active Colors.teal, Material.Icons.alt_route, "Redirect" )
-                , ( Active Colors.green, Material.Icons.dialpad, "Phone Keyboard" )
-                , ( Active Colors.lime, Material.Icons.record_voice_over, "Record Call Audio" )
-                , ( Disabled, Material.Icons.translate, "Translate" )
-                , ( Disabled, Material.Icons.exit_to_app, "Unsubscribe from Group" )
+                -- [ ( Active Colors.purple, Material.Icons.smartphone, "Phone Call" )
+                -- , ( Active Colors.darkBlue, Material.Icons.access_time, "Wait" )
+                -- , ( Active Colors.blue, Material.Icons.message, "Say" )
+                -- , ( Active Colors.teal, Material.Icons.alt_route, "Redirect" )
+                -- , ( Active Colors.green, Material.Icons.dialpad, "Phone Keyboard" )
+                -- , ( Active Colors.lime, Material.Icons.record_voice_over, "Record Call Audio" )
+                [ ( Colors.purple, Material.Icons.smartphone, "Phone Call" )
+                , ( Colors.darkBlue, Material.Icons.access_time, "Wait" )
+                , ( Colors.blue, Material.Icons.message, "Say" )
+                , ( Colors.teal, Material.Icons.alt_route, "Redirect" )
+                , ( Colors.green, Material.Icons.dialpad, "Phone Keyboard" )
+                , ( Colors.lime, Material.Icons.record_voice_over, "Record Call Audio" )
+                , ( Colors.orange, Material.Icons.translate, "Translate" )
+                , ( Colors.grey, Material.Icons.exit_to_app, "Unsubscribe from Group" )
+
+                -- , ( Disabled, Material.Icons.translate, "Translate" )
+                -- , ( Disabled, Material.Icons.exit_to_app, "Unsubscribe from Group" )
                 ]
             )
         , el
@@ -493,7 +354,7 @@ type State
     | Disabled
 
 
-calculateOffset mids i pickedUpFlowAction =
+calculateOffset defaultSize mids i pickedUpFlowAction =
     case pickedUpFlowAction of
         Just ( FlowAction selI, path ) ->
             let
@@ -502,7 +363,7 @@ calculateOffset mids i pickedUpFlowAction =
                         offset =
                             fn path.current - fn path.start
                     in
-                    ( abs offset > 55
+                    ( abs offset > defaultSize
                     , offset + mids
                     )
             in
@@ -646,3 +507,145 @@ viewCanvasHeader model =
                     ]
             }
         ]
+
+
+yellowEllipse =
+    html <|
+        Svg.svg [] <|
+            [ Svg.circle
+                [ Svg.Attributes.fill "rgba(240,240,10,0.5)"
+                , Svg.Attributes.cx "60"
+                , Svg.Attributes.cy "120"
+                , Svg.Attributes.r "30"
+                ]
+                []
+            ]
+
+
+renderDragableAction model defaultSize i ( color, icon ) =
+    let
+        ( ( moveRightDist, moveDownDist ), useFilter ) =
+            calculateOffset (toFloat defaultSize) centerDist i model.pickedUpFlowAction
+
+        centerDist =
+            (toFloat defaultSize - childSize) / 2
+
+        ( parentSize, offset ) =
+            if useFilter then
+                ( defaultSize + 4, -2 )
+
+            else
+                ( defaultSize, 0 )
+
+        childSize =
+            40
+
+        colorExploded =
+            Element.toRgb color
+    in
+    el
+        [ width (px defaultSize)
+        , height (px defaultSize)
+        , behindContent
+            (el
+                [ width (px defaultSize)
+                , centerX
+                , height (px (defaultSize - 2))
+                , centerY
+                , Border.width 2
+                , Border.color Colors.grey
+                , Background.color (Colors.withAlpha 0.05 Colors.black)
+                , Border.dashed
+                , Border.rounded 50
+                ]
+                none
+            )
+        , htmlAttribute (Html.Attributes.style "z-index" "10")
+        ]
+    <|
+        el
+            [ width (px parentSize)
+            , height (px parentSize)
+            , Border.rounded 50
+            , Background.color color
+            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                moveDown moveDownDist
+
+              else
+                moveDown offset
+            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                moveRight moveRightDist
+
+              else
+                moveRight offset
+            , htmlAttribute
+                (Html.Attributes.style "filter"
+                    "url('#goo')"
+                )
+            , htmlAttribute
+                (Html.Attributes.style "-webkit-filter"
+                    "url('#goo')"
+                )
+            , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease")
+            , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease")
+            , behindContent
+                -- , inFront
+                (el
+                    [ width (px childSize)
+                    , height (px childSize)
+                    , if useFilter then
+                        moveDown moveDownDist
+
+                      else
+                        moveDown centerDist
+                    , if useFilter then
+                        moveRight moveRightDist
+
+                      else
+                        moveRight centerDist
+                    , if useFilter then
+                        Border.glow color 1
+
+                      else
+                        Border.glow color 0
+                    , Border.color color
+                    , Border.rounded 22
+                    , Background.color color
+
+                    -- , Background.color Colors.black
+                    , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease")
+                    , htmlAttribute (Html.Attributes.style "transition" "transform 0.2s ease")
+                    , htmlAttribute
+                        (Html.Attributes.style "filter"
+                            "url('#goo')"
+                        )
+                    , htmlAttribute
+                        (Html.Attributes.style "-webkit-filter"
+                            "url('#goo')"
+                        )
+                    ]
+                    none
+                )
+            , if model.pickedUpFlowAction == Nothing then
+                Html.Events.Extra.Mouse.onDown
+                    ((\x ->
+                        ( Tuple.first x.pagePos
+                          --  - Tuple.first x.offsetPos
+                        , Tuple.second x.pagePos
+                          -- - Tuple.second x.offsetPos
+                        )
+                     )
+                        >> ClickedDownOnFlowAction (FlowAction i)
+                    )
+                    |> htmlAttribute
+
+              else
+                Border.rounded 50
+            ]
+            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
+            (MaterialIcons.material [ centerX, centerY ]
+                { icon = icon
+                , size = 20
+                , color = Colors.white
+                }
+            )

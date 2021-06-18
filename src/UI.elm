@@ -15,7 +15,6 @@ module UI exposing
     , green
     , gridIcon
     , layout
-    , loader
     , orange
     , penIcon
     , raisedEl
@@ -43,7 +42,6 @@ import Shared
 import Svg
 import Svg.Attributes exposing (points, x1, x2, y1, y2)
 import Task
-import UI.Classes
 
 
 sidebarPages : List SidebarElement
@@ -365,13 +363,11 @@ colorAnimatingIcon icon size iconColor =
         |> FeatherIcons.toHtml []
         |> html
         |> el
-            ([ Font.color iconColor
-             , Border.rounded 100
-             , mouseOver [ Background.color (withAlpha 0.1 black) ]
-             , padding 12
-             ]
-                ++ UI.Classes.animateTextColor 300
-            )
+            [ Font.color iconColor
+            , Border.rounded 100
+            , mouseOver [ Background.color (withAlpha 0.1 black) ]
+            , padding 12
+            ]
 
 
 raisedEl : List (Attribute msg) -> Element msg -> Element msg
@@ -421,12 +417,6 @@ showIf bool element =
 
     else
         el [] none
-
-
-loader : Float -> Color -> Element msg
-loader size color =
-    customIcon loaderIcon size color
-        |> el [ UI.Classes.spinner ]
 
 
 centerWrap : Attribute msg

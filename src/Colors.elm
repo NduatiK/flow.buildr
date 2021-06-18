@@ -58,6 +58,11 @@ lime =
     rgb255 214 228 40
 
 
+orange : Color
+orange =
+    rgb255 232 125 125
+
+
 withAlpha : Float -> Color -> Color
 withAlpha alpha color =
     let

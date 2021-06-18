@@ -29,6 +29,7 @@ addGooFilter =
                             , Svg.feBlend
                                 [ Svg.Attributes.in_ "SourceGraphic"
                                 , Svg.Attributes.in2 "goo"
+                                , Svg.Attributes.operator "atop"
                                 ]
                                 []
                             ]

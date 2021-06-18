@@ -17942,17 +17942,6 @@ var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 	});
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onMove = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousemove', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onUp = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mouseup', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
-var $author$project$Pages$Flow_buildr$Active = function (a) {
-	return {$: 'Active', a: a};
-};
-var $author$project$Pages$Flow_buildr$ClickedDownOnFlowAction = F2(
-	function (a, b) {
-		return {$: 'ClickedDownOnFlowAction', a: a, b: b};
-	});
-var $author$project$Pages$Flow_buildr$Disabled = {$: 'Disabled'};
-var $author$project$Pages$Flow_buildr$FlowAction = function (a) {
-	return {$: 'FlowAction', a: a};
-};
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
 var $avh4$elm_color$Color$toCssString = function (_v0) {
 	var r = _v0.a;
@@ -18114,63 +18103,6 @@ var $mdgriffith$elm_ui$Element$behindContent = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
 };
 var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
-var $author$project$Pages$Flow_buildr$calculateOffset = F3(
-	function (mids, i, pickedUpFlowAction) {
-		if (pickedUpFlowAction.$ === 'Just') {
-			var _v1 = pickedUpFlowAction.a;
-			var selI = _v1.a.a;
-			var path = _v1.b;
-			var calcDelta = function (fn) {
-				var offset = fn(path.current) - fn(path.start);
-				return _Utils_Tuple2(
-					$elm$core$Basics$abs(offset) > 55,
-					offset + mids);
-			};
-			if (_Utils_eq(selI, i)) {
-				var _v2 = _Utils_Tuple2(
-					calcDelta($elm$core$Tuple$first),
-					calcDelta($elm$core$Tuple$second));
-				if (_v2.b.a) {
-					var _v3 = _v2.a;
-					var x = _v3.b;
-					var _v4 = _v2.b;
-					var y = _v4.b;
-					return _Utils_Tuple2(
-						_Utils_Tuple2(x, y),
-						false);
-				} else {
-					if (_v2.a.a) {
-						var _v5 = _v2.a;
-						var x = _v5.b;
-						var _v6 = _v2.b;
-						var y = _v6.b;
-						return _Utils_Tuple2(
-							_Utils_Tuple2(x, y),
-							false);
-					} else {
-						var _v7 = _v2.a;
-						var x = _v7.b;
-						var _v8 = _v2.b;
-						var y = _v8.b;
-						return _Utils_Tuple2(
-							_Utils_Tuple2((x / 1.5) + (mids / 1.5), (y / 1.5) + (mids / 1.5)),
-							true);
-					}
-				}
-			} else {
-				return _Utils_Tuple2(
-					_Utils_Tuple2(mids, mids),
-					false);
-			}
-		} else {
-			return _Utils_Tuple2(
-				_Utils_Tuple2(mids, mids),
-				false);
-		}
-	});
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
 var $author$project$UI$customIcon = F3(
@@ -18191,8 +18123,6 @@ var $author$project$UI$customIcon = F3(
 						A2($feathericons$elm_feather$FeatherIcons$withSize, size, icon)))));
 	});
 var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
-var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
-var $mdgriffith$elm_ui$Element$Border$dashed = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderDashed);
 var $icidasset$elm_material_icons$Material$Icons$dialpad = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -18352,7 +18282,7 @@ var $icidasset$elm_material_icons$Material$Icons$message = A2(
 				]),
 			_List_Nil)
 		]));
-var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousedown', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
+var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
 var $mdgriffith$elm_ui$Element$paddingXY = F2(
 	function (x, y) {
 		if (_Utils_eq(x, y)) {
@@ -18442,6 +18372,203 @@ var $icidasset$elm_material_icons$Material$Icons$record_voice_over = A2(
 				]),
 			_List_Nil)
 		]));
+var $author$project$Pages$Flow_buildr$ClickedDownOnFlowAction = F2(
+	function (a, b) {
+		return {$: 'ClickedDownOnFlowAction', a: a, b: b};
+	});
+var $author$project$Pages$Flow_buildr$FlowAction = function (a) {
+	return {$: 'FlowAction', a: a};
+};
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $author$project$Pages$Flow_buildr$calculateOffset = F4(
+	function (defaultSize, mids, i, pickedUpFlowAction) {
+		if (pickedUpFlowAction.$ === 'Just') {
+			var _v1 = pickedUpFlowAction.a;
+			var selI = _v1.a.a;
+			var path = _v1.b;
+			var calcDelta = function (fn) {
+				var offset = fn(path.current) - fn(path.start);
+				return _Utils_Tuple2(
+					_Utils_cmp(
+						$elm$core$Basics$abs(offset),
+						defaultSize) > 0,
+					offset + mids);
+			};
+			if (_Utils_eq(selI, i)) {
+				var _v2 = _Utils_Tuple2(
+					calcDelta($elm$core$Tuple$first),
+					calcDelta($elm$core$Tuple$second));
+				if (_v2.b.a) {
+					var _v3 = _v2.a;
+					var x = _v3.b;
+					var _v4 = _v2.b;
+					var y = _v4.b;
+					return _Utils_Tuple2(
+						_Utils_Tuple2(x, y),
+						false);
+				} else {
+					if (_v2.a.a) {
+						var _v5 = _v2.a;
+						var x = _v5.b;
+						var _v6 = _v2.b;
+						var y = _v6.b;
+						return _Utils_Tuple2(
+							_Utils_Tuple2(x, y),
+							false);
+					} else {
+						var _v7 = _v2.a;
+						var x = _v7.b;
+						var _v8 = _v2.b;
+						var y = _v8.b;
+						return _Utils_Tuple2(
+							_Utils_Tuple2((x / 1.5) + (mids / 1.5), (y / 1.5) + (mids / 1.5)),
+							true);
+					}
+				}
+			} else {
+				return _Utils_Tuple2(
+					_Utils_Tuple2(mids, mids),
+					false);
+			}
+		} else {
+			return _Utils_Tuple2(
+				_Utils_Tuple2(mids, mids),
+				false);
+		}
+	});
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$dashed = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderDashed);
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousedown', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
+var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
+	function (a, b, c, d, e) {
+		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Element$Border$width = function (v) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + $elm$core$String$fromInt(v),
+			v,
+			v,
+			v,
+			v));
+};
+var $author$project$Pages$Flow_buildr$renderDragableAction = F4(
+	function (model, defaultSize, i, _v0) {
+		var color = _v0.a;
+		var icon = _v0.b;
+		var colorExploded = $mdgriffith$elm_ui$Element$toRgb(color);
+		var childSize = 40;
+		var centerDist = (defaultSize - childSize) / 2;
+		var _v1 = A4($author$project$Pages$Flow_buildr$calculateOffset, defaultSize, centerDist, i, model.pickedUpFlowAction);
+		var _v2 = _v1.a;
+		var moveRightDist = _v2.a;
+		var moveDownDist = _v2.b;
+		var useFilter = _v1.b;
+		var _v3 = useFilter ? _Utils_Tuple2(defaultSize + 4, -2) : _Utils_Tuple2(defaultSize, 0);
+		var parentSize = _v3.a;
+		var offset = _v3.b;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(defaultSize)),
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(defaultSize)),
+					$mdgriffith$elm_ui$Element$behindContent(
+					A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(defaultSize)),
+								$mdgriffith$elm_ui$Element$centerX,
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(defaultSize - 2)),
+								$mdgriffith$elm_ui$Element$centerY,
+								$mdgriffith$elm_ui$Element$Border$width(2),
+								$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$grey),
+								$mdgriffith$elm_ui$Element$Background$color(
+								A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black)),
+								$mdgriffith$elm_ui$Element$Border$dashed,
+								$mdgriffith$elm_ui$Element$Border$rounded(50)
+							]),
+						$mdgriffith$elm_ui$Element$none)),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'z-index', '10'))
+				]),
+			A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(parentSize)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(parentSize)),
+						$mdgriffith$elm_ui$Element$Border$rounded(50),
+						$mdgriffith$elm_ui$Element$Background$color(color),
+						((!useFilter) && _Utils_eq(
+						A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
+						$elm$core$Maybe$Just(
+							$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(offset),
+						((!useFilter) && _Utils_eq(
+						A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
+						$elm$core$Maybe$Just(
+							$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(offset),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, '-webkit-transition', 'box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, 'transition', 'box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease')),
+						$mdgriffith$elm_ui$Element$behindContent(
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(childSize)),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(childSize)),
+									useFilter ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(centerDist),
+									useFilter ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(centerDist),
+									useFilter ? A2($mdgriffith$elm_ui$Element$Border$glow, color, 1) : A2($mdgriffith$elm_ui$Element$Border$glow, color, 0),
+									$mdgriffith$elm_ui$Element$Border$color(color),
+									$mdgriffith$elm_ui$Element$Border$rounded(22),
+									$mdgriffith$elm_ui$Element$Background$color(color),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.2s ease')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')'))
+								]),
+							$mdgriffith$elm_ui$Element$none)),
+						_Utils_eq(model.pickedUpFlowAction, $elm$core$Maybe$Nothing) ? $mdgriffith$elm_ui$Element$htmlAttribute(
+						$mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
+							A2(
+								$elm$core$Basics$composeR,
+								function (x) {
+									return _Utils_Tuple2(x.pagePos.a, x.pagePos.b);
+								},
+								$author$project$Pages$Flow_buildr$ClickedDownOnFlowAction(
+									$author$project$Pages$Flow_buildr$FlowAction(i))))) : $mdgriffith$elm_ui$Element$Border$rounded(50)
+					]),
+				A2(
+					$author$project$MaterialIcons$material,
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+					{color: $author$project$Colors$white, icon: icon, size: 20})));
+	});
 var $mdgriffith$elm_ui$Internal$Model$FontSize = function (a) {
 	return {$: 'FontSize', a: a};
 };
@@ -18594,22 +18721,6 @@ var $mdgriffith$elm_ui$Internal$Flag$cursor = $mdgriffith$elm_ui$Internal$Flag$f
 var $mdgriffith$elm_ui$Element$Input$darkGrey = A3($mdgriffith$elm_ui$Element$rgb, 186 / 255, 189 / 255, 182 / 255);
 var $mdgriffith$elm_ui$Element$Input$defaultTextPadding = A2($mdgriffith$elm_ui$Element$paddingXY, 12, 12);
 var $mdgriffith$elm_ui$Element$Input$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
-var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
-	function (a, b, c, d, e) {
-		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Element$Border$width = function (v) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-			'b-' + $elm$core$String$fromInt(v),
-			v,
-			v,
-			v,
-			v));
-};
 var $mdgriffith$elm_ui$Element$Input$defaultTextBoxStyle = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$Input$defaultTextPadding,
@@ -19299,15 +19410,6 @@ var $icidasset$elm_material_icons$Material$Icons$translate = A2(
 				]),
 			_List_Nil)
 		]));
-var $mdgriffith$elm_ui$Element$transparent = function (on) {
-	return on ? A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$transparency,
-		A2($mdgriffith$elm_ui$Internal$Model$Transparency, 'transparent', 1.0)) : A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$transparency,
-		A2($mdgriffith$elm_ui$Internal$Model$Transparency, 'visible', 0.0));
-};
 var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
@@ -19432,117 +19534,7 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 					]),
 				A2(
 					$elm$core$List$indexedMap,
-					F2(
-						function (i, _v0) {
-							var color = _v0.a;
-							var icon = _v0.b;
-							var childSize = 40;
-							var centerDist = (54 - childSize) / 2;
-							var _v1 = A3($author$project$Pages$Flow_buildr$calculateOffset, centerDist, i, model.pickedUpFlowAction);
-							var _v2 = _v1.a;
-							var moveRightDist = _v2.a;
-							var moveDownDist = _v2.b;
-							var useFilter = _v1.b;
-							var _v3 = useFilter ? _Utils_Tuple2(58, -2) : _Utils_Tuple2(54, 0);
-							var parentSize = _v3.a;
-							var offset = _v3.b;
-							return A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$width(
-										$mdgriffith$elm_ui$Element$px(54)),
-										$mdgriffith$elm_ui$Element$height(
-										$mdgriffith$elm_ui$Element$px(54)),
-										$mdgriffith$elm_ui$Element$behindContent(
-										A2(
-											$mdgriffith$elm_ui$Element$el,
-											_List_fromArray(
-												[
-													$mdgriffith$elm_ui$Element$width(
-													$mdgriffith$elm_ui$Element$px(52)),
-													$mdgriffith$elm_ui$Element$centerX,
-													$mdgriffith$elm_ui$Element$height(
-													$mdgriffith$elm_ui$Element$px(52)),
-													$mdgriffith$elm_ui$Element$centerY,
-													$mdgriffith$elm_ui$Element$Border$width(2),
-													$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$grey),
-													$mdgriffith$elm_ui$Element$Background$color(
-													A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black)),
-													$mdgriffith$elm_ui$Element$Border$dashed,
-													$mdgriffith$elm_ui$Element$Border$rounded(50)
-												]),
-											$mdgriffith$elm_ui$Element$none)),
-										$mdgriffith$elm_ui$Element$htmlAttribute(
-										A2($elm$html$Html$Attributes$style, 'z-index', '10'))
-									]),
-								A2(
-									$mdgriffith$elm_ui$Element$el,
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$width(
-											$mdgriffith$elm_ui$Element$px(parentSize)),
-											$mdgriffith$elm_ui$Element$height(
-											$mdgriffith$elm_ui$Element$px(parentSize)),
-											$mdgriffith$elm_ui$Element$Border$rounded(50),
-											$mdgriffith$elm_ui$Element$Background$color(color),
-											((!useFilter) && _Utils_eq(
-											A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
-											$elm$core$Maybe$Just(
-												$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(offset),
-											((!useFilter) && _Utils_eq(
-											A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
-											$elm$core$Maybe$Just(
-												$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(offset),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, '-webkit-transition', 'box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, 'transition', 'box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease')),
-											$mdgriffith$elm_ui$Element$behindContent(
-											A2(
-												$mdgriffith$elm_ui$Element$el,
-												_List_fromArray(
-													[
-														$mdgriffith$elm_ui$Element$width(
-														$mdgriffith$elm_ui$Element$px(childSize)),
-														$mdgriffith$elm_ui$Element$height(
-														$mdgriffith$elm_ui$Element$px(childSize)),
-														useFilter ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(centerDist),
-														useFilter ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(centerDist),
-														useFilter ? A2($mdgriffith$elm_ui$Element$Border$glow, color, 1) : $mdgriffith$elm_ui$Element$transparent(false),
-														$mdgriffith$elm_ui$Element$Border$color(color),
-														$mdgriffith$elm_ui$Element$Border$rounded(22),
-														$mdgriffith$elm_ui$Element$Background$color(color),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.2s ease')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')'))
-													]),
-												$mdgriffith$elm_ui$Element$none)),
-											_Utils_eq(model.pickedUpFlowAction, $elm$core$Maybe$Nothing) ? $mdgriffith$elm_ui$Element$htmlAttribute(
-											$mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
-												A2(
-													$elm$core$Basics$composeR,
-													function (x) {
-														return _Utils_Tuple2(x.pagePos.a, x.pagePos.b);
-													},
-													$author$project$Pages$Flow_buildr$ClickedDownOnFlowAction(
-														$author$project$Pages$Flow_buildr$FlowAction(i))))) : $mdgriffith$elm_ui$Element$transparent(false)
-										]),
-									A2(
-										$author$project$MaterialIcons$material,
-										_List_fromArray(
-											[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-										{color: $author$project$Colors$white, icon: icon, size: 20})));
-						}),
+					A2($author$project$Pages$Flow_buildr$renderDragableAction, model, 54),
 					_List_fromArray(
 						[
 							_Utils_Tuple2($author$project$Colors$purple, $icidasset$elm_material_icons$Material$Icons$smartphone),
@@ -19583,10 +19575,10 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 				A2(
 					$elm$core$List$indexedMap,
 					F2(
-						function (i, _v4) {
-							var state = _v4.a;
-							var icon = _v4.b;
-							var message = _v4.c;
+						function (i, _v0) {
+							var state = _v0.a;
+							var icon = _v0.b;
+							var message = _v0.c;
 							return A2(
 								$mdgriffith$elm_ui$Element$row,
 								_List_fromArray(
@@ -19595,40 +19587,12 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 									]),
 								_List_fromArray(
 									[
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$width(
-												$mdgriffith$elm_ui$Element$px(44)),
-												$mdgriffith$elm_ui$Element$height(
-												$mdgriffith$elm_ui$Element$px(44)),
-												$mdgriffith$elm_ui$Element$Border$rounded(22),
-												$mdgriffith$elm_ui$Element$Background$color(
-												function () {
-													if (state.$ === 'Active') {
-														var color = state.a;
-														return color;
-													} else {
-														return A2($author$project$Colors$withAlpha, 0.3, $author$project$Colors$grey);
-													}
-												}())
-											]),
-										A2(
-											$author$project$MaterialIcons$material,
-											_List_fromArray(
-												[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-											{
-												color: function () {
-													if (state.$ === 'Active') {
-														return $author$project$Colors$white;
-													} else {
-														return $author$project$Colors$grey;
-													}
-												}(),
-												icon: icon,
-												size: 20
-											})),
+										A4(
+										$author$project$Pages$Flow_buildr$renderDragableAction,
+										model,
+										44,
+										i + 3,
+										_Utils_Tuple2(state, icon)),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -19641,32 +19605,14 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 						}),
 					_List_fromArray(
 						[
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$purple),
-							$icidasset$elm_material_icons$Material$Icons$smartphone,
-							'Phone Call'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$darkBlue),
-							$icidasset$elm_material_icons$Material$Icons$access_time,
-							'Wait'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$blue),
-							$icidasset$elm_material_icons$Material$Icons$message,
-							'Say'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$teal),
-							$icidasset$elm_material_icons$Material$Icons$alt_route,
-							'Redirect'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$green),
-							$icidasset$elm_material_icons$Material$Icons$dialpad,
-							'Phone Keyboard'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$lime),
-							$icidasset$elm_material_icons$Material$Icons$record_voice_over,
-							'Record Call Audio'),
-							_Utils_Tuple3($author$project$Pages$Flow_buildr$Disabled, $icidasset$elm_material_icons$Material$Icons$translate, 'Translate'),
-							_Utils_Tuple3($author$project$Pages$Flow_buildr$Disabled, $icidasset$elm_material_icons$Material$Icons$exit_to_app, 'Unsubscribe from Group')
+							_Utils_Tuple3($author$project$Colors$purple, $icidasset$elm_material_icons$Material$Icons$smartphone, 'Phone Call'),
+							_Utils_Tuple3($author$project$Colors$darkBlue, $icidasset$elm_material_icons$Material$Icons$access_time, 'Wait'),
+							_Utils_Tuple3($author$project$Colors$blue, $icidasset$elm_material_icons$Material$Icons$message, 'Say'),
+							_Utils_Tuple3($author$project$Colors$teal, $icidasset$elm_material_icons$Material$Icons$alt_route, 'Redirect'),
+							_Utils_Tuple3($author$project$Colors$green, $icidasset$elm_material_icons$Material$Icons$dialpad, 'Phone Keyboard'),
+							_Utils_Tuple3($author$project$Colors$lime, $icidasset$elm_material_icons$Material$Icons$record_voice_over, 'Record Call Audio'),
+							_Utils_Tuple3($author$project$Colors$orange, $icidasset$elm_material_icons$Material$Icons$translate, 'Translate'),
+							_Utils_Tuple3($author$project$Colors$grey, $icidasset$elm_material_icons$Material$Icons$exit_to_app, 'Unsubscribe from Group')
 						]))),
 				A2(
 				$mdgriffith$elm_ui$Element$el,
@@ -20000,7 +19946,6 @@ var $avh4$elm_color$Color$hsl = F3(
 	function (h, s, l) {
 		return A4($avh4$elm_color$Color$hsla, h, s, l, 1.0);
 	});
-var $elm$core$Debug$log = _Debug_log;
 var $joakin$elm_canvas$Canvas$Settings$Advanced$Scale = F2(
 	function (a, b) {
 		return {$: 'Scale', a: a, b: b};
@@ -20111,10 +20056,7 @@ var $author$project$Component$Canvas$render = F4(
 		var x = 0;
 		var size = 100;
 		var y = -(size / 2);
-		var color = A2(
-			$elm$core$Debug$log,
-			'c',
-			($elm$core$Basics$round(count * 10) % 100) / 100);
+		var color = ($elm$core$Basics$round(count * 10) % 100) / 100;
 		return A2(
 			$joakin$elm_canvas$Canvas$shapes,
 			_List_fromArray(
@@ -21775,6 +21717,7 @@ var $elm$svg$Svg$Attributes$id = _VirtualDom_attribute('id');
 var $elm$svg$Svg$Attributes$in2 = _VirtualDom_attribute('in2');
 var $elm$svg$Svg$Attributes$in_ = _VirtualDom_attribute('in');
 var $elm$svg$Svg$Attributes$mode = _VirtualDom_attribute('mode');
+var $elm$svg$Svg$Attributes$operator = _VirtualDom_attribute('operator');
 var $elm$svg$Svg$Attributes$result = _VirtualDom_attribute('result');
 var $elm$svg$Svg$Attributes$stdDeviation = _VirtualDom_attribute('stdDeviation');
 var $elm$svg$Svg$Attributes$values = function (value) {
@@ -21841,7 +21784,8 @@ var $author$project$UI$VisualEffects$addGooFilter = $mdgriffith$elm_ui$Element$i
 										_List_fromArray(
 											[
 												$elm$svg$Svg$Attributes$in_('SourceGraphic'),
-												$elm$svg$Svg$Attributes$in2('goo')
+												$elm$svg$Svg$Attributes$in2('goo'),
+												$elm$svg$Svg$Attributes$operator('atop')
 											]),
 										_List_Nil)
 									]))
