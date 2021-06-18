@@ -1,28 +1,12 @@
-# my new project
+# Flow Buildr
 > 🌳  built with [elm-spa](https://elm-spa.dev)
 
-## dependencies
+So far
+![](screenshots/Screenshot%202021-06-18%20at%207.39.31%20AM.png)
 
-This project requires the latest LTS version of [Node.js](https://nodejs.org/)
+Target
+<video controls="controls">
+  <source type="video/mp4" src="https://cdn.dribbble.com/users/182336/screenshots/11275807/media/f79e94a40bbd168c862d6b6717944f74.mp4"></source>
 
-```bash
-npm install -g elm elm-spa
-```
-
-## running locally
-
-```bash
-elm-spa server  # starts this app at http:/localhost:1234
-```
-
-### other commands
-
-```bash
-elm-spa add    # add a new page to the application
-elm-spa build  # production build
-elm-spa watch  # runs build as you code (without the server)
-```
-
-## learn more
-
-You can learn more at [elm-spa.dev](https://elm-spa.dev)
+  <p>Your browser does not support the video element.</p>
+</video>
