@@ -487,7 +487,7 @@ viewCanvas model =
                 [ height fill
                 , width fill
                 , alpha 0.4
-                , Background.tiled "/dist/DotGrid.png"
+                , Background.tiled "dist/DotGrid.png"
                 ]
                 none
             )

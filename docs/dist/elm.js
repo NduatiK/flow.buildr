@@ -21027,7 +21027,7 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 							$mdgriffith$elm_ui$Element$alpha(0.4),
-							$mdgriffith$elm_ui$Element$Background$tiled('/dist/DotGrid.png')
+							$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png')
 						]),
 					$mdgriffith$elm_ui$Element$none)),
 				$mdgriffith$elm_ui$Element$Border$innerShadow(
