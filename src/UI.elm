@@ -15,9 +15,7 @@ module UI exposing
     , green
     , gridIcon
     , layout
-    , loader
     , orange
-    , penIcon
     , raisedEl
     , red
     , showIf
@@ -43,7 +41,6 @@ import Shared
 import Svg
 import Svg.Attributes exposing (points, x1, x2, y1, y2)
 import Task
-import UI.Classes
 
 
 sidebarPages : List SidebarElement
@@ -288,32 +285,6 @@ defaultPalette =
     }
 
 
-penIcon =
-    [ Svg.g
-        [ Svg.Attributes.transform "scale(1, -1) translate(0, -24) "
-        ]
-        [ Svg.path [ Svg.Attributes.d "M12 19l7-7 3 3-7 7-3-3z" ] []
-        , Svg.path [ Svg.Attributes.d "M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" ] []
-        , Svg.path [ Svg.Attributes.d "M2 2l7.586 7.586" ] []
-        , Svg.circle [ Svg.Attributes.cx "11", Svg.Attributes.cy "11", Svg.Attributes.r "2" ] []
-        ]
-    ]
-        |> FeatherIcons.customIcon
-
-
-loaderIcon =
-    [ Svg.line [ Svg.Attributes.opacity "100%", x1 "12", y1 "2", x2 "12", y2 "6" ] []
-    , Svg.line [ Svg.Attributes.opacity "85%", x1 "4.93", y1 "4.93", x2 "7.76", y2 "7.76" ] []
-    , Svg.line [ Svg.Attributes.opacity "65%", x1 "2", y1 "12", x2 "6", y2 "12" ] []
-    , Svg.line [ Svg.Attributes.opacity "55%", x1 "4.93", y1 "19.07", x2 "7.76", y2 "16.24" ] []
-    , Svg.line [ Svg.Attributes.opacity "45%", x1 "12", y1 "18", x2 "12", y2 "22" ] []
-    , Svg.line [ Svg.Attributes.opacity "30%", x1 "16.24", y1 "16.24", x2 "19.07", y2 "19.07" ] []
-    , Svg.line [ Svg.Attributes.opacity "20%", x1 "18", y1 "12", x2 "22", y2 "12" ] []
-    , Svg.line [ Svg.Attributes.opacity "10%", x1 "16.24", y1 "7.76", x2 "19.07", y2 "4.93" ] []
-    ]
-        |> FeatherIcons.customIcon
-
-
 gridIcon =
     [ Svg.rect [ Svg.Attributes.x "3", Svg.Attributes.y "3", Svg.Attributes.width "7", Svg.Attributes.height "7", Svg.Attributes.fill "currentColor" ] []
     , Svg.rect [ Svg.Attributes.x "14", Svg.Attributes.y "3", Svg.Attributes.width "7", Svg.Attributes.height "7", Svg.Attributes.fill "currentColor" ] []
@@ -365,13 +336,11 @@ colorAnimatingIcon icon size iconColor =
         |> FeatherIcons.toHtml []
         |> html
         |> el
-            ([ Font.color iconColor
-             , Border.rounded 100
-             , mouseOver [ Background.color (withAlpha 0.1 black) ]
-             , padding 12
-             ]
-                ++ UI.Classes.animateTextColor 300
-            )
+            [ Font.color iconColor
+            , Border.rounded 100
+            , mouseOver [ Background.color (withAlpha 0.1 black) ]
+            , padding 12
+            ]
 
 
 raisedEl : List (Attribute msg) -> Element msg -> Element msg
@@ -421,12 +390,6 @@ showIf bool element =
 
     else
         el [] none
-
-
-loader : Float -> Color -> Element msg
-loader size color =
-    customIcon loaderIcon size color
-        |> el [ UI.Classes.spinner ]
 
 
 centerWrap : Attribute msg

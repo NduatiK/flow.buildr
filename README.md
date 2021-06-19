@@ -10,7 +10,9 @@ Target and inspiration by [Oğuz Yağız Kara](https://dribbble.com/shots/112758
 
 Goals
 * Get pretty close to UI parity and stop
-* Use svg or canvas to render the flow area
+* Use svg or ~~canvas~~ to render the flow area.
+
+> Canvas turned out to be insufficient in terms of the primitives available. The main appeal had been easy scaling but this might not be necessary. Heck, it might be possible in raw html but I dont want to many dom nodes and wanted to learn svg or canvas anyway.
 
 Non-Goals
 * Perfection

@@ -41,7 +41,7 @@ toBrowserDocument view =
             { options =
                 [ focusStyle
                     { borderColor = Nothing
-                    , backgroundColor = Just <| rgb 0.1 0.1 0.1
+                    , backgroundColor = Just <| Colors.lightGrey
                     , shadow = Nothing
                     }
                 ]
