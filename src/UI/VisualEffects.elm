@@ -1,35 +1,35 @@
 module UI.VisualEffects exposing (..)
 
-import Element exposing (..)
-import Svg
-import Svg.Attributes
+import Element
+import Svg exposing (..)
+import Svg.Attributes exposing (..)
 
 
+addGooFilter : Element.Attribute msg
 addGooFilter =
-    inFront
-        (el [ width (px 0), height (px 0) ] <|
-            html <|
-                Svg.svg [ Svg.Attributes.version "1.1", Svg.Attributes.viewBox "0 0 0 0" ]
-                    [ Svg.defs
-                        []
-                        [ Svg.filter [ Svg.Attributes.id "goo" ]
-                            [ Svg.feGaussianBlur
-                                [ Svg.Attributes.in_ "SourceGraphic"
-                                , Svg.Attributes.stdDeviation "8"
-                                , Svg.Attributes.result "blur"
+    Element.inFront
+        (Element.el [ Element.width (Element.px 0), Element.height (Element.px 0) ] <|
+            Element.html <|
+                svg [ version "1.1", viewBox "0 0 0 0" ]
+                    [ defs []
+                        [ Svg.filter [ id "goo" ]
+                            [ feGaussianBlur
+                                [ in_ "SourceGraphic"
+                                , stdDeviation "8"
+                                , result "blur"
                                 ]
                                 []
-                            , Svg.feColorMatrix
-                                [ Svg.Attributes.in_ "blur"
-                                , Svg.Attributes.mode "matrix"
-                                , Svg.Attributes.values "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7"
-                                , Svg.Attributes.result "goo"
+                            , feColorMatrix
+                                [ in_ "blur"
+                                , mode "matrix"
+                                , values "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7"
+                                , result "goo"
                                 ]
                                 []
-                            , Svg.feBlend
-                                [ Svg.Attributes.in_ "SourceGraphic"
-                                , Svg.Attributes.in2 "goo"
-                                , Svg.Attributes.operator "atop"
+                            , feBlend
+                                [ in_ "SourceGraphic"
+                                , in2 "goo"
+                                , operator "atop"
                                 ]
                                 []
                             ]

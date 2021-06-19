@@ -382,130 +382,6 @@ calculateOffset defaultSize mids i pickedUpFlowAction =
             ( ( mids, mids ), False )
 
 
-viewCanvas model =
-    el
-        [ height fill
-        , width fill
-        , htmlAttribute (Html.Attributes.style "z-index" "1")
-        , inFront <|
-            Element.map CanvasMsg <|
-                CanvasComponent.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model.canvasState model
-        , inFront (viewCanvasHeader model)
-        ]
-        none
-
-
-viewCanvasHeader model =
-    row [ padding 20, width fill, spacing 12 ]
-        [ el
-            [ width (px 48)
-            , height (px 48)
-            , Border.rounded 44
-            , Background.color Colors.white
-            , Border.shadow
-                { offset = ( 0, 4 )
-                , size = 4
-                , blur = 4 * 2
-                , color = Colors.withAlpha 0.05 Colors.black
-                }
-            ]
-            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
-            (MaterialIcons.material [ centerX, centerY ]
-                { icon = Material.Icons.rotate_left
-                , size = 24
-                , color = Colors.grey
-                }
-            )
-        , el
-            [ width (px 48)
-            , height (px 48)
-            , Border.rounded 44
-            , Background.color Colors.white
-            , Border.shadow
-                { offset = ( 0, 4 )
-                , size = 4
-                , blur = 4 * 2
-                , color = Colors.withAlpha 0.05 Colors.black
-                }
-            ]
-            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
-            (MaterialIcons.material [ centerX, centerY ]
-                { icon = Material.Icons.rotate_right
-                , size = 24
-                , color = Colors.grey
-                }
-            )
-        , row
-            [ centerY
-            , spacing 8
-            , paddingXY 16 8
-            , Font.size 16
-            , Font.color Colors.grey
-            , Border.rounded 6
-            , Background.color Colors.lightGrey
-            , alignRight
-            ]
-            [ text "Export"
-            , MaterialIcons.material [ centerX, centerY ]
-                { icon = Material.Icons.share
-                , size = 20
-                , color = Colors.grey
-                }
-            ]
-        , el
-            [ centerY
-            , Border.rounded 6
-            , alignRight
-            , Background.color Colors.grey
-            , Border.shadow
-                { offset = ( 0, 4 )
-                , size = 4
-                , blur = 4 * 2
-                , color = Colors.withAlpha 0.05 Colors.black
-                }
-            ]
-          <|
-            el
-                [ paddingXY 8 8
-                , Border.rounded 6
-                , Background.color (Colors.withAlpha 0.6 Colors.white)
-                ]
-            <|
-                MaterialIcons.material [ centerX, centerY ]
-                    { icon = Material.Icons.more_horiz
-                    , size = 24
-                    , color = Colors.withAlpha 0.4 Colors.black
-                    }
-        , link [ alignRight ]
-            { url = "#"
-            , label =
-                row
-                    [ centerY
-                    , spacing 8
-                    , paddingXY 16 8
-                    , Font.size 16
-                    , Font.color Colors.white
-                    , Border.rounded 6
-                    , alignRight
-                    , Background.color Colors.purple
-                    , Border.shadow
-                        { offset = ( 0, 4 )
-                        , size = 4
-                        , blur = 4 * 2
-                        , color = Colors.withAlpha 0.05 Colors.black
-                        }
-                    ]
-                    [ text "Publish Flow"
-                    , MaterialIcons.material [ centerX, centerY ]
-                        { icon = Material.Icons.arrow_right
-                        , size = 24
-                        , color = Colors.white
-                        }
-                    ]
-            }
-        ]
-
-
 yellowEllipse =
     html <|
         Svg.svg [] <|
@@ -646,3 +522,300 @@ renderDragableAction model defaultSize i ( color, icon ) =
                 , color = Colors.white
                 }
             )
+
+
+viewCanvas model =
+    el
+        [ height fill
+        , width fill
+        , paddingEach
+            { top = 90
+            , left = 24
+            , right = 24
+            , bottom = 30
+            }
+        , htmlAttribute (Html.Attributes.style "z-index" "1")
+        , behindContent
+            (el
+                [ height fill
+                , width fill
+                , Background.color Colors.lightGrey
+                ]
+                none
+            )
+        , behindContent
+            (el
+                [ height fill
+                , width fill
+                , alpha 0.4
+                , Background.tiled "dist/DotGrid.png"
+                ]
+                none
+            )
+        , inFront <|
+            Element.map CanvasMsg <|
+                CanvasComponent.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model.canvasState model
+        , inFront (viewCanvasHeader model)
+        ]
+        (column
+            [ centerX
+
+            -- , Background.color Colors.orange
+            , height fill
+            , width fill
+            , spacing 60
+            ]
+            [ circle
+                [ below <|
+                    column
+                        [ centerX ]
+                        [ verticalLine
+                        , row [ centerX, spacing -4, moveUp 1 ]
+                            [ cornerOut Left []
+                            , cornerOut Right []
+                            ]
+                        ]
+                ]
+            , row [ centerX, spacing -4, moveUp 1 ]
+                [ column [ moveUp 4, moveRight 10 ]
+                    [ cornerDown Left []
+                    , circle [ moveLeft 24 ]
+                    ]
+                , el [ width (px (280 - 4)) ] none
+                , column [ moveUp 4 ]
+                    [ cornerDown Right []
+                    , circle [ moveRight 11 ]
+                    ]
+                ]
+            ]
+        )
+
+
+verticalLine =
+    el
+        [ width (px 4)
+        , height (px 40)
+        , centerX
+        , moveUp 1
+        , Background.color Colors.orange
+        ]
+        none
+
+
+type Side
+    = Left
+    | Right
+
+
+cornerOut side attr =
+    el
+        ([ Border.color Colors.orange
+         , height (px 20)
+         , width (px 140)
+         ]
+            ++ (case side of
+                    Left ->
+                        [ Border.roundEach
+                            { topLeft = 0
+                            , topRight = 0
+                            , bottomLeft = 0
+                            , bottomRight = 20
+                            }
+                        , Border.widthEach
+                            { top = 0
+                            , bottom = 4
+                            , left = 0
+                            , right = 4
+                            }
+                        ]
+
+                    Right ->
+                        [ Border.roundEach
+                            { topLeft = 0
+                            , topRight = 0
+                            , bottomLeft = 20
+                            , bottomRight = 0
+                            }
+                        , Border.widthEach
+                            { top = 0
+                            , bottom = 4
+                            , left = 4
+                            , right = 0
+                            }
+                        ]
+               )
+            ++ attr
+        )
+        none
+
+
+cornerDown side attr =
+    el
+        ([ Border.color Colors.orange
+         , height (px 40)
+         , width (px 40)
+         ]
+            ++ (case side of
+                    Left ->
+                        [ Border.roundEach
+                            { topLeft = 20
+                            , topRight = 0
+                            , bottomLeft = 0
+                            , bottomRight = 0
+                            }
+                        , Border.widthEach
+                            { top = 4
+                            , bottom = 0
+                            , left = 4
+                            , right = 0
+                            }
+                        ]
+
+                    Right ->
+                        [ Border.roundEach
+                            { topLeft = 0
+                            , topRight = 20
+                            , bottomLeft = 0
+                            , bottomRight = 0
+                            }
+                        , Border.widthEach
+                            { top = 4
+                            , bottom = 0
+                            , left = 0
+                            , right = 4
+                            }
+                        ]
+               )
+            ++ attr
+        )
+        none
+
+
+circle attr =
+    el
+        ([ width (px 54)
+         , height (px 54)
+         , centerX
+         , Border.rounded 44
+         , Background.color Colors.orange
+         , Border.shadow
+            { offset = ( 0, 4 )
+            , size = 4
+            , blur = 4 * 2
+            , color = Colors.withAlpha 0.05 Colors.black
+            }
+         ]
+            ++ attr
+        )
+        none
+
+
+viewCanvasHeader model =
+    row [ padding 20, width fill, spacing 12 ]
+        [ el
+            [ width (px 48)
+            , height (px 48)
+            , Border.rounded 44
+            , Background.color Colors.white
+            , Border.shadow
+                { offset = ( 0, 4 )
+                , size = 4
+                , blur = 4 * 2
+                , color = Colors.withAlpha 0.05 Colors.black
+                }
+            ]
+            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
+            (MaterialIcons.material [ centerX, centerY ]
+                { icon = Material.Icons.rotate_left
+                , size = 24
+                , color = Colors.grey
+                }
+            )
+        , el
+            [ width (px 48)
+            , height (px 48)
+            , Border.rounded 44
+            , Background.color Colors.white
+            , Border.shadow
+                { offset = ( 0, 4 )
+                , size = 4
+                , blur = 4 * 2
+                , color = Colors.withAlpha 0.05 Colors.black
+                }
+            ]
+            -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
+            (MaterialIcons.material [ centerX, centerY ]
+                { icon = Material.Icons.rotate_right
+                , size = 24
+                , color = Colors.grey
+                }
+            )
+        , row
+            [ centerY
+            , spacing 8
+            , paddingXY 16 8
+            , Font.size 16
+            , Font.color Colors.grey
+            , Border.rounded 6
+            , Background.color Colors.lightGrey
+            , alignRight
+            ]
+            [ text "Export"
+            , MaterialIcons.material [ centerX, centerY ]
+                { icon = Material.Icons.share
+                , size = 20
+                , color = Colors.grey
+                }
+            ]
+        , el
+            [ centerY
+            , Border.rounded 6
+            , alignRight
+            , Background.color Colors.grey
+            , Border.shadow
+                { offset = ( 0, 4 )
+                , size = 4
+                , blur = 4 * 2
+                , color = Colors.withAlpha 0.05 Colors.black
+                }
+            ]
+          <|
+            el
+                [ paddingXY 8 8
+                , Border.rounded 6
+                , Background.color (Colors.withAlpha 0.6 Colors.white)
+                ]
+            <|
+                MaterialIcons.material [ centerX, centerY ]
+                    { icon = Material.Icons.more_horiz
+                    , size = 24
+                    , color = Colors.withAlpha 0.4 Colors.black
+                    }
+        , link [ alignRight ]
+            { url = "#"
+            , label =
+                row
+                    [ centerY
+                    , spacing 8
+                    , paddingXY 16 8
+                    , Font.size 16
+                    , Font.color Colors.white
+                    , Border.rounded 6
+                    , alignRight
+                    , Background.color Colors.purple
+                    , Border.shadow
+                        { offset = ( 0, 4 )
+                        , size = 4
+                        , blur = 4 * 2
+                        , color = Colors.withAlpha 0.05 Colors.black
+                        }
+                    ]
+                    [ text "Publish Flow"
+                    , MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.arrow_right
+                        , size = 24
+                        , color = Colors.white
+                        }
+                    ]
+            }
+        ]

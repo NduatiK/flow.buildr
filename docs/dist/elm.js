@@ -19791,1158 +19791,162 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 					{color: $author$project$Colors$white, icon: $icidasset$elm_material_icons$Material$Icons$add, size: 20}))
 			]));
 };
-var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableClear = F3(
-	function (a, b, c) {
-		return {$: 'DrawableClear', a: a, b: b, c: c};
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified = {$: 'NotSpecified'};
-var $joakin$elm_canvas$Canvas$Renderable = function (a) {
-	return {$: 'Renderable', a: a};
+var $author$project$Pages$Flow_buildr$Left = {$: 'Left'};
+var $author$project$Pages$Flow_buildr$Right = {$: 'Right'};
+var $mdgriffith$elm_ui$Internal$Model$Below = {$: 'Below'};
+var $mdgriffith$elm_ui$Element$below = function (element) {
+	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Below, element);
 };
-var $joakin$elm_canvas$Canvas$clear = F3(
-	function (point, w, h) {
-		return $joakin$elm_canvas$Canvas$Renderable(
-			{
-				commands: _List_Nil,
-				drawOp: $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified,
-				drawable: A3($joakin$elm_canvas$Canvas$Internal$Canvas$DrawableClear, point, w, h)
-			});
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp = function (a) {
-	return {$: 'SettingDrawOp', a: a};
-};
-var $joakin$elm_canvas$Canvas$Settings$fill = function (color) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
-		$joakin$elm_canvas$Canvas$Internal$Canvas$Fill(color));
-};
-var $joakin$elm_grid$Grid$fold2d = F3(
-	function (_v0, fn, initial) {
-		var rows = _v0.rows;
-		var cols = _v0.cols;
-		var iter = F3(
-			function (x, y, res) {
-				iter:
-				while (true) {
-					if (_Utils_cmp(y, rows) > -1) {
-						return res;
-					} else {
-						if (_Utils_cmp(x, cols) > -1) {
-							var $temp$x = 0,
-								$temp$y = y + 1,
-								$temp$res = res;
-							x = $temp$x;
-							y = $temp$y;
-							res = $temp$res;
-							continue iter;
-						} else {
-							var $temp$x = x + 1,
-								$temp$y = y,
-								$temp$res = A2(
-								fn,
-								_Utils_Tuple2(x, y),
-								res);
-							x = $temp$x;
-							y = $temp$y;
-							res = $temp$res;
-							continue iter;
-						}
-					}
-				}
-			});
-		return A3(iter, 0, 0, initial);
-	});
-var $author$project$Component$Canvas$gridSize = 24;
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Rect = F3(
-	function (a, b, c) {
-		return {$: 'Rect', a: a, b: b, c: c};
-	});
-var $joakin$elm_canvas$Canvas$rect = F3(
-	function (pos, width, height) {
-		return A3($joakin$elm_canvas$Canvas$Internal$Canvas$Rect, pos, width, height);
-	});
-var $avh4$elm_color$Color$black = A4($avh4$elm_color$Color$RgbaSpace, 0 / 255, 0 / 255, 0 / 255, 1.0);
-var $author$project$Component$Canvas$gridSizef = $author$project$Component$Canvas$gridSize;
-var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableShapes = function (a) {
-	return {$: 'DrawableShapes', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke = F2(
-	function (a, b) {
-		return {$: 'FillAndStroke', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Stroke = function (a) {
-	return {$: 'Stroke', a: a};
-};
-var $joakin$elm_canvas$Canvas$mergeDrawOp = F2(
-	function (op1, op2) {
-		var _v0 = _Utils_Tuple2(op1, op2);
-		_v0$7:
-		while (true) {
-			switch (_v0.b.$) {
-				case 'FillAndStroke':
-					var _v1 = _v0.b;
-					var c = _v1.a;
-					var sc = _v1.b;
-					return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c, sc);
-				case 'Fill':
-					switch (_v0.a.$) {
-						case 'Fill':
-							var c = _v0.b.a;
-							return $joakin$elm_canvas$Canvas$Internal$Canvas$Fill(c);
-						case 'Stroke':
-							var c1 = _v0.a.a;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c2, c1);
-						case 'FillAndStroke':
-							var _v2 = _v0.a;
-							var c = _v2.a;
-							var sc = _v2.b;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c2, sc);
-						default:
-							break _v0$7;
-					}
-				case 'Stroke':
-					switch (_v0.a.$) {
-						case 'Stroke':
-							var c = _v0.b.a;
-							return $joakin$elm_canvas$Canvas$Internal$Canvas$Stroke(c);
-						case 'Fill':
-							var c1 = _v0.a.a;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c1, c2);
-						case 'FillAndStroke':
-							var _v3 = _v0.a;
-							var c = _v3.a;
-							var sc = _v3.b;
-							var sc2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c, sc2);
-						default:
-							break _v0$7;
-					}
-				default:
-					if (_v0.a.$ === 'NotSpecified') {
-						break _v0$7;
-					} else {
-						var whatever = _v0.a;
-						var _v5 = _v0.b;
-						return whatever;
-					}
-			}
-		}
-		var _v4 = _v0.a;
-		var whatever = _v0.b;
-		return whatever;
-	});
-var $joakin$elm_canvas$Canvas$addSettingsToRenderable = F2(
-	function (settings, renderable) {
-		var addSetting = F2(
-			function (setting, _v1) {
-				var r = _v1.a;
-				return $joakin$elm_canvas$Canvas$Renderable(
-					function () {
-						switch (setting.$) {
-							case 'SettingCommand':
-								var cmd = setting.a;
-								return _Utils_update(
-									r,
-									{
-										commands: A2($elm$core$List$cons, cmd, r.commands)
-									});
-							case 'SettingCommands':
-								var cmds = setting.a;
-								return _Utils_update(
-									r,
-									{
-										commands: A3($elm$core$List$foldl, $elm$core$List$cons, r.commands, cmds)
-									});
-							case 'SettingUpdateDrawable':
-								var f = setting.a;
-								return _Utils_update(
-									r,
-									{
-										drawable: f(r.drawable)
-									});
-							default:
-								var op = setting.a;
-								return _Utils_update(
-									r,
-									{
-										drawOp: A2($joakin$elm_canvas$Canvas$mergeDrawOp, r.drawOp, op)
-									});
-						}
-					}());
-			});
-		return A3($elm$core$List$foldl, addSetting, renderable, settings);
-	});
-var $joakin$elm_canvas$Canvas$shapes = F2(
-	function (settings, ss) {
-		return A2(
-			$joakin$elm_canvas$Canvas$addSettingsToRenderable,
-			settings,
-			$joakin$elm_canvas$Canvas$Renderable(
-				{
-					commands: _List_Nil,
-					drawOp: $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified,
-					drawable: $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableShapes(ss)
-				}));
-	});
-var $author$project$Component$Canvas$renderItem = F3(
-	function (scale, _v0, lines) {
-		var col = _v0.a;
-		var row = _v0.b;
-		var time = 1;
-		var _v1 = _Utils_Tuple2(col, row);
-		var colf = _v1.a;
-		var rowf = _v1.b;
-		var _v2 = _Utils_Tuple2((rowf * $author$project$Component$Canvas$gridSizef) * scale, (colf * $author$project$Component$Canvas$gridSizef) * scale);
-		var x = _v2.a;
-		var y = _v2.b;
-		return A2(
-			$elm$core$List$cons,
-			A2(
-				$joakin$elm_canvas$Canvas$shapes,
-				_List_fromArray(
-					[
-						$joakin$elm_canvas$Canvas$Settings$fill($avh4$elm_color$Color$black)
-					]),
-				_List_fromArray(
-					[
-						A3(
-						$joakin$elm_canvas$Canvas$rect,
-						_Utils_Tuple2(x - (1.2 / 2), y - (1.2 / 2)),
-						1.2,
-						1.2)
-					])),
-			lines);
-	});
-var $avh4$elm_color$Color$rgb = F3(
-	function (r, g, b) {
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, 1.0);
-	});
-var $author$project$Component$Canvas$clearScreen = F3(
-	function (model, width, height) {
-		return A2(
-			$elm$core$List$cons,
-			A3(
-				$joakin$elm_canvas$Canvas$clear,
-				_Utils_Tuple2(0, 0),
-				width,
-				height),
-			A2(
-				$elm$core$List$cons,
-				A2(
-					$joakin$elm_canvas$Canvas$shapes,
-					_List_fromArray(
-						[
-							$joakin$elm_canvas$Canvas$Settings$fill(
-							A3($avh4$elm_color$Color$rgb, 244, 243, 246))
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$joakin$elm_canvas$Canvas$rect,
-							_Utils_Tuple2(0, 0),
-							width,
-							height)
-						])),
-				A3(
-					$joakin$elm_grid$Grid$fold2d,
+var $author$project$Pages$Flow_buildr$circle = function (attr) {
+	return A2(
+		$mdgriffith$elm_ui$Element$el,
+		_Utils_ap(
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(54)),
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(54)),
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$Border$rounded(44),
+					$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$orange),
+					$mdgriffith$elm_ui$Element$Border$shadow(
 					{
-						cols: $elm$core$Basics$ceiling((height / model.scale) / $author$project$Component$Canvas$gridSize),
-						rows: $elm$core$Basics$ceiling((width / model.scale) / $author$project$Component$Canvas$gridSize)
-					},
-					$author$project$Component$Canvas$renderItem(model.scale),
-					_List_Nil)));
+						blur: 4 * 2,
+						color: A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black),
+						offset: _Utils_Tuple2(0, 4),
+						size: 4
+					})
+				]),
+			attr),
+		$mdgriffith$elm_ui$Element$none);
+};
+var $mdgriffith$elm_ui$Element$Border$roundEach = function (_v0) {
+	var topLeft = _v0.topLeft;
+	var topRight = _v0.topRight;
+	var bottomLeft = _v0.bottomLeft;
+	var bottomRight = _v0.bottomRight;
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			'br-' + ($elm$core$String$fromInt(topLeft) + ('-' + ($elm$core$String$fromInt(topRight) + ($elm$core$String$fromInt(bottomLeft) + ('-' + $elm$core$String$fromInt(bottomRight)))))),
+			'border-radius',
+			$elm$core$String$fromInt(topLeft) + ('px ' + ($elm$core$String$fromInt(topRight) + ('px ' + ($elm$core$String$fromInt(bottomRight) + ('px ' + ($elm$core$String$fromInt(bottomLeft) + 'px'))))))));
+};
+var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
+	function (x, y) {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+				y,
+				x,
+				y,
+				x));
 	});
+var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
+	var bottom = _v0.bottom;
+	var top = _v0.top;
+	var left = _v0.left;
+	var right = _v0.right;
+	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
+			top,
+			right,
+			bottom,
+			left));
+};
+var $author$project$Pages$Flow_buildr$cornerDown = F2(
+	function (side, attr) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(40)),
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(40))
+					]),
+				_Utils_ap(
+					function () {
+						if (side.$ === 'Left') {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 0, topLeft: 20, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 0, left: 4, right: 0, top: 4})
+								]);
+						} else {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 0, topLeft: 0, topRight: 20}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 0, left: 0, right: 4, top: 4})
+								]);
+						}
+					}(),
+					attr)),
+			$mdgriffith$elm_ui$Element$none);
+	});
+var $author$project$Pages$Flow_buildr$cornerOut = F2(
+	function (side, attr) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(20)),
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(140))
+					]),
+				_Utils_ap(
+					function () {
+						if (side.$ === 'Left') {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 20, topLeft: 0, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 4, left: 0, right: 4, top: 0})
+								]);
+						} else {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 20, bottomRight: 0, topLeft: 0, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 4, left: 4, right: 0, top: 0})
+								]);
+						}
+					}(),
+					attr)),
+			$mdgriffith$elm_ui$Element$none);
+	});
+var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
+var $mdgriffith$elm_ui$Element$moveLeft = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveX,
+		$mdgriffith$elm_ui$Internal$Model$MoveX(-x));
+};
 var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cursorPointer);
-var $joakin$elm_canvas$Canvas$Settings$Text$Center = {$: 'Center'};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand = function (a) {
-	return {$: 'SettingCommand', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field = F2(
-	function (name, value) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'type',
-					$elm$json$Json$Encode$string('field')),
-					_Utils_Tuple2(
-					'name',
-					$elm$json$Json$Encode$string(name)),
-					_Utils_Tuple2('value', value)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$textAlign = function (align) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'textAlign',
-		$elm$json$Json$Encode$string(align));
-};
-var $joakin$elm_canvas$Canvas$Settings$Text$textAlignToString = function (alignment) {
-	switch (alignment.$) {
-		case 'Left':
-			return 'left';
-		case 'Right':
-			return 'right';
-		case 'Center':
-			return 'center';
-		case 'Start':
-			return 'start';
-		default:
-			return 'end';
-	}
-};
-var $joakin$elm_canvas$Canvas$Settings$Text$align = function (alignment) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$textAlign(
-			$joakin$elm_canvas$Canvas$Settings$Text$textAlignToString(alignment)));
-};
-var $author$project$Component$Canvas$centerX = function (viewWidth) {
-	return viewWidth / 2;
-};
-var $author$project$Component$Canvas$centerY = function (viewHeight) {
-	return viewHeight / 2;
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Circle = F2(
-	function (a, b) {
-		return {$: 'Circle', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$circle = F2(
-	function (pos, radius) {
-		return A2($joakin$elm_canvas$Canvas$Internal$Canvas$Circle, pos, radius);
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$font = function (f) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'font',
-		$elm$json$Json$Encode$string(f));
-};
-var $joakin$elm_canvas$Canvas$Settings$Text$font = function (_v0) {
-	var size = _v0.size;
-	var family = _v0.family;
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommand(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$font(
-			$elm$core$String$fromInt(size) + ('px ' + family)));
-};
-var $avh4$elm_color$Color$hsla = F4(
-	function (hue, sat, light, alpha) {
-		var _v0 = _Utils_Tuple3(hue, sat, light);
-		var h = _v0.a;
-		var s = _v0.b;
-		var l = _v0.c;
-		var m2 = (l <= 0.5) ? (l * (s + 1)) : ((l + s) - (l * s));
-		var m1 = (l * 2) - m2;
-		var hueToRgb = function (h__) {
-			var h_ = (h__ < 0) ? (h__ + 1) : ((h__ > 1) ? (h__ - 1) : h__);
-			return ((h_ * 6) < 1) ? (m1 + (((m2 - m1) * h_) * 6)) : (((h_ * 2) < 1) ? m2 : (((h_ * 3) < 2) ? (m1 + (((m2 - m1) * ((2 / 3) - h_)) * 6)) : m1));
-		};
-		var b = hueToRgb(h - (1 / 3));
-		var g = hueToRgb(h);
-		var r = hueToRgb(h + (1 / 3));
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, alpha);
-	});
-var $avh4$elm_color$Color$hsl = F3(
-	function (h, s, l) {
-		return A4($avh4$elm_color$Color$hsla, h, s, l, 1.0);
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$Scale = F2(
-	function (a, b) {
-		return {$: 'Scale', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$scale = $joakin$elm_canvas$Canvas$Settings$Advanced$Scale;
-var $joakin$elm_canvas$Canvas$Settings$stroke = function (color) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
-		$joakin$elm_canvas$Canvas$Internal$Canvas$Stroke(color));
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableText = function (a) {
-	return {$: 'DrawableText', a: a};
-};
-var $joakin$elm_canvas$Canvas$text = F3(
-	function (settings, point, str) {
-		return A2(
-			$joakin$elm_canvas$Canvas$addSettingsToRenderable,
-			settings,
-			$joakin$elm_canvas$Canvas$Renderable(
-				{
-					commands: _List_Nil,
-					drawOp: $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified,
-					drawable: $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableText(
-						{maxWidth: $elm$core$Maybe$Nothing, point: point, text: str})
-				}));
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands = function (a) {
-	return {$: 'SettingCommands', a: a};
-};
-var $elm$json$Json$Encode$float = _Json_wrap;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn = F2(
-	function (name, args) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'type',
-					$elm$json$Json$Encode$string('function')),
-					_Utils_Tuple2(
-					'name',
-					$elm$json$Json$Encode$string(name)),
-					_Utils_Tuple2(
-					'args',
-					A2($elm$json$Json$Encode$list, $elm$core$Basics$identity, args))
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rotate = function (angle) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-		'rotate',
-		_List_fromArray(
-			[
-				$elm$json$Json$Encode$float(angle)
-			]));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$scale = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'scale',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$transform = F6(
-	function (a, b, c, d, e, f) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'transform',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(a),
-					$elm$json$Json$Encode$float(b),
-					$elm$json$Json$Encode$float(c),
-					$elm$json$Json$Encode$float(d),
-					$elm$json$Json$Encode$float(e),
-					$elm$json$Json$Encode$float(f)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$translate = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'translate',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$transform = function (transforms) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands(
-		A2(
-			$elm$core$List$map,
-			function (t) {
-				switch (t.$) {
-					case 'Rotate':
-						var angle = t.a;
-						return $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rotate(angle);
-					case 'Scale':
-						var x = t.a;
-						var y = t.b;
-						return A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$scale, x, y);
-					case 'Translate':
-						var x = t.a;
-						var y = t.b;
-						return A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$translate, x, y);
-					default:
-						var m11 = t.a.m11;
-						var m12 = t.a.m12;
-						var m21 = t.a.m21;
-						var m22 = t.a.m22;
-						var dx = t.a.dx;
-						var dy = t.a.dy;
-						return A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$transform, m11, m12, m21, m22, dx, dy);
-				}
-			},
-			transforms));
-};
-var $joakin$elm_canvas$Canvas$Settings$Advanced$Translate = F2(
-	function (a, b) {
-		return {$: 'Translate', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$translate = $joakin$elm_canvas$Canvas$Settings$Advanced$Translate;
 var $author$project$Component$Canvas$render = F4(
 	function (model, count, width, height) {
-		var y = -(height / 3);
-		var x = 0;
-		var size = 50;
-		var color = ($elm$core$Basics$round(count * 10) % 100) / 100;
-		return _List_fromArray(
-			[
-				A3(
-				$joakin$elm_canvas$Canvas$text,
-				_List_fromArray(
-					[
-						$joakin$elm_canvas$Canvas$Settings$Text$font(
-						{family: 'DM Sans', size: 30}),
-						$joakin$elm_canvas$Canvas$Settings$stroke($avh4$elm_color$Color$black),
-						$joakin$elm_canvas$Canvas$Settings$fill($avh4$elm_color$Color$black),
-						$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
-						_List_fromArray(
-							[
-								A2(
-								$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
-								$author$project$Component$Canvas$centerX(width),
-								$author$project$Component$Canvas$centerY(height)),
-								A2($joakin$elm_canvas$Canvas$Settings$Advanced$scale, model.scale, model.scale)
-							])),
-						$joakin$elm_canvas$Canvas$Settings$Text$align($joakin$elm_canvas$Canvas$Settings$Text$Center)
-					]),
-				_Utils_Tuple2(x, y),
-				'render model count width heigght'),
-				A2(
-				$joakin$elm_canvas$Canvas$shapes,
-				_List_fromArray(
-					[
-						$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
-						_List_fromArray(
-							[
-								A2(
-								$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
-								$author$project$Component$Canvas$centerX(width),
-								$author$project$Component$Canvas$centerY(height)),
-								A2($joakin$elm_canvas$Canvas$Settings$Advanced$scale, model.scale, model.scale)
-							])),
-						$joakin$elm_canvas$Canvas$Settings$fill(
-						A3($avh4$elm_color$Color$hsl, color, 0.7, 0.7))
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$joakin$elm_canvas$Canvas$circle,
-						_Utils_Tuple2(x, y + 60),
-						40)
-					]))
-			]);
-	});
-var $elm$html$Html$canvas = _VirtualDom_node('canvas');
-var $joakin$elm_canvas$Canvas$cnvs = A2($elm$html$Html$canvas, _List_Nil, _List_Nil);
-var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$commands = function (list) {
-	return A2(
-		$elm$html$Html$Attributes$property,
-		'cmds',
-		A2($elm$json$Json$Encode$list, $elm$core$Basics$identity, list));
-};
-var $elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		$elm$core$String$fromInt(n));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$empty = _List_Nil;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$beginPath = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'beginPath', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$clearRect = F4(
-	function (x, y, width, height) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'clearRect',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(width),
-					$elm$json$Json$Encode$float(height)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$renderClear = F4(
-	function (_v0, w, h, cmds) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$clearRect, x, y, w, h),
-			cmds);
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc = F6(
-	function (x, y, radius, startAngle, endAngle, anticlockwise) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'arc',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(radius),
-					$elm$json$Json$Encode$float(startAngle),
-					$elm$json$Json$Encode$float(endAngle),
-					$elm$json$Json$Encode$bool(anticlockwise)
-				]));
-	});
-var $elm$core$Basics$pi = _Basics_pi;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$circle = F3(
-	function (x, y, r) {
-		return A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc, x, y, r, 0, 2 * $elm$core$Basics$pi, false);
-	});
-var $elm$core$Basics$cos = _Basics_cos;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'moveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rect = F4(
-	function (x, y, w, h) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'rect',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(w),
-					$elm$json$Json$Encode$float(h)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arcTo = F5(
-	function (x1, y1, x2, y2, radius) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'arcTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x1),
-					$elm$json$Json$Encode$float(y1),
-					$elm$json$Json$Encode$float(x2),
-					$elm$json$Json$Encode$float(y2),
-					$elm$json$Json$Encode$float(radius)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$bezierCurveTo = F6(
-	function (cp1x, cp1y, cp2x, cp2y, x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'bezierCurveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(cp1x),
-					$elm$json$Json$Encode$float(cp1y),
-					$elm$json$Json$Encode$float(cp2x),
-					$elm$json$Json$Encode$float(cp2y),
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$lineTo = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'lineTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$quadraticCurveTo = F4(
-	function (cpx, cpy, x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'quadraticCurveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(cpx),
-					$elm$json$Json$Encode$float(cpy),
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$renderLineSegment = F2(
-	function (segment, cmds) {
-		switch (segment.$) {
-			case 'ArcTo':
-				var _v1 = segment.a;
-				var x = _v1.a;
-				var y = _v1.b;
-				var _v2 = segment.b;
-				var x2 = _v2.a;
-				var y2 = _v2.b;
-				var radius = segment.c;
-				return A2(
-					$elm$core$List$cons,
-					A5($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arcTo, x, y, x2, y2, radius),
-					cmds);
-			case 'BezierCurveTo':
-				var _v3 = segment.a;
-				var cp1x = _v3.a;
-				var cp1y = _v3.b;
-				var _v4 = segment.b;
-				var cp2x = _v4.a;
-				var cp2y = _v4.b;
-				var _v5 = segment.c;
-				var x = _v5.a;
-				var y = _v5.b;
-				return A2(
-					$elm$core$List$cons,
-					A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$bezierCurveTo, cp1x, cp1y, cp2x, cp2y, x, y),
-					cmds);
-			case 'LineTo':
-				var _v6 = segment.a;
-				var x = _v6.a;
-				var y = _v6.b;
-				return A2(
-					$elm$core$List$cons,
-					A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$lineTo, x, y),
-					cmds);
-			case 'MoveTo':
-				var _v7 = segment.a;
-				var x = _v7.a;
-				var y = _v7.b;
-				return A2(
-					$elm$core$List$cons,
-					A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-					cmds);
-			default:
-				var _v8 = segment.a;
-				var cpx = _v8.a;
-				var cpy = _v8.b;
-				var _v9 = segment.b;
-				var x = _v9.a;
-				var y = _v9.b;
-				return A2(
-					$elm$core$List$cons,
-					A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$quadraticCurveTo, cpx, cpy, x, y),
-					cmds);
-		}
-	});
-var $elm$core$Basics$sin = _Basics_sin;
-var $joakin$elm_canvas$Canvas$renderShape = F2(
-	function (shape, cmds) {
-		switch (shape.$) {
-			case 'Rect':
-				var _v1 = shape.a;
-				var x = _v1.a;
-				var y = _v1.b;
-				var w = shape.b;
-				var h = shape.c;
-				return A2(
-					$elm$core$List$cons,
-					A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rect, x, y, w, h),
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-						cmds));
-			case 'Circle':
-				var _v2 = shape.a;
-				var x = _v2.a;
-				var y = _v2.b;
-				var r = shape.b;
-				return A2(
-					$elm$core$List$cons,
-					A3($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$circle, x, y, r),
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x + r, y),
-						cmds));
-			case 'Path':
-				var _v3 = shape.a;
-				var x = _v3.a;
-				var y = _v3.b;
-				var segments = shape.b;
-				return A3(
-					$elm$core$List$foldl,
-					$joakin$elm_canvas$Canvas$renderLineSegment,
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-						cmds),
-					segments);
-			default:
-				var _v4 = shape.a;
-				var x = _v4.a;
-				var y = _v4.b;
-				var radius = shape.b;
-				var startAngle = shape.c;
-				var endAngle = shape.d;
-				var anticlockwise = shape.e;
-				return A2(
-					$elm$core$List$cons,
-					A2(
-						$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo,
-						x + (radius * $elm$core$Basics$cos(endAngle)),
-						y + (radius * $elm$core$Basics$sin(endAngle))),
-					A2(
-						$elm$core$List$cons,
-						A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc, x, y, radius, startAngle, endAngle, anticlockwise),
-						A2(
-							$elm$core$List$cons,
-							A2(
-								$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo,
-								x + (radius * $elm$core$Basics$cos(startAngle)),
-								y + (radius * $elm$core$Basics$sin(startAngle))),
-							cmds)));
-		}
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$NonZero = {$: 'NonZero'};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillRuleToString = function (fillRule) {
-	if (fillRule.$ === 'NonZero') {
-		return 'nonzero';
-	} else {
-		return 'evenodd';
-	}
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fill = function (fillRule) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-		'fill',
-		_List_fromArray(
-			[
-				$elm$json$Json$Encode$string(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillRuleToString(fillRule))
-			]));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle = function (color) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'fillStyle',
-		$elm$json$Json$Encode$string(
-			$avh4$elm_color$Color$toCssString(color)));
-};
-var $joakin$elm_canvas$Canvas$renderShapeFill = F2(
-	function (c, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fill($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$NonZero),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle(c),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$stroke = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'stroke', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle = function (color) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'strokeStyle',
-		$elm$json$Json$Encode$string(
-			$avh4$elm_color$Color$toCssString(color)));
-};
-var $joakin$elm_canvas$Canvas$renderShapeStroke = F2(
-	function (c, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$stroke,
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle(c),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$renderShapeDrawOp = F2(
-	function (drawOp, cmds) {
-		switch (drawOp.$) {
-			case 'NotSpecified':
-				return A2($joakin$elm_canvas$Canvas$renderShapeFill, $avh4$elm_color$Color$black, cmds);
-			case 'Fill':
-				var c = drawOp.a;
-				return A2($joakin$elm_canvas$Canvas$renderShapeFill, c, cmds);
-			case 'Stroke':
-				var c = drawOp.a;
-				return A2($joakin$elm_canvas$Canvas$renderShapeStroke, c, cmds);
-			default:
-				var fc = drawOp.a;
-				var sc = drawOp.b;
-				return A2(
-					$joakin$elm_canvas$Canvas$renderShapeStroke,
-					sc,
-					A2($joakin$elm_canvas$Canvas$renderShapeFill, fc, cmds));
-		}
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillText = F4(
-	function (text, x, y, maybeMaxWidth) {
-		if (maybeMaxWidth.$ === 'Nothing') {
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'fillText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y)
-					]));
-		} else {
-			var maxWidth = maybeMaxWidth.a;
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'fillText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y),
-						$elm$json$Json$Encode$float(maxWidth)
-					]));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderTextFill = F5(
-	function (txt, x, y, color, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillText, txt.text, x, y, txt.maxWidth),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle(color),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeText = F4(
-	function (text, x, y, maybeMaxWidth) {
-		if (maybeMaxWidth.$ === 'Nothing') {
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'strokeText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y)
-					]));
-		} else {
-			var maxWidth = maybeMaxWidth.a;
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'strokeText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y),
-						$elm$json$Json$Encode$float(maxWidth)
-					]));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderTextStroke = F5(
-	function (txt, x, y, color, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeText, txt.text, x, y, txt.maxWidth),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle(color),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$renderTextDrawOp = F3(
-	function (drawOp, txt, cmds) {
-		var _v0 = txt.point;
-		var x = _v0.a;
-		var y = _v0.b;
-		switch (drawOp.$) {
-			case 'NotSpecified':
-				return A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, $avh4$elm_color$Color$black, cmds);
-			case 'Fill':
-				var c = drawOp.a;
-				return A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, c, cmds);
-			case 'Stroke':
-				var c = drawOp.a;
-				return A5($joakin$elm_canvas$Canvas$renderTextStroke, txt, x, y, c, cmds);
-			default:
-				var fc = drawOp.a;
-				var sc = drawOp.b;
-				return A5(
-					$joakin$elm_canvas$Canvas$renderTextStroke,
-					txt,
-					x,
-					y,
-					sc,
-					A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, fc, cmds));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderText = F3(
-	function (drawOp, txt, cmds) {
-		return A3($joakin$elm_canvas$Canvas$renderTextDrawOp, drawOp, txt, cmds);
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage = F9(
-	function (sx, sy, sw, sh, dx, dy, dw, dh, imageObj) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'drawImage',
-			_List_fromArray(
-				[
-					imageObj,
-					$elm$json$Json$Encode$float(sx),
-					$elm$json$Json$Encode$float(sy),
-					$elm$json$Json$Encode$float(sw),
-					$elm$json$Json$Encode$float(sh),
-					$elm$json$Json$Encode$float(dx),
-					$elm$json$Json$Encode$float(dy),
-					$elm$json$Json$Encode$float(dw),
-					$elm$json$Json$Encode$float(dh)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$Texture$drawTexture = F4(
-	function (x, y, t, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			function () {
-				if (t.$ === 'TImage') {
-					var image = t.a;
-					return A9($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage, 0, 0, image.width, image.height, x, y, image.width, image.height, image.json);
-				} else {
-					var sprite = t.a;
-					var image = t.b;
-					return A9($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage, sprite.x, sprite.y, sprite.width, sprite.height, x, y, sprite.width, sprite.height, image.json);
-				}
-			}(),
-			cmds);
-	});
-var $joakin$elm_canvas$Canvas$renderTexture = F3(
-	function (_v0, t, cmds) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return A4($joakin$elm_canvas$Canvas$Internal$Texture$drawTexture, x, y, t, cmds);
-	});
-var $joakin$elm_canvas$Canvas$renderDrawable = F3(
-	function (drawable, drawOp, cmds) {
-		switch (drawable.$) {
-			case 'DrawableText':
-				var txt = drawable.a;
-				return A3($joakin$elm_canvas$Canvas$renderText, drawOp, txt, cmds);
-			case 'DrawableShapes':
-				var ss = drawable.a;
-				return A2(
-					$joakin$elm_canvas$Canvas$renderShapeDrawOp,
-					drawOp,
-					A3(
-						$elm$core$List$foldl,
-						$joakin$elm_canvas$Canvas$renderShape,
-						A2($elm$core$List$cons, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$beginPath, cmds),
-						ss));
-			case 'DrawableTexture':
-				var p = drawable.a;
-				var t = drawable.b;
-				return A3($joakin$elm_canvas$Canvas$renderTexture, p, t, cmds);
-			default:
-				var p = drawable.a;
-				var w = drawable.b;
-				var h = drawable.c;
-				return A4($joakin$elm_canvas$Canvas$renderClear, p, w, h, cmds);
-		}
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$restore = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'restore', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$save = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'save', _List_Nil);
-var $joakin$elm_canvas$Canvas$renderOne = F2(
-	function (_v0, cmds) {
-		var data = _v0.a;
-		var commands = data.commands;
-		var drawable = data.drawable;
-		var drawOp = data.drawOp;
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$restore,
-			A3(
-				$joakin$elm_canvas$Canvas$renderDrawable,
-				drawable,
-				drawOp,
-				_Utils_ap(
-					commands,
-					A2($elm$core$List$cons, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$save, cmds))));
-	});
-var $joakin$elm_canvas$Canvas$render = function (entities) {
-	return A3($elm$core$List$foldl, $joakin$elm_canvas$Canvas$renderOne, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$empty, entities);
-};
-var $joakin$elm_canvas$Canvas$Internal$Texture$TImage = function (a) {
-	return {$: 'TImage', a: a};
-};
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $joakin$elm_canvas$Canvas$Internal$Texture$decodeTextureImage = A2(
-	$elm$json$Json$Decode$andThen,
-	function (image) {
-		return A4(
-			$elm$json$Json$Decode$map3,
-			F3(
-				function (tagName, width, height) {
-					return (tagName === 'IMG') ? $elm$core$Maybe$Just(
-						$joakin$elm_canvas$Canvas$Internal$Texture$TImage(
-							{height: height, json: image, width: width})) : $elm$core$Maybe$Nothing;
-				}),
-			A2($elm$json$Json$Decode$field, 'tagName', $elm$json$Json$Decode$string),
-			A2($elm$json$Json$Decode$field, 'width', $elm$json$Json$Decode$float),
-			A2($elm$json$Json$Decode$field, 'height', $elm$json$Json$Decode$float));
-	},
-	$elm$json$Json$Decode$value);
-var $joakin$elm_canvas$Canvas$Internal$Texture$decodeImageLoadEvent = A2($elm$json$Json$Decode$field, 'target', $joakin$elm_canvas$Canvas$Internal$Texture$decodeTextureImage);
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var $joakin$elm_canvas$Canvas$renderTextureSource = function (textureSource) {
-	var url = textureSource.a;
-	var onLoad = textureSource.b;
-	return _Utils_Tuple2(
-		url,
-		A2(
-			$elm$html$Html$img,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$src(url),
-					A2($elm$html$Html$Attributes$attribute, 'crossorigin', 'anonymous'),
-					A2($elm$html$Html$Attributes$style, 'display', 'none'),
-					A2(
-					$elm$html$Html$Events$on,
-					'load',
-					A2($elm$json$Json$Decode$map, onLoad, $joakin$elm_canvas$Canvas$Internal$Texture$decodeImageLoadEvent)),
-					A2(
-					$elm$html$Html$Events$on,
-					'error',
-					$elm$json$Json$Decode$succeed(
-						onLoad($elm$core$Maybe$Nothing)))
-				]),
-			_List_Nil));
-};
-var $elm$html$Html$Attributes$width = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'width',
-		$elm$core$String$fromInt(n));
-};
-var $joakin$elm_canvas$Canvas$toHtmlWith = F3(
-	function (options, attrs, entities) {
-		return A3(
-			$elm$html$Html$Keyed$node,
-			'elm-canvas',
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$commands(
-					$joakin$elm_canvas$Canvas$render(entities)),
-				A2(
-					$elm$core$List$cons,
-					$elm$html$Html$Attributes$height(options.height),
-					A2(
-						$elm$core$List$cons,
-						$elm$html$Html$Attributes$width(options.width),
-						attrs))),
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2('__canvas', $joakin$elm_canvas$Canvas$cnvs),
-				A2($elm$core$List$map, $joakin$elm_canvas$Canvas$renderTextureSource, options.textures)));
-	});
-var $joakin$elm_canvas$Canvas$toHtml = F3(
-	function (_v0, attrs, entities) {
-		var w = _v0.a;
-		var h = _v0.b;
-		return A3(
-			$joakin$elm_canvas$Canvas$toHtmlWith,
-			{height: h, textures: _List_Nil, width: w},
-			attrs,
-			entities);
+		return A2($mdgriffith$elm_ui$Element$column, _List_Nil, _List_Nil);
 	});
 var $author$project$Component$Canvas$ResetZoom = {$: 'ResetZoom'};
 var $author$project$Component$Canvas$ZoomIn = {$: 'ZoomIn'};
@@ -20956,6 +19960,7 @@ var $mdgriffith$elm_ui$Element$Input$focusDefault = function (attrs) {
 	return A2($elm$core$List$any, $mdgriffith$elm_ui$Element$Input$hasFocusStyle, attrs) ? $mdgriffith$elm_ui$Internal$Model$NoAttribute : $mdgriffith$elm_ui$Internal$Model$htmlClass('focusable');
 };
 var $mdgriffith$elm_ui$Element$Events$onClick = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onClick);
+var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
 	return {$: 'MayPreventDefault', a: a};
@@ -21243,8 +20248,6 @@ var $author$project$Component$Canvas$renderCanvas = F3(
 	function (viewWidth, canvasModel, _v0) {
 		var count = _v0.count;
 		var viewHeight = _v0.viewHeight;
-		var width = viewWidth;
-		var height = viewHeight;
 		var _v1 = canvasModel;
 		var model = _v1.a;
 		return A2(
@@ -21257,19 +20260,25 @@ var $author$project$Component$Canvas$renderCanvas = F3(
 					$mdgriffith$elm_ui$Element$inFront(
 					$author$project$Component$Canvas$viewChrome(model))
 				]),
-			$mdgriffith$elm_ui$Element$html(
-				A3(
-					$joakin$elm_canvas$Canvas$toHtml,
-					_Utils_Tuple2(viewWidth, viewHeight),
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-							A2($elm$html$Html$Attributes$style, 'cursor', 'grab')
-						]),
-					_Utils_ap(
-						A3($author$project$Component$Canvas$clearScreen, model, width, height),
-						A4($author$project$Component$Canvas$render, model, count, width, height)))));
+			A4($author$project$Component$Canvas$render, model, count, $mdgriffith$elm_ui$Element$width, $mdgriffith$elm_ui$Element$height));
 	});
+var $mdgriffith$elm_ui$Element$Background$tiled = function (src) {
+	return $mdgriffith$elm_ui$Internal$Model$Attr(
+		A2($elm$virtual_dom$VirtualDom$style, 'background', 'url(\"' + (src + '\") repeat')));
+};
+var $author$project$Pages$Flow_buildr$verticalLine = A2(
+	$mdgriffith$elm_ui$Element$el,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width(
+			$mdgriffith$elm_ui$Element$px(4)),
+			$mdgriffith$elm_ui$Element$height(
+			$mdgriffith$elm_ui$Element$px(40)),
+			$mdgriffith$elm_ui$Element$centerX,
+			$mdgriffith$elm_ui$Element$moveUp(1),
+			$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$orange)
+		]),
+	$mdgriffith$elm_ui$Element$none);
 var $icidasset$elm_material_icons$Material$Icons$arrow_right = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -21294,7 +20303,6 @@ var $icidasset$elm_material_icons$Material$Icons$arrow_right = A2(
 				]),
 			_List_Nil)
 		]));
-var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
 var $icidasset$elm_material_icons$Material$Icons$more_horiz = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -21549,8 +20557,31 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 			[
 				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$paddingEach(
+				{bottom: 30, left: 24, right: 24, top: 90}),
 				$mdgriffith$elm_ui$Element$htmlAttribute(
 				A2($elm$html$Html$Attributes$style, 'z-index', '1')),
+				$mdgriffith$elm_ui$Element$behindContent(
+				A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+							$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$lightGrey)
+						]),
+					$mdgriffith$elm_ui$Element$none)),
+				$mdgriffith$elm_ui$Element$behindContent(
+				A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+							$mdgriffith$elm_ui$Element$alpha(0.4),
+							$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png')
+						]),
+					$mdgriffith$elm_ui$Element$none)),
 				$mdgriffith$elm_ui$Element$inFront(
 				A2(
 					$mdgriffith$elm_ui$Element$map,
@@ -21559,7 +20590,94 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 				$mdgriffith$elm_ui$Element$inFront(
 				$author$project$Pages$Flow_buildr$viewCanvasHeader(model))
 			]),
-		$mdgriffith$elm_ui$Element$none);
+		A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(60)
+				]),
+			_List_fromArray(
+				[
+					$author$project$Pages$Flow_buildr$circle(
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$below(
+							A2(
+								$mdgriffith$elm_ui$Element$column,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								_List_fromArray(
+									[
+										$author$project$Pages$Flow_buildr$verticalLine,
+										A2(
+										$mdgriffith$elm_ui$Element$row,
+										_List_fromArray(
+											[
+												$mdgriffith$elm_ui$Element$centerX,
+												$mdgriffith$elm_ui$Element$spacing(-4),
+												$mdgriffith$elm_ui$Element$moveUp(1)
+											]),
+										_List_fromArray(
+											[
+												A2($author$project$Pages$Flow_buildr$cornerOut, $author$project$Pages$Flow_buildr$Left, _List_Nil),
+												A2($author$project$Pages$Flow_buildr$cornerOut, $author$project$Pages$Flow_buildr$Right, _List_Nil)
+											]))
+									])))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$centerX,
+							$mdgriffith$elm_ui$Element$spacing(-4),
+							$mdgriffith$elm_ui$Element$moveUp(1)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveUp(4),
+									$mdgriffith$elm_ui$Element$moveRight(10)
+								]),
+							_List_fromArray(
+								[
+									A2($author$project$Pages$Flow_buildr$cornerDown, $author$project$Pages$Flow_buildr$Left, _List_Nil),
+									$author$project$Pages$Flow_buildr$circle(
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$moveLeft(24)
+										]))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(280 - 4))
+								]),
+							$mdgriffith$elm_ui$Element$none),
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveUp(4)
+								]),
+							_List_fromArray(
+								[
+									A2($author$project$Pages$Flow_buildr$cornerDown, $author$project$Pages$Flow_buildr$Right, _List_Nil),
+									$author$project$Pages$Flow_buildr$circle(
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$moveRight(11)
+										]))
+								]))
+						]))
+				])));
 };
 var $author$project$Pages$Flow_buildr$view = function (model) {
 	return {

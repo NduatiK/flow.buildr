@@ -1,7 +1,14 @@
 module Model.Actions exposing (Actions(..), Inputs(..), config)
 
 import Colors
+import Element
 import Material.Icons
+import Material.Icons.Types
+
+
+type Node msg
+    = Expanded (Config msg)
+    | Collapsed (Config msg)
 
 
 type Actions
@@ -18,6 +25,17 @@ type Actions
 
 type Inputs
     = Text String
+
+
+type alias Config msg =
+    { icon : Material.Icons.Types.Icon msg
+    , color : Element.Color
+    , title : String
+    , maxChildren : Int
+    , minChildren : Int
+    , defaultChildren : List (Node msg)
+    , inputs : List Inputs
+    }
 
 
 config action =
