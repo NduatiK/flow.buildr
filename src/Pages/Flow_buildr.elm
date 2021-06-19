@@ -342,7 +342,15 @@ viewActionBar model =
                         { color, icon, title } =
                             Actions.config action
                     in
-                    row [ spacing 12 ] <|
+                    row
+                        [ spacing 12
+                        -- , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                        --     htmlAttribute (Html.Attributes.style "z-index" "11")
+
+                        --   else
+                        --     spacing 12
+                        ]
+                    <|
                         [ renderDragableAction model 44 (i + 3) ( color, icon )
                         , el [ Font.size 15, Font.medium ] (text title)
                         ]
@@ -442,6 +450,11 @@ renderDragableAction model defaultSize i ( color, icon ) =
     el
         [ width (px defaultSize)
         , height (px defaultSize)
+        , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+            htmlAttribute (Html.Attributes.style "z-index" "10")
+
+          else
+            height (px defaultSize)
         , behindContent
             (el
                 [ width (px defaultSize)
@@ -456,7 +469,6 @@ renderDragableAction model defaultSize i ( color, icon ) =
                 ]
                 none
             )
-        , htmlAttribute (Html.Attributes.style "z-index" "10")
         ]
     <|
         el

@@ -51,6 +51,8 @@ sidebarPages =
     , Page ( "Home", FeatherIcons.settings, A )
     , Page ( "Home", FeatherIcons.pieChart, A )
     , Page ( "Home", FeatherIcons.code, A )
+    , Spacer
+    , Github
     ]
 
 
@@ -104,7 +106,7 @@ sidebar sidebarAttr currentRoute palette =
     in
     pages
         |> column
-            [ paddingEach { bottom = 50, left = 28 - 8, right = 24 - 8, top = 50 }
+            [ paddingEach { bottom = 30, left = 28 - 8, right = 24 - 8, top = 50 }
             , spacing 36
             , height fill
 
@@ -143,6 +145,12 @@ bdPages currentRoute pages palette =
                 Spacer ->
                     el [ height fill ] none
 
+                Github ->
+                    link [ centerX ]
+                        { label = el [ centerX ] <| customIcon FeatherIcons.github 24 Colors.black
+                        , url = "https://github.com/NduatiK/flow_buildr"
+                        }
+
                 Page page ->
                     renderPage page currentRoute palette
         )
@@ -154,6 +162,7 @@ type SidebarElement
     | Logo
     | Spacer
     | Divider
+    | Github
     | Unauthorized
 
 
