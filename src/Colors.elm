@@ -18,6 +18,10 @@ grey =
     rgb255 143 139 168
 
 
+midGrey : Color
+midGrey =
+    (rgb255 203 209 218)
+
 lightGrey : Color
 lightGrey =
     rgb255 244 243 246

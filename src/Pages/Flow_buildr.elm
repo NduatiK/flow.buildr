@@ -1,11 +1,7 @@
 module Pages.Flow_buildr exposing (Model, Msg, page)
 
-import Animator
-import Animator.Css
-import Animator.Inline
 import Browser.Events
 import Colors
-import Dict
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -28,7 +24,6 @@ import Request
 import Shared
 import Svg
 import Svg.Attributes
-import Time
 import UI
 import UI.Css as Css
 import UI.VisualEffects
@@ -57,27 +52,11 @@ type alias Model =
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
     , canvas : CanvasModel
     , tree : Node
-    , animationDragState : Animator.Timeline DragState
-
-    -- , animationData : Maybe AnimationData
     }
-
-
-type alias DragState =
-    -- { items :
-    --  List Int
-    -- }
-    Dict.Dict Int Path
 
 
 type alias CanvasModel =
     { scale : Float
-    }
-
-
-type alias AnimationData =
-    { pageWidth : Float
-    , bookOffset : Float
     }
 
 
@@ -88,43 +67,41 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
-      , animationDragState =
-            Animator.init Dict.empty
       , tree =
-            Node (NodeAttr Colors.purple True)
-                [ Node (NodeAttr Colors.green True) []
-                , Node (NodeAttr Colors.green False)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True) []
+            Node (NodeAttr Colors.purple True False)
+                [ Node (NodeAttr Colors.green True True) []
+                , Node (NodeAttr Colors.green False False)
+                    [ Node (NodeAttr Colors.green True False) []
+                    , Node (NodeAttr Colors.green True False) []
                     ]
-                , Node (NodeAttr Colors.darkBlue True)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True)
-                        [ Node (NodeAttr Colors.green True) []
+                , Node (NodeAttr Colors.darkBlue True False)
+                    [ Node (NodeAttr Colors.green True False) []
+                    , Node (NodeAttr Colors.green True False)
+                        [ Node (NodeAttr Colors.green True False) []
                         ]
-                    , Node (NodeAttr Colors.grey True) []
-                    , Node (NodeAttr Colors.grey False)
-                        [ Node (NodeAttr Colors.darkBlue True)
-                            [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.green True)
-                                [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.grey True False) []
+                    , Node (NodeAttr Colors.grey False False)
+                        [ Node (NodeAttr Colors.darkBlue True False)
+                            [ Node (NodeAttr Colors.green True False) []
+                            , Node (NodeAttr Colors.green True False)
+                                [ Node (NodeAttr Colors.green True False) []
                                 ]
-                            , Node (NodeAttr Colors.grey True) []
-                            , Node (NodeAttr Colors.grey True) []
+                            , Node (NodeAttr Colors.grey True False) []
+                            , Node (NodeAttr Colors.grey True False) []
                             ]
-                        , Node (NodeAttr Colors.blue True)
-                            [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
-                            , Node (NodeAttr Colors.grey True) []
+                        , Node (NodeAttr Colors.blue True False)
+                            [ Node (NodeAttr Colors.green True False) []
+                            , Node (NodeAttr Colors.green True False) []
+                            , Node (NodeAttr Colors.grey True False) []
+                            , Node (NodeAttr Colors.grey True False) []
                             ]
                         ]
                     ]
-                , Node (NodeAttr Colors.blue True)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True) []
+                , Node (NodeAttr Colors.blue True False)
+                    [ Node (NodeAttr Colors.green True False) []
+                    , Node (NodeAttr Colors.green True False) []
                     ]
-                , Node (NodeAttr Colors.green True) []
+                , Node (NodeAttr Colors.green True False) []
                 ]
       , canvas =
             { scale = 1
@@ -148,29 +125,13 @@ type alias Location =
     ( Float, Float )
 
 
-animator : Animator.Animator Model
-animator =
-    Animator.animator
-        |> Animator.watchingWith .animationDragState
-            (\newState model ->
-                let
-                    _ =
-                        Debug.log "" (Animator.current newState)
-                in
-                { model | animationDragState = newState }
-            )
-            (\state ->
-                not (Dict.isEmpty state)
-            )
-
-
 
 -- UPDATE
 
 
 type Msg
     = NoOp
-    | Tick Time.Posix
+    | Frame Float
     | GotWindowSize Int Int
       ---
     | ZoomIn
@@ -179,7 +140,7 @@ type Msg
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
-    | ReleasedFlowAction FlowAction
+    | ReleasedFlowAction
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -188,11 +149,8 @@ update msg ({ canvas } as model) =
         NoOp ->
             ( model, Effect.none )
 
-        Tick newTime ->
-            ( model
-                |> Animator.update newTime animator
-            , Effect.none
-            )
+        Frame _ ->
+            ( { model | count = model.count + 0.01 }, Effect.none )
 
         GotWindowSize w h ->
             ( { model
@@ -202,39 +160,25 @@ update msg ({ canvas } as model) =
             , Effect.none
             )
 
-        ClickedDownOnFlowAction ((FlowAction index) as flowAction) startLocation ->
+        ClickedDownOnFlowAction flowAction startLocation ->
             ( { model
                 | pickedUpFlowAction = Just ( flowAction, Path startLocation startLocation )
-                , animationDragState =
-                    model.animationDragState
-                        |> Animator.go Animator.veryQuickly
-                            (Dict.insert index (Path startLocation startLocation) (Animator.current model.animationDragState))
               }
             , Effect.none
             )
 
-        MovedFlowActionTo ((FlowAction index) as flowAction) path ->
+        MovedFlowActionTo flowAction path ->
             ( { model
                 | pickedUpFlowAction =
                     model.pickedUpFlowAction
                         |> Maybe.map (\_ -> ( flowAction, path ))
-                , animationDragState =
-                    model.animationDragState
-                        |> Animator.go Animator.veryQuickly
-                            (Dict.update index (Maybe.map (always path)) (Animator.current model.animationDragState))
               }
             , Effect.none
             )
 
-        ReleasedFlowAction ((FlowAction index) as removedAction) ->
+        ReleasedFlowAction ->
             -- ( model
-            ( { model
-                | pickedUpFlowAction = Nothing
-                , animationDragState =
-                    model.animationDragState
-                        |> Animator.go Animator.veryQuickly
-                            (Dict.remove index (Animator.current model.animationDragState))
-              }
+            ( { model | pickedUpFlowAction = Nothing }
             , Effect.none
             )
 
@@ -270,13 +214,13 @@ subscriptions model =
                 Browser.Events.onVisibilityChange
                     (\x ->
                         if x == Browser.Events.Hidden then
-                            ReleasedFlowAction flowAction
+                            ReleasedFlowAction
 
                         else
                             NoOp
                     )
-        , animator
-            |> Animator.toSubscription Tick model
+
+        -- , Browser.Events.onAnimationFrameDelta Frame
         ]
 
 
@@ -320,7 +264,7 @@ view model =
                             -- Browser.Events.onMouseMove MovedFlowActionTo
                             [ Html.Events.Extra.Mouse.onMove (.pagePos >> (\x -> { old | current = x }) >> MovedFlowActionTo flowAction)
                                 |> htmlAttribute
-                            , Html.Events.Extra.Mouse.onUp (always (ReleasedFlowAction flowAction))
+                            , Html.Events.Extra.Mouse.onUp (always ReleasedFlowAction)
                                 |> htmlAttribute
                             ]
                     ]
@@ -414,15 +358,15 @@ viewActionBar model =
                         , el [ Font.size 15, Font.medium ] (text title)
                         ]
                 )
-                [--     Actions.PhoneCall
-                 -- , Actions.Wait
-                 -- , Actions.Say
-                 -- , Actions.Redirect
-                 -- , Actions.PhoneKeyboard
-                 -- , Actions.RecordCallAudio
-                 -- , Actions.Translate
-                 -- , Actions.UnsubscribeFromGroup
-                 -- , Actions.MakePayment
+                [ Actions.PhoneCall
+                , Actions.Wait
+                , Actions.Say
+                , Actions.Redirect
+                , Actions.PhoneKeyboard
+                , Actions.RecordCallAudio
+                , Actions.Translate
+                , Actions.UnsubscribeFromGroup
+                , Actions.MakePayment
                 ]
             )
         , el
@@ -535,15 +479,19 @@ renderDragableAction model defaultSize i ( color, icon ) =
                 else
                     centerDist
             }
+
+        isSelected =
+            Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i)
     in
     el
         [ width (px defaultSize)
         , height (px defaultSize)
-        , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+        , if isSelected then
             htmlAttribute (Html.Attributes.style "z-index" "10")
 
           else
             height (px defaultSize)
+        , Css.ignoreMouse isSelected
         , behindContent
             (el
                 [ width (px defaultSize)
@@ -561,68 +509,52 @@ renderDragableAction model defaultSize i ( color, icon ) =
         ]
     <|
         el
-            [ UI.VisualEffects.gooey
+            [ if useFilter then
+                UI.VisualEffects.gooey
+
+              else
+                width (px parentSize)
             , width (px parentSize)
             , height (px parentSize)
             , Border.rounded 50
+            , Css.ignoreMouse isSelected
             , Background.color color
+            , Css.translateXY offsetV.x offsetV.y
+            , Css.transition
+                [ ( Css.Shadow, 100, "ease" )
+                , ( Css.Translation, 200, "ease-out" )
+                , ( Css.Width, 300, "ease-out" )
+                , ( Css.Height, 300, "ease-out" )
+                ]
+            , if isSelected then
+                Border.shadow
+                    { offset =
+                        if useFilter then
+                            ( 0, 0 )
 
-            -- , Css.translateXY offsetV.x offsetV.y
-            , htmlAttribute <|
-                Animator.Inline.xy model.animationDragState <|
-                    \state ->
-                        let
-                            _ =
-                                ( i, state )
-                        in
-                        case Dict.get i state of
-                            Just path ->
-                                { y = Animator.at moveDownDist
-                                , x =
-                                    Animator.at
-                                        ((Tuple.first path.current
-                                            - Tuple.first path.start
-                                         )
-                                            |> (\x ->
-                                                    if x < 100 then
-                                                        x
+                        else
+                            ( 0, 6 )
+                    , size = 0
+                    , blur = 4 * 2
+                    , color =
+                        if useFilter then
+                            color
 
-                                                    else
-                                                        x
-                                               )
-                                        )
-                                }
+                        else
+                            Colors.withAlpha 0.1 Colors.black
+                    }
 
-                            Nothing ->
-                                { y = Animator.at offset
-                                , x = Animator.at offset
-                                }
-
-            -- { x = Animator.withWobble 1 (Animator.at offsetV.x)
-            -- , y = Animator.withWobble 1 (Animator.at offsetV.y)
-            -- }
-            -- , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease-out, width 0.1s ease,height 0.1s ease")
-            -- , Css.transition
-            --     [ ( Css.Shadow, 100, "ease" )
-            --     , ( Css.Translation, 500, "ease-out" )
-            --     , ( Css.Width, 300, "ease-out" )
-            --     , ( Css.Height, 300, "ease-out" )
-            --     ]
+              else
+                Border.glow color 0
             , behindContent
                 -- , inFront
                 (el
                     [ UI.VisualEffects.gooey
                     , width (px childSize)
+                    , Css.ignoreMouse isSelected
                     , height (px childSize)
-                    , htmlAttribute <|
-                        Animator.Inline.xy model.animationDragState <|
-                            \state ->
-                                { x = Animator.at offsetChild.x
-                                , y = Animator.at offsetChild.y
-                                }
-
-                    -- Css.translateXY offsetChild.x offsetChild.y
-                    , if useFilter then
+                    , Css.translateXY offsetChild.x offsetChild.y
+                    , if isSelected then
                         Border.glow color 1
 
                       else
@@ -699,7 +631,7 @@ viewCanvas model =
                 , htmlAttribute (Html.Attributes.style "transition" "transform 0.1s ease, zoom 0.2s ease")
                 ]
             <|
-                viewHtmlTree_ (toFloat model.viewHeight * max 0 ((model.canvas.scale - 1) / 3)) model.tree
+                viewHtmlTree_ model (toFloat model.viewHeight * max 0 ((model.canvas.scale - 1) / 3)) model.tree
 
 
 type Node
@@ -709,6 +641,7 @@ type Node
 type alias NodeAttr =
     { color : Color
     , expanded : Bool
+    , dropNode : Bool
     }
 
 
@@ -735,7 +668,7 @@ numberOfChildren_ (Node { expanded } children) =
             |> List.sum
 
 
-viewHtmlTree_ offset tree =
+viewHtmlTree_ model offset tree =
     el
         [ alignLeft
         , Background.tiled "dist/DotGrid.png"
@@ -754,7 +687,7 @@ viewHtmlTree_ offset tree =
             }
         ]
     <|
-        viewHtmlTree
+        viewHtmlTree model
             { hasParent = False
             , hasSibling = False
             , parentWidth = numberOfChildren tree
@@ -770,16 +703,18 @@ siblingPadding =
 
 
 viewHtmlTree :
-    { hasParent : Bool
-    , hasSibling : Bool
-    , parentWidth : Int
-    , widthOfLeftSiblings : Int
-    , widthOfLeftSibling : Int
-    , siblingCount : Int
-    }
+    Model
+    ->
+        { hasParent : Bool
+        , hasSibling : Bool
+        , parentWidth : Int
+        , widthOfLeftSiblings : Int
+        , widthOfLeftSibling : Int
+        , siblingCount : Int
+        }
     -> Node
     -> Element Msg
-viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded } children) as node) =
+viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded, dropNode } children) as node) =
     let
         nodeWidth =
             numberOfChildren node
@@ -863,19 +798,11 @@ viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingC
 
               else
                 none
-            , circle
-                [ inFront
-                    -- (el [ centerX, centerY, Font.size 12 ] <|
-                    --     text label
-                    -- )
-                    (MaterialIcons.material [ centerX, centerY ]
-                        { icon = Material.Icons.rotate_left
-                        , size = 24
-                        , color = Colors.white
-                        }
-                    )
-                ]
-                node
+            , circle []
+                { node = node
+                , icon = Material.Icons.rotate_left
+                , dragging = pickedUpFlowAction /= Nothing
+                }
             ]
         , case ( expanded, children ) of
             ( False, _ ) ->
@@ -909,7 +836,7 @@ viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingC
                                 (\sibling ( leftSiblingsWidth, leftSiblingWidth, acc ) ->
                                     ( leftSiblingsWidth + numberOfChildren sibling
                                     , numberOfChildren sibling
-                                    , viewHtmlTree
+                                    , viewHtmlTree model
                                         { hasParent = True
                                         , hasSibling = List.length children > 1
                                         , parentWidth = nodeWidth
@@ -1077,7 +1004,7 @@ cornerToParent side extensionWidth attr =
                             , left = 0
                             , right = 4
                             }
-                        , moveLeft 12
+                        , moveLeft 16
                         , centerX
                         , onLeft
                             (el
@@ -1121,20 +1048,19 @@ circleWidth =
     64
 
 
-circle attr (Node { expanded, color } _) =
+circle attr { node, icon, dragging } =
+    let
+        (Node { expanded, color, dropNode } _) =
+            node
+
+        scaler =
+            16
+    in
     el
         ([ width (px circleWidth)
          , height (px circleWidth)
          , centerX
          , Border.rounded circleWidth
-         , Border.width 4
-         , Border.color
-            (if expanded then
-                color
-
-             else
-                Colors.orange
-            )
          , if not expanded then
             below
                 (column [ centerX, pointer ]
@@ -1156,22 +1082,151 @@ circle attr (Node { expanded, color } _) =
                 )
 
            else
-            Background.color color
-         , Background.color color
-         , Border.shadow
-            { offset = ( 0, 4 )
-            , size = 4
-            , blur = 4 * 2
-            , color =
-                Colors.withAlpha
-                    (if expanded then
-                        0.05
+            centerX
+         , inFront
+            (el
+                ([ width (px (circleWidth * 2))
+                 , height (px (circleWidth * 2))
+                 , moveUp (circleWidth / 2)
+                 , centerX
+                 , centerY
+                 ]
+                    ++ (if dropNode && dragging then
+                            [ mouseOver
+                                [ scale 1.1
+                                , moveUp (circleWidth / 2)
+                                ]
+                            , Css.transition [ ( Css.Scale, 150, "ease 100ms" ) ]
+                            ]
 
-                     else
-                        0.1
+                        else
+                            []
+                       )
+                )
+                (el
+                    ([ width (px circleWidth)
+                     , height (px circleWidth)
+                     , centerX
+                     , centerY
+                     , Border.rounded circleWidth
+                     , Border.width 4
+                     , Background.color color
+                     , Border.shadow
+                        { offset = ( 0, 4 )
+                        , size = 4
+                        , blur = 4 * 2
+                        , color =
+                            Colors.withAlpha
+                                (if expanded then
+                                    0.05
+
+                                 else
+                                    0.1
+                                )
+                                Colors.black
+                        }
+                     ]
+                        ++ (if dropNode then
+                                [ Background.color Colors.midGrey
+                                , Border.width 0
+                                ]
+
+                            else
+                                [ Border.color
+                                    (if expanded then
+                                        color
+
+                                     else
+                                        Colors.orange
+                                    )
+                                ]
+                           )
                     )
-                    Colors.black
-            }
+                    none
+                )
+            )
+         , inFront
+            -- (el [ centerX, centerY, Font.size 12 ] <|
+            --     text label
+            -- )
+            (MaterialIcons.material [ centerX, centerY, Css.ignoreMouse True ]
+                { icon =
+                    if dropNode then
+                        Material.Icons.add
+
+                    else
+                        icon
+                , size = 24
+                , color =
+                    if dropNode then
+                        Colors.grey
+
+                    else
+                        Colors.white
+                }
+            )
+         , behindContent
+            (if dropNode then
+                let
+                    h =
+                        round ((scaler / 2) - 1)
+                in
+                el [ height (px h), width (px 4), centerX, Background.color Colors.white, moveUp (toFloat h), moveLeft 2 ] none
+
+             else
+                none
+            )
+         , behindContent
+            -- (el [ centerX, centerY, Font.size 12 ] <|
+            --     text label
+            -- )
+            (if dropNode then
+                el
+                    [ moveUp (scaler / 2)
+                    , centerX
+                    ]
+                <|
+                    el
+                        [ Css.slowSpinner
+                        , Css.animationDuration 10
+                        ]
+                    <|
+                        html
+                            (Svg.svg
+                                [ Svg.Attributes.width (String.fromFloat (circleWidth + scaler))
+                                , Svg.Attributes.height (String.fromFloat (circleWidth + scaler))
+                                , Svg.Attributes.viewBox (String.join " " [ "-2 -2", String.fromFloat (circleWidth + scaler + 4), String.fromFloat (circleWidth + scaler + 4) ])
+                                ]
+                                [ Svg.circle
+                                    [ Svg.Attributes.cx (String.fromFloat ((circleWidth + scaler) / 2))
+                                    , Svg.Attributes.cy (String.fromFloat ((circleWidth + scaler) / 2))
+                                    , Svg.Attributes.r (String.fromFloat ((circleWidth + scaler) / 2))
+                                    , Svg.Attributes.fillOpacity "0"
+                                    , Svg.Attributes.strokeWidth "3px"
+                                    , Svg.Attributes.stroke (Colors.toString (Colors.withAlpha 0.8 Colors.grey))
+                                    , Svg.Attributes.strokeDasharray "4, 8"
+
+                                    -- , Svg.Attributes.strokeDasharray "10, 12"
+                                    , Svg.Attributes.strokeLinecap "round"
+                                    ]
+                                    []
+                                ]
+                            )
+                -- el
+                --     [ width (px (circleWidth + 16))
+                --     , height (px (circleWidth + 16))
+                --     , Border.rounded circleWidth
+                --     , Border.dashed
+                --     , Border.width 2
+                --     , Css.slowSpinner
+                --     -- , Background.color Colors.blue
+                --     , centerY
+                --     ]
+                --     none
+
+             else
+                none
+            )
          ]
             ++ attr
         )

@@ -4,6 +4,34 @@ import Element exposing (..)
 import Html.Attributes
 
 
+spinner : Element.Attribute msg
+spinner =
+    htmlAttribute (Html.Attributes.class "spinner")
+
+
+slowSpinner : Element.Attribute msg
+slowSpinner =
+    htmlAttribute (Html.Attributes.class "slowSpinner")
+
+
+animationDuration : Float -> Element.Attribute msg
+animationDuration duration =
+    htmlAttribute (Html.Attributes.style "animation-duration" (String.fromFloat duration ++ "s"))
+
+
+ignoreMouse : Bool -> Element.Attribute msg
+ignoreMouse ignore =
+    htmlAttribute
+        (Html.Attributes.style "pointer-events"
+            (if ignore then
+                "none"
+
+             else
+                "auto"
+            )
+        )
+
+
 translateXY : Float -> Float -> Element.Attribute msg
 translateXY x y =
     htmlAttribute
@@ -20,6 +48,7 @@ type Animatable
     | Width
     | Shadow
     | Translation
+    | Scale
 
 
 animatableToString animatable =
@@ -34,6 +63,9 @@ animatableToString animatable =
             "box-shadow"
 
         Translation ->
+            "transform"
+
+        Scale ->
             "transform"
 
 
