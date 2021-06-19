@@ -11262,362 +11262,18 @@ var $author$project$UI$getSizeOfWindow = function (msg) {
 		},
 		$elm$browser$Browser$Dom$getViewport);
 };
-var $author$project$Component$Canvas$Model = function (a) {
-	return {$: 'Model', a: a};
-};
-var $author$project$Component$Canvas$NoAnimation = {$: 'NoAnimation'};
-var $elm_community$graph$Graph$Edge = F3(
-	function (from, to, label) {
-		return {from: from, label: label, to: to};
-	});
-var $author$project$Graph$GraphFile$GraphFile = function (a) {
-	return {$: 'GraphFile', a: a};
-};
-var $elm_community$graph$Graph$Node = F2(
-	function (id, label) {
-		return {id: id, label: label};
-	});
-var $ianmackenzie$elm_units$Quantity$Quantity = function (a) {
-	return {$: 'Quantity', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
-	function (a, b, c, d) {
-		return {$: 'Rgba', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Element$rgb255 = F3(
-	function (red, green, blue) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
-	});
-var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
-var $author$project$Graph$GraphFile$actionDefaultEdgeProp = {color: $author$project$Colors$lightGrey, distance: 50, label: '', labelColor: $author$project$Colors$lightGrey, labelIsVisible: true, labelSize: 12, opacity: 1, strength: 0.7, thickness: 3};
-var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
-var $ianmackenzie$elm_geometry$Geometry$Types$Point2d = function (a) {
-	return {$: 'Point2d', a: a};
-};
-var $ianmackenzie$elm_geometry$Point2d$origin = $ianmackenzie$elm_geometry$Geometry$Types$Point2d(
-	{x: 0, y: 0});
-var $ianmackenzie$elm_geometry$Point2d$xy = F2(
-	function (_v0, _v1) {
-		var x = _v0.a;
-		var y = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Point2d(
-			{x: x, y: y});
-	});
-var $ianmackenzie$elm_geometry$Geometry$Types$Vector2d = function (a) {
-	return {$: 'Vector2d', a: a};
-};
-var $ianmackenzie$elm_geometry$Vector2d$zero = $ianmackenzie$elm_geometry$Geometry$Types$Vector2d(
-	{x: 0, y: 0});
-var $author$project$Graph$GraphFile$actionDefaultVertexProp = {
-	borderColor: $author$project$Colors$lightGrey,
-	borderWidth: 0,
-	color: $author$project$Colors$orange,
-	fixed: false,
-	gravityCenter: A2(
-		$ianmackenzie$elm_geometry$Point2d$xy,
-		$ianmackenzie$elm_units$Quantity$Quantity(0),
-		$ianmackenzie$elm_units$Quantity$Quantity(0)),
-	gravityStrengthX: 0.05,
-	gravityStrengthY: 0.05,
-	isExpanded: true,
-	manyBodyStrength: -100,
-	position: $ianmackenzie$elm_geometry$Point2d$origin,
-	radius: 54 / 2,
-	velocity: $ianmackenzie$elm_geometry$Vector2d$zero
-};
-var $elm_community$graph$Graph$Graph = function (a) {
-	return {$: 'Graph', a: a};
-};
-var $elm_community$graph$Graph$NodeContext = F3(
-	function (node, incoming, outgoing) {
-		return {incoming: incoming, node: node, outgoing: outgoing};
-	});
-var $elm_community$intdict$IntDict$Empty = {$: 'Empty'};
-var $elm_community$intdict$IntDict$empty = $elm_community$intdict$IntDict$Empty;
-var $elm_community$intdict$IntDict$Inner = function (a) {
-	return {$: 'Inner', a: a};
-};
-var $elm_community$intdict$IntDict$size = function (dict) {
-	switch (dict.$) {
-		case 'Empty':
-			return 0;
-		case 'Leaf':
-			return 1;
-		default:
-			var i = dict.a;
-			return i.size;
-	}
-};
-var $elm_community$intdict$IntDict$inner = F3(
-	function (p, l, r) {
-		var _v0 = _Utils_Tuple2(l, r);
-		if (_v0.a.$ === 'Empty') {
-			var _v1 = _v0.a;
-			return r;
-		} else {
-			if (_v0.b.$ === 'Empty') {
-				var _v2 = _v0.b;
-				return l;
-			} else {
-				return $elm_community$intdict$IntDict$Inner(
-					{
-						left: l,
-						prefix: p,
-						right: r,
-						size: $elm_community$intdict$IntDict$size(l) + $elm_community$intdict$IntDict$size(r)
-					});
-			}
-		}
-	});
-var $elm$core$Bitwise$complement = _Bitwise_complement;
-var $elm$core$Bitwise$or = _Bitwise_or;
-var $elm_community$intdict$IntDict$highestBitSet = function (n) {
-	var shiftOr = F2(
-		function (i, shift) {
-			return i | (i >>> shift);
-		});
-	var n1 = A2(shiftOr, n, 1);
-	var n2 = A2(shiftOr, n1, 2);
-	var n3 = A2(shiftOr, n2, 4);
-	var n4 = A2(shiftOr, n3, 8);
-	var n5 = A2(shiftOr, n4, 16);
-	return n5 & (~(n5 >>> 1));
-};
-var $elm_community$intdict$IntDict$signBit = $elm_community$intdict$IntDict$highestBitSet(-1);
-var $elm$core$Bitwise$xor = _Bitwise_xor;
-var $elm_community$intdict$IntDict$isBranchingBitSet = function (p) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$elm$core$Bitwise$xor($elm_community$intdict$IntDict$signBit),
-		A2(
-			$elm$core$Basics$composeR,
-			$elm$core$Bitwise$and(p.branchingBit),
-			$elm$core$Basics$neq(0)));
-};
-var $elm_community$intdict$IntDict$higherBitMask = function (branchingBit) {
-	return branchingBit ^ (~(branchingBit - 1));
-};
-var $elm_community$intdict$IntDict$lcp = F2(
-	function (x, y) {
-		var branchingBit = $elm_community$intdict$IntDict$highestBitSet(x ^ y);
-		var mask = $elm_community$intdict$IntDict$higherBitMask(branchingBit);
-		var prefixBits = x & mask;
-		return {branchingBit: branchingBit, prefixBits: prefixBits};
-	});
-var $elm_community$intdict$IntDict$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
-};
-var $elm_community$intdict$IntDict$leaf = F2(
-	function (k, v) {
-		return $elm_community$intdict$IntDict$Leaf(
-			{key: k, value: v});
-	});
-var $elm_community$intdict$IntDict$prefixMatches = F2(
-	function (p, n) {
-		return _Utils_eq(
-			n & $elm_community$intdict$IntDict$higherBitMask(p.branchingBit),
-			p.prefixBits);
-	});
-var $elm_community$intdict$IntDict$update = F3(
-	function (key, alter, dict) {
-		var join = F2(
-			function (_v2, _v3) {
-				var k1 = _v2.a;
-				var l = _v2.b;
-				var k2 = _v3.a;
-				var r = _v3.b;
-				var prefix = A2($elm_community$intdict$IntDict$lcp, k1, k2);
-				return A2($elm_community$intdict$IntDict$isBranchingBitSet, prefix, k2) ? A3($elm_community$intdict$IntDict$inner, prefix, l, r) : A3($elm_community$intdict$IntDict$inner, prefix, r, l);
-			});
-		var alteredNode = function (mv) {
-			var _v1 = alter(mv);
-			if (_v1.$ === 'Just') {
-				var v = _v1.a;
-				return A2($elm_community$intdict$IntDict$leaf, key, v);
-			} else {
-				return $elm_community$intdict$IntDict$empty;
-			}
-		};
-		switch (dict.$) {
-			case 'Empty':
-				return alteredNode($elm$core$Maybe$Nothing);
-			case 'Leaf':
-				var l = dict.a;
-				return _Utils_eq(l.key, key) ? alteredNode(
-					$elm$core$Maybe$Just(l.value)) : A2(
-					join,
-					_Utils_Tuple2(
-						key,
-						alteredNode($elm$core$Maybe$Nothing)),
-					_Utils_Tuple2(l.key, dict));
-			default:
-				var i = dict.a;
-				return A2($elm_community$intdict$IntDict$prefixMatches, i.prefix, key) ? (A2($elm_community$intdict$IntDict$isBranchingBitSet, i.prefix, key) ? A3(
-					$elm_community$intdict$IntDict$inner,
-					i.prefix,
-					i.left,
-					A3($elm_community$intdict$IntDict$update, key, alter, i.right)) : A3(
-					$elm_community$intdict$IntDict$inner,
-					i.prefix,
-					A3($elm_community$intdict$IntDict$update, key, alter, i.left),
-					i.right)) : A2(
-					join,
-					_Utils_Tuple2(
-						key,
-						alteredNode($elm$core$Maybe$Nothing)),
-					_Utils_Tuple2(i.prefix.prefixBits, dict));
-		}
-	});
-var $elm_community$intdict$IntDict$insert = F3(
-	function (key, value, dict) {
-		return A3(
-			$elm_community$intdict$IntDict$update,
-			key,
-			$elm$core$Basics$always(
-				$elm$core$Maybe$Just(value)),
-			dict);
-	});
-var $elm_community$intdict$IntDict$get = F2(
-	function (key, dict) {
-		get:
-		while (true) {
-			switch (dict.$) {
-				case 'Empty':
-					return $elm$core$Maybe$Nothing;
-				case 'Leaf':
-					var l = dict.a;
-					return _Utils_eq(l.key, key) ? $elm$core$Maybe$Just(l.value) : $elm$core$Maybe$Nothing;
-				default:
-					var i = dict.a;
-					if (!A2($elm_community$intdict$IntDict$prefixMatches, i.prefix, key)) {
-						return $elm$core$Maybe$Nothing;
-					} else {
-						if (A2($elm_community$intdict$IntDict$isBranchingBitSet, i.prefix, key)) {
-							var $temp$key = key,
-								$temp$dict = i.right;
-							key = $temp$key;
-							dict = $temp$dict;
-							continue get;
-						} else {
-							var $temp$key = key,
-								$temp$dict = i.left;
-							key = $temp$key;
-							dict = $temp$dict;
-							continue get;
-						}
-					}
-			}
-		}
-	});
-var $elm_community$intdict$IntDict$member = F2(
-	function (key, dict) {
-		var _v0 = A2($elm_community$intdict$IntDict$get, key, dict);
-		if (_v0.$ === 'Just') {
-			return true;
-		} else {
-			return false;
-		}
-	});
-var $elm_community$graph$Graph$fromNodesAndEdges = F2(
-	function (nodes_, edges_) {
-		var nodeRep = A3(
-			$elm$core$List$foldl,
-			function (n) {
-				return A2(
-					$elm_community$intdict$IntDict$insert,
-					n.id,
-					A3($elm_community$graph$Graph$NodeContext, n, $elm_community$intdict$IntDict$empty, $elm_community$intdict$IntDict$empty));
-			},
-			$elm_community$intdict$IntDict$empty,
-			nodes_);
-		var addEdge = F2(
-			function (edge, rep) {
-				var updateOutgoing = function (ctx) {
-					return _Utils_update(
-						ctx,
-						{
-							outgoing: A3($elm_community$intdict$IntDict$insert, edge.to, edge.label, ctx.outgoing)
-						});
-				};
-				var updateIncoming = function (ctx) {
-					return _Utils_update(
-						ctx,
-						{
-							incoming: A3($elm_community$intdict$IntDict$insert, edge.from, edge.label, ctx.incoming)
-						});
-				};
-				return A3(
-					$elm_community$intdict$IntDict$update,
-					edge.to,
-					$elm$core$Maybe$map(updateIncoming),
-					A3(
-						$elm_community$intdict$IntDict$update,
-						edge.from,
-						$elm$core$Maybe$map(updateOutgoing),
-						rep));
-			});
-		var addEdgeIfValid = F2(
-			function (edge, rep) {
-				return (A2($elm_community$intdict$IntDict$member, edge.from, rep) && A2($elm_community$intdict$IntDict$member, edge.to, rep)) ? A2(addEdge, edge, rep) : rep;
-			});
-		return $elm_community$graph$Graph$Graph(
-			A3($elm$core$List$foldl, addEdgeIfValid, nodeRep, edges_));
-	});
-var $mdgriffith$elm_ui$Element$rgb = F3(
-	function (r, g, b) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
-	});
-var $author$project$Colors$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
-var $author$project$Graph$GraphFile$default = $author$project$Graph$GraphFile$GraphFile(
-	{
-		defaultEdgeProperties: $author$project$Graph$GraphFile$actionDefaultEdgeProp,
-		defaultVertexProperties: $author$project$Graph$GraphFile$actionDefaultVertexProp,
-		graph: A2(
-			$elm_community$graph$Graph$fromNodesAndEdges,
-			_List_fromArray(
-				[
-					A2($elm_community$graph$Graph$Node, 1, $author$project$Graph$GraphFile$actionDefaultVertexProp),
-					A2(
-					$elm_community$graph$Graph$Node,
-					2,
-					_Utils_update(
-						$author$project$Graph$GraphFile$actionDefaultVertexProp,
-						{
-							color: $author$project$Colors$white,
-							position: A2(
-								$ianmackenzie$elm_geometry$Point2d$xy,
-								$ianmackenzie$elm_units$Quantity$Quantity(-175),
-								$ianmackenzie$elm_units$Quantity$Quantity(148))
-						})),
-					A2(
-					$elm_community$graph$Graph$Node,
-					3,
-					_Utils_update(
-						$author$project$Graph$GraphFile$actionDefaultVertexProp,
-						{
-							color: $author$project$Colors$white,
-							position: A2(
-								$ianmackenzie$elm_geometry$Point2d$xy,
-								$ianmackenzie$elm_units$Quantity$Quantity(175),
-								$ianmackenzie$elm_units$Quantity$Quantity(148))
-						}))
-				]),
-			_List_fromArray(
-				[
-					A3($elm_community$graph$Graph$Edge, 1, 2, $author$project$Graph$GraphFile$actionDefaultEdgeProp),
-					A3($elm_community$graph$Graph$Edge, 1, 3, $author$project$Graph$GraphFile$actionDefaultEdgeProp)
-				]))
-	});
-var $author$project$Component$Canvas$init = $author$project$Component$Canvas$Model(
-	{animation: $author$project$Component$Canvas$NoAnimation, graph: $author$project$Graph$GraphFile$default, scale: 1, timeList: _List_Nil});
 var $author$project$Pages$Flow_buildr$init = function (req) {
 	return _Utils_Tuple2(
-		{canvasState: $author$project$Component$Canvas$init, count: 0, pickedUpFlowAction: $elm$core$Maybe$Nothing, req: req, viewHeight: 800, viewWidth: 800},
+		{
+			canvas: {scale: 1},
+			count: 0,
+			pickedUpFlowAction: $elm$core$Maybe$Nothing,
+			req: req,
+			viewHeight: 800,
+			viewWidth: 800
+		},
 		$author$project$Effect$fromCmd(
 			$author$project$UI$getSizeOfWindow($author$project$Pages$Flow_buildr$GotWindowSize)));
-};
-var $author$project$Pages$Flow_buildr$CanvasMsg = function (a) {
-	return {$: 'CanvasMsg', a: a};
 };
 var $elm$browser$Browser$Events$Hidden = {$: 'Hidden'};
 var $author$project$Pages$Flow_buildr$NoOp = {$: 'NoOp'};
@@ -11831,10 +11487,6 @@ var $elm$browser$Browser$Events$onVisibilityChange = function (func) {
 				'target',
 				A2($elm$json$Json$Decode$field, info.hidden, $elm$json$Json$Decode$bool))));
 };
-var $author$project$Component$Canvas$subscriptions = function (_v0) {
-	var model = _v0.a;
-	return $elm$core$Platform$Sub$batch(_List_Nil);
-};
 var $author$project$Pages$Flow_buildr$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
@@ -11853,1621 +11505,16 @@ var $author$project$Pages$Flow_buildr$subscriptions = function (model) {
 							return _Utils_eq(x, $elm$browser$Browser$Events$Hidden) ? $author$project$Pages$Flow_buildr$ReleasedFlowAction : $author$project$Pages$Flow_buildr$NoOp;
 						});
 				}
-			}(),
-				A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Pages$Flow_buildr$CanvasMsg,
-				$author$project$Component$Canvas$subscriptions(model.canvasState))
+			}()
 			]));
 };
 var $author$project$Pages$Flow_buildr$Path = F2(
 	function (start, current) {
 		return {current: current, start: start};
 	});
-var $author$project$Effect$batch = $author$project$Effect$Batch;
-var $author$project$Component$Canvas$ForceAnimation = function (a) {
-	return {$: 'ForceAnimation', a: a};
-};
-var $author$project$Graph$Force$Gravity = {$: 'Gravity'};
-var $author$project$Graph$Force$Link = {$: 'Link'};
-var $author$project$Graph$Force$ManyBody = function (a) {
-	return {$: 'ManyBody', a: a};
-};
-var $author$project$Graph$Force$State = function (a) {
-	return {$: 'State', a: a};
-};
-var $elm_community$graph$Graph$unGraph = function (graph) {
-	var rep = graph.a;
-	return rep;
-};
-var $elm_community$graph$Graph$get = function (nodeId) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$elm_community$graph$Graph$unGraph,
-		$elm_community$intdict$IntDict$get(nodeId));
-};
-var $author$project$Graph$Extra$degree = F2(
-	function (id, graph) {
-		var numberOfOutgoingEdges = A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2(
-				$elm$core$Maybe$map,
-				A2(
-					$elm$core$Basics$composeR,
-					function ($) {
-						return $.outgoing;
-					},
-					$elm_community$intdict$IntDict$size),
-				A2($elm_community$graph$Graph$get, id, graph)));
-		var numberOfIncomingEdges = A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2(
-				$elm$core$Maybe$map,
-				A2(
-					$elm$core$Basics$composeR,
-					function ($) {
-						return $.incoming;
-					},
-					$elm_community$intdict$IntDict$size),
-				A2($elm_community$graph$Graph$get, id, graph)));
-		return numberOfIncomingEdges + numberOfOutgoingEdges;
-	});
-var $elm_community$intdict$IntDict$foldl = F3(
-	function (f, acc, dict) {
-		foldl:
-		while (true) {
-			switch (dict.$) {
-				case 'Empty':
-					return acc;
-				case 'Leaf':
-					var l = dict.a;
-					return A3(f, l.key, l.value, acc);
-				default:
-					var i = dict.a;
-					var $temp$f = f,
-						$temp$acc = A3($elm_community$intdict$IntDict$foldl, f, acc, i.left),
-						$temp$dict = i.right;
-					f = $temp$f;
-					acc = $temp$acc;
-					dict = $temp$dict;
-					continue foldl;
-			}
-		}
-	});
-var $elm_community$graph$Graph$edges = function (graph) {
-	var flippedFoldl = F3(
-		function (f, dict, list) {
-			return A3($elm_community$intdict$IntDict$foldl, f, list, dict);
-		});
-	var prependEdges = F2(
-		function (node1, ctx) {
-			return A2(
-				flippedFoldl,
-				F2(
-					function (node2, e) {
-						return $elm$core$List$cons(
-							{from: node1, label: e, to: node2});
-					}),
-				ctx.outgoing);
-		});
-	return A3(
-		flippedFoldl,
-		prependEdges,
-		$elm_community$graph$Graph$unGraph(graph),
-		_List_Nil);
-};
-var $elm_community$intdict$IntDict$foldr = F3(
-	function (f, acc, dict) {
-		foldr:
-		while (true) {
-			switch (dict.$) {
-				case 'Empty':
-					return acc;
-				case 'Leaf':
-					var l = dict.a;
-					return A3(f, l.key, l.value, acc);
-				default:
-					var i = dict.a;
-					var $temp$f = f,
-						$temp$acc = A3($elm_community$intdict$IntDict$foldr, f, acc, i.right),
-						$temp$dict = i.left;
-					f = $temp$f;
-					acc = $temp$acc;
-					dict = $temp$dict;
-					continue foldr;
-			}
-		}
-	});
-var $elm_community$intdict$IntDict$values = function (dict) {
-	return A3(
-		$elm_community$intdict$IntDict$foldr,
-		F3(
-			function (key, value, valueList) {
-				return A2($elm$core$List$cons, value, valueList);
-			}),
-		_List_Nil,
-		dict);
-};
-var $elm_community$graph$Graph$nodes = A2(
-	$elm$core$Basics$composeR,
-	$elm_community$graph$Graph$unGraph,
-	A2(
-		$elm$core$Basics$composeR,
-		$elm_community$intdict$IntDict$values,
-		$elm$core$List$map(
-			function ($) {
-				return $.node;
-			})));
-var $ianmackenzie$elm_geometry$Vector2d$from = F2(
-	function (_v0, _v1) {
-		var p1 = _v0.a;
-		var p2 = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Vector2d(
-			{x: p2.x - p1.x, y: p2.y - p1.y});
-	});
-var $ianmackenzie$elm_geometry$Vector2d$scaleBy = F2(
-	function (k, _v0) {
-		var v = _v0.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Vector2d(
-			{x: k * v.x, y: k * v.y});
-	});
-var $ianmackenzie$elm_geometry$Vector2d$sumHelp = F3(
-	function (sumX, sumY, vectors) {
-		sumHelp:
-		while (true) {
-			if (vectors.b) {
-				var x = vectors.a.a.x;
-				var y = vectors.a.a.y;
-				var rest = vectors.b;
-				var $temp$sumX = sumX + x,
-					$temp$sumY = sumY + y,
-					$temp$vectors = rest;
-				sumX = $temp$sumX;
-				sumY = $temp$sumY;
-				vectors = $temp$vectors;
-				continue sumHelp;
-			} else {
-				return $ianmackenzie$elm_geometry$Geometry$Types$Vector2d(
-					{x: sumX, y: sumY});
-			}
-		}
-	});
-var $ianmackenzie$elm_geometry$Vector2d$sum = function (vectors) {
-	return A3($ianmackenzie$elm_geometry$Vector2d$sumHelp, 0, 0, vectors);
-};
-var $author$project$Graph$Force$Gravity$run = function (alpha) {
-	var handle = function (_v0) {
-		var id = _v0.id;
-		var position = _v0.position;
-		var velocity = _v0.velocity;
-		var gravityCenter = _v0.gravityCenter;
-		var gravityStrengthX = _v0.gravityStrengthX;
-		var gravityStrengthY = _v0.gravityStrengthY;
-		var v = A2($ianmackenzie$elm_geometry$Vector2d$from, position, gravityCenter);
-		var velocityDelta = A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, gravityStrengthX * alpha, v);
-		return _Utils_Tuple2(
-			id,
-			$ianmackenzie$elm_geometry$Vector2d$sum(
-				_List_fromArray(
-					[velocity, velocityDelta])));
-	};
-	return $elm$core$List$map(handle);
-};
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
-var $elm$core$Basics$sqrt = _Basics_sqrt;
-var $ianmackenzie$elm_units$Quantity$zero = $ianmackenzie$elm_units$Quantity$Quantity(0);
-var $ianmackenzie$elm_geometry$Vector2d$length = function (_v0) {
-	var v = _v0.a;
-	var largestComponent = A2(
-		$elm$core$Basics$max,
-		$elm$core$Basics$abs(v.x),
-		$elm$core$Basics$abs(v.y));
-	if (!largestComponent) {
-		return $ianmackenzie$elm_units$Quantity$zero;
-	} else {
-		var scaledY = v.y / largestComponent;
-		var scaledX = v.x / largestComponent;
-		var scaledLength = $elm$core$Basics$sqrt((scaledX * scaledX) + (scaledY * scaledY));
-		return $ianmackenzie$elm_units$Quantity$Quantity(scaledLength * largestComponent);
-	}
-};
-var $ianmackenzie$elm_geometry$Vector2d$minus = F2(
-	function (_v0, _v1) {
-		var v2 = _v0.a;
-		var v1 = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Vector2d(
-			{x: v1.x - v2.x, y: v1.y - v2.y});
-	});
-var $elm_community$intdict$IntDict$toList = function (dict) {
-	return A3(
-		$elm_community$intdict$IntDict$foldr,
-		F3(
-			function (key, value, list) {
-				return A2(
-					$elm$core$List$cons,
-					_Utils_Tuple2(key, value),
-					list);
-			}),
-		_List_Nil,
-		dict);
-};
-var $ianmackenzie$elm_geometry$Point2d$translateBy = F2(
-	function (_v0, _v1) {
-		var v = _v0.a;
-		var p = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Point2d(
-			{x: p.x + v.x, y: p.y + v.y});
-	});
-var $ianmackenzie$elm_units$Quantity$unwrap = function (_v0) {
-	var value = _v0.a;
-	return value;
-};
-var $author$project$Graph$Force$Link$run = function (alpha) {
-	var handle = function (_v0) {
-		var source = _v0.source;
-		var target = _v0.target;
-		var distance = _v0.distance;
-		var strength = _v0.strength;
-		var diff = A2(
-			$ianmackenzie$elm_geometry$Vector2d$from,
-			A2($ianmackenzie$elm_geometry$Point2d$translateBy, source.velocity, source.position),
-			A2($ianmackenzie$elm_geometry$Point2d$translateBy, target.velocity, target.position));
-		var d = $ianmackenzie$elm_geometry$Vector2d$length(diff);
-		var l = ((alpha * strength) * ($ianmackenzie$elm_units$Quantity$unwrap(d) - distance)) / $ianmackenzie$elm_units$Quantity$unwrap(d);
-		var f = A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, l, diff);
-		var bias = source.degree / (source.degree + target.degree);
-		var updateSourceVelocity = function (mV) {
-			return $elm$core$Maybe$Just(
-				$ianmackenzie$elm_geometry$Vector2d$sum(
-					_List_fromArray(
-						[
-							A2($elm$core$Maybe$withDefault, source.velocity, mV),
-							A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, 1 - bias, f)
-						])));
-		};
-		var updateTargetVelocity = function (mV) {
-			return $elm$core$Maybe$Just(
-				A2(
-					$ianmackenzie$elm_geometry$Vector2d$minus,
-					A2($elm$core$Maybe$withDefault, target.velocity, mV),
-					A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, bias, f)));
-		};
-		return A2(
-			$elm$core$Basics$composeR,
-			A2($elm_community$intdict$IntDict$update, source.id, updateSourceVelocity),
-			A2($elm_community$intdict$IntDict$update, target.id, updateTargetVelocity));
-	};
-	return A2(
-		$elm$core$Basics$composeR,
-		A2($elm$core$List$foldr, handle, $elm_community$intdict$IntDict$empty),
-		$elm_community$intdict$IntDict$toList);
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$maxX = function (_v0) {
-	var boundingBox = _v0.a;
-	return boundingBox.maxX;
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$maxY = function (_v0) {
-	var boundingBox = _v0.a;
-	return boundingBox.maxY;
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$minX = function (_v0) {
-	var boundingBox = _v0.a;
-	return boundingBox.minX;
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$minY = function (_v0) {
-	var boundingBox = _v0.a;
-	return boundingBox.minY;
-};
-var $ianmackenzie$elm_units$Quantity$minus = F2(
-	function (_v0, _v1) {
-		var y = _v0.a;
-		var x = _v1.a;
-		return $ianmackenzie$elm_units$Quantity$Quantity(x - y);
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$dimensions = function (boundingBox) {
-	return _Utils_Tuple2(
-		A2(
-			$ianmackenzie$elm_units$Quantity$minus,
-			$ianmackenzie$elm_geometry$BoundingBox2d$minX(boundingBox),
-			$ianmackenzie$elm_geometry$BoundingBox2d$maxX(boundingBox)),
-		A2(
-			$ianmackenzie$elm_units$Quantity$minus,
-			$ianmackenzie$elm_geometry$BoundingBox2d$minY(boundingBox),
-			$ianmackenzie$elm_geometry$BoundingBox2d$maxY(boundingBox)));
-};
-var $ianmackenzie$elm_geometry$Point2d$distanceFrom = F2(
-	function (_v0, _v1) {
-		var p1 = _v0.a;
-		var p2 = _v1.a;
-		var deltaY = p2.y - p1.y;
-		var deltaX = p2.x - p1.x;
-		var largestComponent = A2(
-			$elm$core$Basics$max,
-			$elm$core$Basics$abs(deltaX),
-			$elm$core$Basics$abs(deltaY));
-		if (!largestComponent) {
-			return $ianmackenzie$elm_units$Quantity$zero;
-		} else {
-			var scaledY = deltaY / largestComponent;
-			var scaledX = deltaX / largestComponent;
-			var scaledLength = $elm$core$Basics$sqrt((scaledX * scaledX) + (scaledY * scaledY));
-			return $ianmackenzie$elm_units$Quantity$Quantity(scaledLength * largestComponent);
-		}
-	});
-var $elm$core$Basics$isNaN = _Basics_isNaN;
-var $ianmackenzie$elm_units$Quantity$squared = function (_v0) {
-	var value = _v0.a;
-	return $ianmackenzie$elm_units$Quantity$Quantity(value * value);
-};
-var $author$project$Graph$Force$ManyBody$applyForce = F4(
-	function (alpha, theta, qtree, vertex) {
-		var isFarAway = function (treePart) {
-			var distance = A2($ianmackenzie$elm_geometry$Point2d$distanceFrom, vertex.position, treePart.aggregate.position);
-			var _v2 = $ianmackenzie$elm_geometry$BoundingBox2d$dimensions(treePart.boundingBox);
-			var width = _v2.a;
-			return _Utils_cmp(
-				$ianmackenzie$elm_units$Quantity$unwrap(width) / $ianmackenzie$elm_units$Quantity$unwrap(distance),
-				theta) < 0;
-		};
-		var calculateVelocity = F2(
-			function (target, source) {
-				var delta = A2($ianmackenzie$elm_geometry$Vector2d$from, target.position, source.position);
-				var weight = (source.strength * alpha) / $ianmackenzie$elm_units$Quantity$unwrap(
-					$ianmackenzie$elm_units$Quantity$squared(
-						$ianmackenzie$elm_geometry$Vector2d$length(delta)));
-				return $elm$core$Basics$isNaN(weight) ? $ianmackenzie$elm_geometry$Vector2d$zero : A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, weight, delta);
-			});
-		var useAggregate = function (treePart) {
-			return A2(calculateVelocity, vertex, treePart.aggregate);
-		};
-		switch (qtree.$) {
-			case 'Empty':
-				return $ianmackenzie$elm_geometry$Vector2d$zero;
-			case 'Leaf':
-				var leaf = qtree.a;
-				if (isFarAway(leaf)) {
-					return useAggregate(leaf);
-				} else {
-					var applyForceFromPoint = F2(
-						function (point, accum) {
-							return _Utils_eq(point.key, vertex.key) ? accum : $ianmackenzie$elm_geometry$Vector2d$sum(
-								_List_fromArray(
-									[
-										A2(calculateVelocity, vertex, point),
-										accum
-									]));
-						});
-					var _v1 = leaf.children;
-					var first = _v1.a;
-					var rest = _v1.b;
-					return A3(
-						$elm$core$List$foldl,
-						applyForceFromPoint,
-						$ianmackenzie$elm_geometry$Vector2d$zero,
-						A2($elm$core$List$cons, first, rest));
-				}
-			default:
-				var node = qtree.a;
-				if (isFarAway(node)) {
-					return useAggregate(node);
-				} else {
-					var helper = function (tree) {
-						return A4($author$project$Graph$Force$ManyBody$applyForce, alpha, theta, tree, vertex);
-					};
-					return $ianmackenzie$elm_geometry$Vector2d$sum(
-						_List_fromArray(
-							[
-								helper(node.nw),
-								helper(node.ne),
-								helper(node.se),
-								helper(node.sw)
-							]));
-				}
-		}
-	});
-var $ianmackenzie$elm_geometry$Point2d$coordinates = function (_v0) {
-	var p = _v0.a;
-	return _Utils_Tuple2(
-		$ianmackenzie$elm_units$Quantity$Quantity(p.x),
-		$ianmackenzie$elm_units$Quantity$Quantity(p.y));
-};
-var $author$project$Graph$Force$ManyBody$constructSuperPoint = F2(
-	function (first, rest) {
-		var initialStrength = first.strength;
-		var initialPoint = $ianmackenzie$elm_geometry$Point2d$coordinates(first.position);
-		var folder = F2(
-			function (point, _v3) {
-				var _v4 = _v3.a;
-				var accumX = _v4.a;
-				var accumY = _v4.b;
-				var strength = _v3.b;
-				var size = _v3.c;
-				var _v2 = $ianmackenzie$elm_geometry$Point2d$coordinates(point.position);
-				var x = _v2.a;
-				var y = _v2.b;
-				return _Utils_Tuple3(
-					_Utils_Tuple2(
-						accumX + $ianmackenzie$elm_units$Quantity$unwrap(x),
-						accumY + $ianmackenzie$elm_units$Quantity$unwrap(y)),
-					strength + point.strength,
-					size + 1);
-			});
-		var _v0 = A3(
-			$elm$core$List$foldl,
-			folder,
-			_Utils_Tuple3(
-				A3($elm$core$Tuple$mapBoth, $ianmackenzie$elm_units$Quantity$unwrap, $ianmackenzie$elm_units$Quantity$unwrap, initialPoint),
-				initialStrength,
-				1),
-			rest);
-		var _v1 = _v0.a;
-		var totalX = _v1.a;
-		var totalY = _v1.b;
-		var totalStrength = _v0.b;
-		var totalSize = _v0.c;
-		return {
-			position: A2(
-				$ianmackenzie$elm_geometry$Point2d$xy,
-				$ianmackenzie$elm_units$Quantity$Quantity(totalX / totalSize),
-				$ianmackenzie$elm_units$Quantity$Quantity(totalY / totalSize)),
-			strength: totalStrength
-		};
-	});
-var $author$project$Graph$Force$ManyBody$config = {
-	combineAggregates: $author$project$Graph$Force$ManyBody$constructSuperPoint,
-	combineVertices: $author$project$Graph$Force$ManyBody$constructSuperPoint,
-	toPoint: function ($) {
-		return $.position;
-	}
-};
-var $author$project$Graph$Force$QuadTree$Empty = {$: 'Empty'};
-var $author$project$Graph$Force$QuadTree$empty = $author$project$Graph$Force$QuadTree$Empty;
-var $author$project$Graph$Force$QuadTree$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
-};
-var $author$project$Graph$Force$QuadTree$Node = function (a) {
-	return {$: 'Node', a: a};
-};
-var $ianmackenzie$elm_geometry$Geometry$Types$BoundingBox2d = function (a) {
-	return {$: 'BoundingBox2d', a: a};
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$extrema = function (_v0) {
-	var boundingBoxExtrema = _v0.a;
-	return boundingBoxExtrema;
-};
-var $ianmackenzie$elm_units$Quantity$max = F2(
-	function (_v0, _v1) {
-		var x = _v0.a;
-		var y = _v1.a;
-		return $ianmackenzie$elm_units$Quantity$Quantity(
-			A2($elm$core$Basics$max, x, y));
-	});
-var $elm$core$Basics$min = F2(
-	function (x, y) {
-		return (_Utils_cmp(x, y) < 0) ? x : y;
-	});
-var $ianmackenzie$elm_units$Quantity$min = F2(
-	function (_v0, _v1) {
-		var x = _v0.a;
-		var y = _v1.a;
-		return $ianmackenzie$elm_units$Quantity$Quantity(
-			A2($elm$core$Basics$min, x, y));
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$aggregateHelp = F5(
-	function (currentMinX, currentMaxX, currentMinY, currentMaxY, boxes) {
-		aggregateHelp:
-		while (true) {
-			if (boxes.b) {
-				var next = boxes.a;
-				var rest = boxes.b;
-				var b = $ianmackenzie$elm_geometry$BoundingBox2d$extrema(next);
-				var $temp$currentMinX = A2($ianmackenzie$elm_units$Quantity$min, b.minX, currentMinX),
-					$temp$currentMaxX = A2($ianmackenzie$elm_units$Quantity$max, b.maxX, currentMaxX),
-					$temp$currentMinY = A2($ianmackenzie$elm_units$Quantity$min, b.minY, currentMinY),
-					$temp$currentMaxY = A2($ianmackenzie$elm_units$Quantity$max, b.maxY, currentMaxY),
-					$temp$boxes = rest;
-				currentMinX = $temp$currentMinX;
-				currentMaxX = $temp$currentMaxX;
-				currentMinY = $temp$currentMinY;
-				currentMaxY = $temp$currentMaxY;
-				boxes = $temp$boxes;
-				continue aggregateHelp;
-			} else {
-				return $ianmackenzie$elm_geometry$Geometry$Types$BoundingBox2d(
-					{maxX: currentMaxX, maxY: currentMaxY, minX: currentMinX, minY: currentMinY});
-			}
-		}
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$aggregate = F2(
-	function (first, rest) {
-		var b1 = $ianmackenzie$elm_geometry$BoundingBox2d$extrema(first);
-		return A5($ianmackenzie$elm_geometry$BoundingBox2d$aggregateHelp, b1.minX, b1.maxX, b1.minY, b1.maxY, rest);
-	});
-var $ianmackenzie$elm_units$Quantity$greaterThanOrEqualTo = F2(
-	function (_v0, _v1) {
-		var y = _v0.a;
-		var x = _v1.a;
-		return _Utils_cmp(x, y) > -1;
-	});
-var $ianmackenzie$elm_units$Quantity$lessThanOrEqualTo = F2(
-	function (_v0, _v1) {
-		var y = _v0.a;
-		var x = _v1.a;
-		return _Utils_cmp(x, y) < 1;
-	});
-var $ianmackenzie$elm_geometry$Point2d$xCoordinate = function (_v0) {
-	var p = _v0.a;
-	return $ianmackenzie$elm_units$Quantity$Quantity(p.x);
-};
-var $ianmackenzie$elm_geometry$Point2d$yCoordinate = function (_v0) {
-	var p = _v0.a;
-	return $ianmackenzie$elm_units$Quantity$Quantity(p.y);
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$contains = F2(
-	function (point, boundingBox) {
-		return A2(
-			$ianmackenzie$elm_units$Quantity$greaterThanOrEqualTo,
-			$ianmackenzie$elm_geometry$BoundingBox2d$minX(boundingBox),
-			$ianmackenzie$elm_geometry$Point2d$xCoordinate(point)) && (A2(
-			$ianmackenzie$elm_units$Quantity$lessThanOrEqualTo,
-			$ianmackenzie$elm_geometry$BoundingBox2d$maxX(boundingBox),
-			$ianmackenzie$elm_geometry$Point2d$xCoordinate(point)) && (A2(
-			$ianmackenzie$elm_units$Quantity$greaterThanOrEqualTo,
-			$ianmackenzie$elm_geometry$BoundingBox2d$minY(boundingBox),
-			$ianmackenzie$elm_geometry$Point2d$yCoordinate(point)) && A2(
-			$ianmackenzie$elm_units$Quantity$lessThanOrEqualTo,
-			$ianmackenzie$elm_geometry$BoundingBox2d$maxY(boundingBox),
-			$ianmackenzie$elm_geometry$Point2d$yCoordinate(point))));
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$fromExtrema = function (given) {
-	return (A2($ianmackenzie$elm_units$Quantity$lessThanOrEqualTo, given.maxX, given.minX) && A2($ianmackenzie$elm_units$Quantity$lessThanOrEqualTo, given.maxY, given.minY)) ? $ianmackenzie$elm_geometry$Geometry$Types$BoundingBox2d(given) : $ianmackenzie$elm_geometry$Geometry$Types$BoundingBox2d(
-		{
-			maxX: A2($ianmackenzie$elm_units$Quantity$max, given.minX, given.maxX),
-			maxY: A2($ianmackenzie$elm_units$Quantity$max, given.minY, given.maxY),
-			minX: A2($ianmackenzie$elm_units$Quantity$min, given.minX, given.maxX),
-			minY: A2($ianmackenzie$elm_units$Quantity$min, given.minY, given.maxY)
-		});
-};
-var $author$project$Graph$Force$QuadTree$NE = {$: 'NE'};
-var $author$project$Graph$Force$QuadTree$NW = {$: 'NW'};
-var $author$project$Graph$Force$QuadTree$SE = {$: 'SE'};
-var $author$project$Graph$Force$QuadTree$SW = {$: 'SW'};
-var $ianmackenzie$elm_units$Quantity$interpolateFrom = F3(
-	function (_v0, _v1, parameter) {
-		var start = _v0.a;
-		var end = _v1.a;
-		return (parameter <= 0.5) ? $ianmackenzie$elm_units$Quantity$Quantity(start + (parameter * (end - start))) : $ianmackenzie$elm_units$Quantity$Quantity(end + ((1 - parameter) * (start - end)));
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$midX = function (_v0) {
-	var boundingBox = _v0.a;
-	return A3($ianmackenzie$elm_units$Quantity$interpolateFrom, boundingBox.minX, boundingBox.maxX, 0.5);
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$midY = function (_v0) {
-	var boundingBox = _v0.a;
-	return A3($ianmackenzie$elm_units$Quantity$interpolateFrom, boundingBox.minY, boundingBox.maxY, 0.5);
-};
-var $ianmackenzie$elm_geometry$BoundingBox2d$centerPoint = function (boundingBox) {
-	return A2(
-		$ianmackenzie$elm_geometry$Point2d$xy,
-		$ianmackenzie$elm_geometry$BoundingBox2d$midX(boundingBox),
-		$ianmackenzie$elm_geometry$BoundingBox2d$midY(boundingBox));
-};
-var $ianmackenzie$elm_geometry$Point2d$toTuple = F2(
-	function (fromQuantity, point) {
-		return _Utils_Tuple2(
-			fromQuantity(
-				$ianmackenzie$elm_geometry$Point2d$xCoordinate(point)),
-			fromQuantity(
-				$ianmackenzie$elm_geometry$Point2d$yCoordinate(point)));
-	});
-var $author$project$Graph$Force$QuadTree$quadrant = F2(
-	function (boundingBox, point) {
-		var _v0 = A2($ianmackenzie$elm_geometry$Point2d$toTuple, $ianmackenzie$elm_units$Quantity$unwrap, point);
-		var x = _v0.a;
-		var y = _v0.b;
-		var _v1 = A2(
-			$ianmackenzie$elm_geometry$Point2d$toTuple,
-			$ianmackenzie$elm_units$Quantity$unwrap,
-			$ianmackenzie$elm_geometry$BoundingBox2d$centerPoint(boundingBox));
-		var midX = _v1.a;
-		var midY = _v1.b;
-		return (_Utils_cmp(y, midY) > -1) ? ((_Utils_cmp(x, midX) > -1) ? $author$project$Graph$Force$QuadTree$NE : $author$project$Graph$Force$QuadTree$NW) : ((_Utils_cmp(x, midX) > -1) ? $author$project$Graph$Force$QuadTree$SE : $author$project$Graph$Force$QuadTree$SW);
-	});
-var $ianmackenzie$elm_geometry$BoundingBox2d$singleton = function (point) {
-	return $ianmackenzie$elm_geometry$Geometry$Types$BoundingBox2d(
-		{
-			maxX: $ianmackenzie$elm_geometry$Point2d$xCoordinate(point),
-			maxY: $ianmackenzie$elm_geometry$Point2d$yCoordinate(point),
-			minX: $ianmackenzie$elm_geometry$Point2d$xCoordinate(point),
-			minY: $ianmackenzie$elm_geometry$Point2d$yCoordinate(point)
-		});
-};
-var $author$project$Graph$Force$QuadTree$singleton = F2(
-	function (toPoint, vertex) {
-		return $author$project$Graph$Force$QuadTree$Leaf(
-			{
-				aggregate: _Utils_Tuple0,
-				boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$singleton(
-					toPoint(vertex)),
-				children: _Utils_Tuple2(vertex, _List_Nil)
-			});
-	});
-var $ianmackenzie$elm_units$Quantity$plus = F2(
-	function (_v0, _v1) {
-		var y = _v0.a;
-		var x = _v1.a;
-		return $ianmackenzie$elm_units$Quantity$Quantity(x + y);
-	});
-var $ianmackenzie$elm_units$Quantity$sum = function (quantities) {
-	return A3($elm$core$List$foldl, $ianmackenzie$elm_units$Quantity$plus, $ianmackenzie$elm_units$Quantity$zero, quantities);
-};
-var $author$project$Graph$Force$QuadTree$insertBy = F3(
-	function (toPoint, vertex, qtree) {
-		switch (qtree.$) {
-			case 'Empty':
-				return $author$project$Graph$Force$QuadTree$Leaf(
-					{
-						aggregate: _Utils_Tuple0,
-						boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$singleton(
-							toPoint(vertex)),
-						children: _Utils_Tuple2(vertex, _List_Nil)
-					});
-			case 'Leaf':
-				var leaf = qtree.a;
-				var maxSize = 32;
-				var _v1 = leaf.children;
-				var first = _v1.a;
-				var rest = _v1.b;
-				var newSize = 2 + $elm$core$List$length(rest);
-				if (_Utils_cmp(newSize, maxSize) > -1) {
-					var initial = $author$project$Graph$Force$QuadTree$Node(
-						{
-							aggregate: _Utils_Tuple0,
-							boundingBox: A2(
-								$ianmackenzie$elm_geometry$BoundingBox2d$aggregate,
-								leaf.boundingBox,
-								_List_fromArray(
-									[
-										$ianmackenzie$elm_geometry$BoundingBox2d$singleton(
-										toPoint(vertex))
-									])),
-							ne: $author$project$Graph$Force$QuadTree$Empty,
-							nw: $author$project$Graph$Force$QuadTree$Empty,
-							se: $author$project$Graph$Force$QuadTree$Empty,
-							sw: $author$project$Graph$Force$QuadTree$Empty
-						});
-					return A3(
-						$elm$core$List$foldl,
-						$author$project$Graph$Force$QuadTree$insertBy(toPoint),
-						initial,
-						A2($elm$core$List$cons, first, rest));
-				} else {
-					return $author$project$Graph$Force$QuadTree$Leaf(
-						{
-							aggregate: _Utils_Tuple0,
-							boundingBox: A2(
-								$ianmackenzie$elm_geometry$BoundingBox2d$aggregate,
-								leaf.boundingBox,
-								_List_fromArray(
-									[
-										$ianmackenzie$elm_geometry$BoundingBox2d$singleton(
-										toPoint(vertex))
-									])),
-							children: _Utils_Tuple2(
-								vertex,
-								A2($elm$core$List$cons, first, rest))
-						});
-				}
-			default:
-				var node = qtree.a;
-				var point = toPoint(vertex);
-				if (A2($ianmackenzie$elm_geometry$BoundingBox2d$contains, point, node.boundingBox)) {
-					var _v2 = A2($author$project$Graph$Force$QuadTree$quadrant, node.boundingBox, point);
-					switch (_v2.$) {
-						case 'NE':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: node.aggregate,
-									boundingBox: node.boundingBox,
-									ne: A3($author$project$Graph$Force$QuadTree$insertBy, toPoint, vertex, node.ne),
-									nw: node.nw,
-									se: node.se,
-									sw: node.sw
-								});
-						case 'SE':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: node.aggregate,
-									boundingBox: node.boundingBox,
-									ne: node.ne,
-									nw: node.nw,
-									se: A3($author$project$Graph$Force$QuadTree$insertBy, toPoint, vertex, node.se),
-									sw: node.sw
-								});
-						case 'NW':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: node.aggregate,
-									boundingBox: node.boundingBox,
-									ne: node.ne,
-									nw: A3($author$project$Graph$Force$QuadTree$insertBy, toPoint, vertex, node.nw),
-									se: node.se,
-									sw: node.sw
-								});
-						default:
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: node.aggregate,
-									boundingBox: node.boundingBox,
-									ne: node.ne,
-									nw: node.nw,
-									se: node.se,
-									sw: A3($author$project$Graph$Force$QuadTree$insertBy, toPoint, vertex, node.sw)
-								});
-					}
-				} else {
-					var _v3 = $ianmackenzie$elm_geometry$BoundingBox2d$extrema(node.boundingBox);
-					var minX = _v3.minX;
-					var minY = _v3.minY;
-					var maxX = _v3.maxX;
-					var maxY = _v3.maxY;
-					var _v4 = $ianmackenzie$elm_geometry$BoundingBox2d$dimensions(node.boundingBox);
-					var width = _v4.a;
-					var height = _v4.b;
-					var _v5 = A2($author$project$Graph$Force$QuadTree$quadrant, node.boundingBox, point);
-					switch (_v5.$) {
-						case 'NE':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: _Utils_Tuple0,
-									boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$fromExtrema(
-										{
-											maxX: $ianmackenzie$elm_units$Quantity$sum(
-												_List_fromArray(
-													[maxX, width])),
-											maxY: $ianmackenzie$elm_units$Quantity$sum(
-												_List_fromArray(
-													[maxY, height])),
-											minX: minX,
-											minY: minY
-										}),
-									ne: A2($author$project$Graph$Force$QuadTree$singleton, toPoint, vertex),
-									nw: $author$project$Graph$Force$QuadTree$Empty,
-									se: $author$project$Graph$Force$QuadTree$Empty,
-									sw: qtree
-								});
-						case 'SE':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: _Utils_Tuple0,
-									boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$fromExtrema(
-										{
-											maxX: $ianmackenzie$elm_units$Quantity$sum(
-												_List_fromArray(
-													[maxX, width])),
-											maxY: maxY,
-											minX: minX,
-											minY: A2($ianmackenzie$elm_units$Quantity$minus, height, minY)
-										}),
-									ne: $author$project$Graph$Force$QuadTree$Empty,
-									nw: qtree,
-									se: A2($author$project$Graph$Force$QuadTree$singleton, toPoint, vertex),
-									sw: $author$project$Graph$Force$QuadTree$Empty
-								});
-						case 'NW':
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: _Utils_Tuple0,
-									boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$fromExtrema(
-										{
-											maxX: maxX,
-											maxY: $ianmackenzie$elm_units$Quantity$sum(
-												_List_fromArray(
-													[maxY, height])),
-											minX: A2($ianmackenzie$elm_units$Quantity$minus, width, minX),
-											minY: minY
-										}),
-									ne: $author$project$Graph$Force$QuadTree$Empty,
-									nw: A2($author$project$Graph$Force$QuadTree$singleton, toPoint, vertex),
-									se: qtree,
-									sw: $author$project$Graph$Force$QuadTree$Empty
-								});
-						default:
-							return $author$project$Graph$Force$QuadTree$Node(
-								{
-									aggregate: _Utils_Tuple0,
-									boundingBox: $ianmackenzie$elm_geometry$BoundingBox2d$fromExtrema(
-										{
-											maxX: maxX,
-											maxY: maxY,
-											minX: A2($ianmackenzie$elm_units$Quantity$minus, width, minX),
-											minY: A2($ianmackenzie$elm_units$Quantity$minus, height, minY)
-										}),
-									ne: qtree,
-									nw: $author$project$Graph$Force$QuadTree$Empty,
-									se: $author$project$Graph$Force$QuadTree$Empty,
-									sw: A2($author$project$Graph$Force$QuadTree$singleton, toPoint, vertex)
-								});
-					}
-				}
-		}
-	});
-var $author$project$Graph$Force$QuadTree$fromList = function (toPoint) {
-	return A2(
-		$elm$core$List$foldl,
-		$author$project$Graph$Force$QuadTree$insertBy(toPoint),
-		$author$project$Graph$Force$QuadTree$empty);
-};
-var $author$project$Graph$Force$QuadTree$getAggregate = function (qtree) {
-	switch (qtree.$) {
-		case 'Empty':
-			return $elm$core$Maybe$Nothing;
-		case 'Leaf':
-			var aggregate = qtree.a.aggregate;
-			return $elm$core$Maybe$Just(aggregate);
-		default:
-			var aggregate = qtree.a.aggregate;
-			return $elm$core$Maybe$Just(aggregate);
-	}
-};
-var $author$project$Graph$Force$QuadTree$performAggregate = F2(
-	function (config, vanillaQuadTree) {
-		var combineAggregates = config.combineAggregates;
-		var combineVertices = config.combineVertices;
-		switch (vanillaQuadTree.$) {
-			case 'Empty':
-				return $author$project$Graph$Force$QuadTree$Empty;
-			case 'Leaf':
-				var leaf = vanillaQuadTree.a;
-				var _v1 = leaf.children;
-				var first = _v1.a;
-				var rest = _v1.b;
-				return $author$project$Graph$Force$QuadTree$Leaf(
-					{
-						aggregate: A2(combineVertices, first, rest),
-						boundingBox: leaf.boundingBox,
-						children: _Utils_Tuple2(first, rest)
-					});
-			default:
-				var node = vanillaQuadTree.a;
-				var newSw = A2($author$project$Graph$Force$QuadTree$performAggregate, config, node.sw);
-				var newSe = A2($author$project$Graph$Force$QuadTree$performAggregate, config, node.se);
-				var newNw = A2($author$project$Graph$Force$QuadTree$performAggregate, config, node.nw);
-				var newNe = A2($author$project$Graph$Force$QuadTree$performAggregate, config, node.ne);
-				var subresults = A2(
-					$elm$core$List$filterMap,
-					$author$project$Graph$Force$QuadTree$getAggregate,
-					_List_fromArray(
-						[newNw, newSw, newNe, newSe]));
-				if (!subresults.b) {
-					return $author$project$Graph$Force$QuadTree$Empty;
-				} else {
-					var x = subresults.a;
-					var xs = subresults.b;
-					return $author$project$Graph$Force$QuadTree$Node(
-						{
-							aggregate: A2(combineAggregates, x, xs),
-							boundingBox: node.boundingBox,
-							ne: newNe,
-							nw: newNw,
-							se: newSe,
-							sw: newSw
-						});
-				}
-		}
-	});
-var $author$project$Graph$Force$ManyBody$run = F3(
-	function (alpha, theta, vertices) {
-		var withAggregates = A2(
-			$author$project$Graph$Force$QuadTree$performAggregate,
-			$author$project$Graph$Force$ManyBody$config,
-			A2(
-				$author$project$Graph$Force$QuadTree$fromList,
-				function ($) {
-					return $.position;
-				},
-				vertices));
-		var updateVertex = function (vertex) {
-			return _Utils_update(
-				vertex,
-				{
-					velocity: $ianmackenzie$elm_geometry$Vector2d$sum(
-						_List_fromArray(
-							[
-								vertex.velocity,
-								A4($author$project$Graph$Force$ManyBody$applyForce, alpha, theta, withAggregates, vertex)
-							]))
-				});
-		};
-		return A2($elm$core$List$map, updateVertex, vertices);
-	});
-var $elm_community$graph$Graph$applyEdgeDiff = F3(
-	function (nodeId, diff, graphRep) {
-		var updateOutgoingEdge = F2(
-			function (upd, node) {
-				return _Utils_update(
-					node,
-					{
-						outgoing: A3($elm_community$intdict$IntDict$update, nodeId, upd, node.outgoing)
-					});
-			});
-		var updateIncomingEdge = F2(
-			function (upd, node) {
-				return _Utils_update(
-					node,
-					{
-						incoming: A3($elm_community$intdict$IntDict$update, nodeId, upd, node.incoming)
-					});
-			});
-		var flippedFoldl = F3(
-			function (f, dict, acc) {
-				return A3($elm_community$intdict$IntDict$foldl, f, acc, dict);
-			});
-		var edgeUpdateToMaybe = function (edgeUpdate) {
-			if (edgeUpdate.$ === 'Insert') {
-				var lbl = edgeUpdate.a;
-				return $elm$core$Maybe$Just(lbl);
-			} else {
-				return $elm$core$Maybe$Nothing;
-			}
-		};
-		var updateAdjacency = F3(
-			function (updateEdge, updatedId, edgeUpdate) {
-				var updateLbl = updateEdge(
-					$elm$core$Basics$always(
-						edgeUpdateToMaybe(edgeUpdate)));
-				return A2(
-					$elm_community$intdict$IntDict$update,
-					updatedId,
-					$elm$core$Maybe$map(updateLbl));
-			});
-		return A3(
-			flippedFoldl,
-			updateAdjacency(updateOutgoingEdge),
-			diff.outgoing,
-			A3(
-				flippedFoldl,
-				updateAdjacency(updateIncomingEdge),
-				diff.incoming,
-				graphRep));
-	});
-var $elm_community$graph$Graph$Insert = function (a) {
-	return {$: 'Insert', a: a};
-};
-var $elm_community$graph$Graph$Remove = function (a) {
-	return {$: 'Remove', a: a};
-};
-var $elm_community$graph$Graph$crashHack = function (msg) {
-	crashHack:
-	while (true) {
-		var $temp$msg = msg;
-		msg = $temp$msg;
-		continue crashHack;
-	}
-};
-var $elm_community$graph$Graph$emptyDiff = {incoming: $elm_community$intdict$IntDict$empty, outgoing: $elm_community$intdict$IntDict$empty};
-var $elm_community$graph$Graph$computeEdgeDiff = F2(
-	function (old, _new) {
-		var collectUpdates = F3(
-			function (edgeUpdate, updatedId, label) {
-				var replaceUpdate = function (old_) {
-					var _v5 = _Utils_Tuple2(
-						old_,
-						edgeUpdate(label));
-					if (_v5.a.$ === 'Just') {
-						if (_v5.a.a.$ === 'Remove') {
-							if (_v5.b.$ === 'Insert') {
-								var oldLbl = _v5.a.a.a;
-								var newLbl = _v5.b.a;
-								return _Utils_eq(oldLbl, newLbl) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
-									$elm_community$graph$Graph$Insert(newLbl));
-							} else {
-								return $elm_community$graph$Graph$crashHack('Graph.computeEdgeDiff: Collected two removals for the same edge. This is an error in the implementation of Graph and you should file a bug report!');
-							}
-						} else {
-							return $elm_community$graph$Graph$crashHack('Graph.computeEdgeDiff: Collected inserts before removals. This is an error in the implementation of Graph and you should file a bug report!');
-						}
-					} else {
-						var _v6 = _v5.a;
-						var eu = _v5.b;
-						return $elm$core$Maybe$Just(eu);
-					}
-				};
-				return A2($elm_community$intdict$IntDict$update, updatedId, replaceUpdate);
-			});
-		var collect = F3(
-			function (edgeUpdate, adj, updates) {
-				return A3(
-					$elm_community$intdict$IntDict$foldl,
-					collectUpdates(edgeUpdate),
-					updates,
-					adj);
-			});
-		var _v0 = _Utils_Tuple2(old, _new);
-		if (_v0.a.$ === 'Nothing') {
-			if (_v0.b.$ === 'Nothing') {
-				var _v1 = _v0.a;
-				var _v2 = _v0.b;
-				return $elm_community$graph$Graph$emptyDiff;
-			} else {
-				var _v4 = _v0.a;
-				var ins = _v0.b.a;
-				return {
-					incoming: A3(collect, $elm_community$graph$Graph$Insert, ins.outgoing, $elm_community$intdict$IntDict$empty),
-					outgoing: A3(collect, $elm_community$graph$Graph$Insert, ins.incoming, $elm_community$intdict$IntDict$empty)
-				};
-			}
-		} else {
-			if (_v0.b.$ === 'Nothing') {
-				var rem = _v0.a.a;
-				var _v3 = _v0.b;
-				return {
-					incoming: A3(collect, $elm_community$graph$Graph$Remove, rem.outgoing, $elm_community$intdict$IntDict$empty),
-					outgoing: A3(collect, $elm_community$graph$Graph$Remove, rem.incoming, $elm_community$intdict$IntDict$empty)
-				};
-			} else {
-				var rem = _v0.a.a;
-				var ins = _v0.b.a;
-				return _Utils_eq(rem, ins) ? $elm_community$graph$Graph$emptyDiff : {
-					incoming: A3(
-						collect,
-						$elm_community$graph$Graph$Insert,
-						ins.outgoing,
-						A3(collect, $elm_community$graph$Graph$Remove, rem.outgoing, $elm_community$intdict$IntDict$empty)),
-					outgoing: A3(
-						collect,
-						$elm_community$graph$Graph$Insert,
-						ins.incoming,
-						A3(collect, $elm_community$graph$Graph$Remove, rem.incoming, $elm_community$intdict$IntDict$empty))
-				};
-			}
-		}
-	});
-var $elm_community$intdict$IntDict$filter = F2(
-	function (predicate, dict) {
-		var add = F3(
-			function (k, v, d) {
-				return A2(predicate, k, v) ? A3($elm_community$intdict$IntDict$insert, k, v, d) : d;
-			});
-		return A3($elm_community$intdict$IntDict$foldl, add, $elm_community$intdict$IntDict$empty, dict);
-	});
-var $elm_community$graph$Graph$update = F2(
-	function (nodeId, updater) {
-		var wrappedUpdater = function (rep) {
-			var old = A2($elm_community$intdict$IntDict$get, nodeId, rep);
-			var filterInvalidEdges = function (ctx) {
-				return $elm_community$intdict$IntDict$filter(
-					F2(
-						function (id, _v0) {
-							return _Utils_eq(id, ctx.node.id) || A2($elm_community$intdict$IntDict$member, id, rep);
-						}));
-			};
-			var cleanUpEdges = function (ctx) {
-				return _Utils_update(
-					ctx,
-					{
-						incoming: A2(filterInvalidEdges, ctx, ctx.incoming),
-						outgoing: A2(filterInvalidEdges, ctx, ctx.outgoing)
-					});
-			};
-			var _new = A2(
-				$elm$core$Maybe$map,
-				cleanUpEdges,
-				updater(old));
-			var diff = A2($elm_community$graph$Graph$computeEdgeDiff, old, _new);
-			return A3(
-				$elm_community$intdict$IntDict$update,
-				nodeId,
-				$elm$core$Basics$always(_new),
-				A3($elm_community$graph$Graph$applyEdgeDiff, nodeId, diff, rep));
-		};
-		return A2(
-			$elm$core$Basics$composeR,
-			$elm_community$graph$Graph$unGraph,
-			A2($elm$core$Basics$composeR, wrappedUpdater, $elm_community$graph$Graph$Graph));
-	});
-var $author$project$Graph$Extra$updateNodesBy = F3(
-	function (l, upBy, graph) {
-		var ctxUpdater = F2(
-			function (upData, ctx) {
-				var node = ctx.node;
-				return _Utils_update(
-					ctx,
-					{
-						node: _Utils_update(
-							node,
-							{
-								label: A2(upBy, upData, node.label)
-							})
-					});
-			});
-		var updateNodeProperties = F2(
-			function (_v0, acc) {
-				var id = _v0.a;
-				var upData = _v0.b;
-				return A3(
-					$elm_community$graph$Graph$update,
-					id,
-					$elm$core$Maybe$map(
-						ctxUpdater(upData)),
-					acc);
-			});
-		return A3($elm$core$List$foldr, updateNodeProperties, graph, l);
-	});
-var $author$project$Graph$Force$updateVelocities = function (newVelocities) {
-	var applyVelocity = F2(
-		function (velocity, forceVertex) {
-			return _Utils_update(
-				forceVertex,
-				{velocity: velocity});
-		});
-	return A2($author$project$Graph$Extra$updateNodesBy, newVelocities, applyVelocity);
-};
-var $author$project$Graph$Force$applyForce = F3(
-	function (alpha, force, forceGraph) {
-		switch (force.$) {
-			case 'Link':
-				var getData = function (id) {
-					var _v2 = A2($elm_community$graph$Graph$get, id, forceGraph);
-					if (_v2.$ === 'Just') {
-						var ctx = _v2.a;
-						return {
-							degree: A2($author$project$Graph$Extra$degree, id, forceGraph),
-							id: id,
-							position: ctx.node.label.position,
-							velocity: ctx.node.label.velocity
-						};
-					} else {
-						return {degree: 0, id: 0, position: $ianmackenzie$elm_geometry$Point2d$origin, velocity: $ianmackenzie$elm_geometry$Vector2d$zero};
-					}
-				};
-				var toLinkParam = function (_v1) {
-					var from = _v1.from;
-					var to = _v1.to;
-					var label = _v1.label;
-					return {
-						distance: label.distance,
-						source: getData(from),
-						strength: label.strength,
-						target: getData(to)
-					};
-				};
-				var newVelocities = A2(
-					$author$project$Graph$Force$Link$run,
-					alpha,
-					A2(
-						$elm$core$List$map,
-						toLinkParam,
-						$elm_community$graph$Graph$edges(forceGraph)));
-				return A2($author$project$Graph$Force$updateVelocities, newVelocities, forceGraph);
-			case 'ManyBody':
-				var theta = force.a;
-				var toManyBodyVertex = function (_v4) {
-					var id = _v4.id;
-					var label = _v4.label;
-					return {key: id, position: label.position, strength: label.manyBodyStrength, velocity: label.velocity};
-				};
-				var newVelocities = A2(
-					$elm$core$List$map,
-					function (_v3) {
-						var key = _v3.key;
-						var velocity = _v3.velocity;
-						return _Utils_Tuple2(key, velocity);
-					},
-					A3(
-						$author$project$Graph$Force$ManyBody$run,
-						alpha,
-						theta,
-						A2(
-							$elm$core$List$map,
-							toManyBodyVertex,
-							$elm_community$graph$Graph$nodes(forceGraph))));
-				return A2($author$project$Graph$Force$updateVelocities, newVelocities, forceGraph);
-			default:
-				var toGravityVertex = function (_v5) {
-					var id = _v5.id;
-					var label = _v5.label;
-					return {gravityCenter: label.gravityCenter, gravityStrengthX: label.gravityStrengthX, gravityStrengthY: label.gravityStrengthY, id: id, position: label.position, velocity: label.velocity};
-				};
-				var newVelocities = A2(
-					$author$project$Graph$Force$Gravity$run,
-					alpha,
-					A2(
-						$elm$core$List$map,
-						toGravityVertex,
-						$elm_community$graph$Graph$nodes(forceGraph)));
-				return A2($author$project$Graph$Force$updateVelocities, newVelocities, forceGraph);
-		}
-	});
-var $elm_community$graph$Graph$empty = $elm_community$graph$Graph$Graph($elm_community$intdict$IntDict$empty);
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $elm_community$intdict$IntDict$findMax = function (dict) {
-	findMax:
-	while (true) {
-		switch (dict.$) {
-			case 'Empty':
-				return $elm$core$Maybe$Nothing;
-			case 'Leaf':
-				var l = dict.a;
-				return $elm$core$Maybe$Just(
-					_Utils_Tuple2(l.key, l.value));
-			default:
-				var i = dict.a;
-				var $temp$dict = i.right;
-				dict = $temp$dict;
-				continue findMax;
-		}
-	}
-};
-var $elm_community$intdict$IntDict$findMin = function (dict) {
-	findMin:
-	while (true) {
-		switch (dict.$) {
-			case 'Empty':
-				return $elm$core$Maybe$Nothing;
-			case 'Leaf':
-				var l = dict.a;
-				return $elm$core$Maybe$Just(
-					_Utils_Tuple2(l.key, l.value));
-			default:
-				var i = dict.a;
-				var $temp$dict = i.left;
-				dict = $temp$dict;
-				continue findMin;
-		}
-	}
-};
-var $elm_community$graph$Graph$nodeIdRange = function (graph) {
-	return A2(
-		$elm$core$Maybe$andThen,
-		function (_v0) {
-			var min = _v0.a;
-			return A2(
-				$elm$core$Maybe$andThen,
-				function (_v1) {
-					var max = _v1.a;
-					return $elm$core$Maybe$Just(
-						_Utils_Tuple2(min, max));
-				},
-				$elm_community$intdict$IntDict$findMax(
-					$elm_community$graph$Graph$unGraph(graph)));
-		},
-		$elm_community$intdict$IntDict$findMin(
-			$elm_community$graph$Graph$unGraph(graph)));
-};
-var $elm_community$graph$Graph$remove = F2(
-	function (nodeId, graph) {
-		return A3(
-			$elm_community$graph$Graph$update,
-			nodeId,
-			$elm$core$Basics$always($elm$core$Maybe$Nothing),
-			graph);
-	});
-var $elm_community$graph$Graph$fold = F3(
-	function (f, acc, graph) {
-		var go = F2(
-			function (acc1, graph1) {
-				go:
-				while (true) {
-					var maybeContext = A2(
-						$elm$core$Maybe$andThen,
-						function (id) {
-							return A2($elm_community$graph$Graph$get, id, graph);
-						},
-						A2(
-							$elm$core$Maybe$map,
-							$elm$core$Tuple$first,
-							$elm_community$graph$Graph$nodeIdRange(graph1)));
-					if (maybeContext.$ === 'Just') {
-						var ctx = maybeContext.a;
-						var $temp$acc1 = A2(f, ctx, acc1),
-							$temp$graph1 = A2($elm_community$graph$Graph$remove, ctx.node.id, graph1);
-						acc1 = $temp$acc1;
-						graph1 = $temp$graph1;
-						continue go;
-					} else {
-						return acc1;
-					}
-				}
-			});
-		return A2(go, acc, graph);
-	});
-var $elm_community$graph$Graph$insert = F2(
-	function (nodeContext, graph) {
-		return A3(
-			$elm_community$graph$Graph$update,
-			nodeContext.node.id,
-			$elm$core$Basics$always(
-				$elm$core$Maybe$Just(nodeContext)),
-			graph);
-	});
-var $elm_community$graph$Graph$mapNodes = function (f) {
-	return A2(
-		$elm_community$graph$Graph$fold,
-		function (_v0) {
-			var node = _v0.node;
-			var incoming = _v0.incoming;
-			var outgoing = _v0.outgoing;
-			return $elm_community$graph$Graph$insert(
-				{
-					incoming: incoming,
-					node: {
-						id: node.id,
-						label: f(node.label)
-					},
-					outgoing: outgoing
-				});
-		},
-		$elm_community$graph$Graph$empty);
-};
-var $author$project$Graph$Force$tick = F2(
-	function (_v0, forceGraph) {
-		var state = _v0.a;
-		var newAlpha = state.alpha + ((state.alphaTarget - state.alpha) * state.alphaDecay);
-		var applyVelocity = function (forceVertex) {
-			var sV = A2($ianmackenzie$elm_geometry$Vector2d$scaleBy, state.velocityDecay, forceVertex.velocity);
-			return forceVertex.fixed ? _Utils_update(
-				forceVertex,
-				{velocity: $ianmackenzie$elm_geometry$Vector2d$zero}) : _Utils_update(
-				forceVertex,
-				{
-					position: A2($ianmackenzie$elm_geometry$Point2d$translateBy, sV, forceVertex.position),
-					velocity: sV
-				});
-		};
-		return _Utils_Tuple2(
-			$author$project$Graph$Force$State(
-				_Utils_update(
-					state,
-					{alpha: newAlpha})),
-			A2(
-				$elm_community$graph$Graph$mapNodes,
-				applyVelocity,
-				A3(
-					$elm$core$List$foldl,
-					$author$project$Graph$Force$applyForce(newAlpha),
-					forceGraph,
-					_List_fromArray(
-						[
-							$author$project$Graph$Force$Link,
-							$author$project$Graph$Force$ManyBody(0.9),
-							$author$project$Graph$Force$Gravity
-						]))));
-	});
-var $author$project$Graph$GraphFile$forceTick = F2(
-	function (forceState, _v0) {
-		var p = _v0.a;
-		var _v1 = A2($author$project$Graph$Force$tick, forceState, p.graph);
-		var newForceState = _v1.a;
-		var newGraph = _v1.b;
-		return _Utils_Tuple2(
-			newForceState,
-			$author$project$Graph$GraphFile$GraphFile(
-				_Utils_update(
-					p,
-					{graph: newGraph})));
-	});
-var $author$project$Graph$Force$isCompleted = function (_v0) {
-	var alpha = _v0.a.alpha;
-	var minAlpha = _v0.a.minAlpha;
-	return _Utils_cmp(alpha, minAlpha) < 1;
-};
-var $elm$core$Tuple$mapFirst = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			func(x),
-			y);
-	});
-var $author$project$Component$Canvas$stopAnimation = function (m) {
-	return _Utils_update(
-		m,
-		{animation: $author$project$Component$Canvas$NoAnimation});
-};
-var $elm$core$List$takeReverse = F3(
-	function (n, list, kept) {
-		takeReverse:
-		while (true) {
-			if (n <= 0) {
-				return kept;
-			} else {
-				if (!list.b) {
-					return kept;
-				} else {
-					var x = list.a;
-					var xs = list.b;
-					var $temp$n = n - 1,
-						$temp$list = xs,
-						$temp$kept = A2($elm$core$List$cons, x, kept);
-					n = $temp$n;
-					list = $temp$list;
-					kept = $temp$kept;
-					continue takeReverse;
-				}
-			}
-		}
-	});
-var $elm$core$List$takeTailRec = F2(
-	function (n, list) {
-		return $elm$core$List$reverse(
-			A3($elm$core$List$takeReverse, n, list, _List_Nil));
-	});
-var $elm$core$List$takeFast = F3(
-	function (ctr, n, list) {
-		if (n <= 0) {
-			return _List_Nil;
-		} else {
-			var _v0 = _Utils_Tuple2(n, list);
-			_v0$1:
-			while (true) {
-				_v0$5:
-				while (true) {
-					if (!_v0.b.b) {
-						return list;
-					} else {
-						if (_v0.b.b.b) {
-							switch (_v0.a) {
-								case 1:
-									break _v0$1;
-								case 2:
-									var _v2 = _v0.b;
-									var x = _v2.a;
-									var _v3 = _v2.b;
-									var y = _v3.a;
-									return _List_fromArray(
-										[x, y]);
-								case 3:
-									if (_v0.b.b.b.b) {
-										var _v4 = _v0.b;
-										var x = _v4.a;
-										var _v5 = _v4.b;
-										var y = _v5.a;
-										var _v6 = _v5.b;
-										var z = _v6.a;
-										return _List_fromArray(
-											[x, y, z]);
-									} else {
-										break _v0$5;
-									}
-								default:
-									if (_v0.b.b.b.b && _v0.b.b.b.b.b) {
-										var _v7 = _v0.b;
-										var x = _v7.a;
-										var _v8 = _v7.b;
-										var y = _v8.a;
-										var _v9 = _v8.b;
-										var z = _v9.a;
-										var _v10 = _v9.b;
-										var w = _v10.a;
-										var tl = _v10.b;
-										return (ctr > 1000) ? A2(
-											$elm$core$List$cons,
-											x,
-											A2(
-												$elm$core$List$cons,
-												y,
-												A2(
-													$elm$core$List$cons,
-													z,
-													A2(
-														$elm$core$List$cons,
-														w,
-														A2($elm$core$List$takeTailRec, n - 4, tl))))) : A2(
-											$elm$core$List$cons,
-											x,
-											A2(
-												$elm$core$List$cons,
-												y,
-												A2(
-													$elm$core$List$cons,
-													z,
-													A2(
-														$elm$core$List$cons,
-														w,
-														A3($elm$core$List$takeFast, ctr + 1, n - 4, tl)))));
-									} else {
-										break _v0$5;
-									}
-							}
-						} else {
-							if (_v0.a === 1) {
-								break _v0$1;
-							} else {
-								break _v0$5;
-							}
-						}
-					}
-				}
-				return list;
-			}
-			var _v1 = _v0.b;
-			var x = _v1.a;
-			return _List_fromArray(
-				[x]);
-		}
-	});
-var $elm$core$List$take = F2(
-	function (n, list) {
-		return A3($elm$core$List$takeFast, 0, n, list);
-	});
-var $author$project$Component$Canvas$update = F2(
-	function (msg, _v0) {
-		var model = _v0.a;
-		return A2(
-			$elm$core$Tuple$mapFirst,
-			$author$project$Component$Canvas$Model,
-			function () {
-				switch (msg.$) {
-					case 'ZoomIn':
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{scale: model.scale + 0.1}),
-							$author$project$Effect$none);
-					case 'ZoomOut':
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{scale: model.scale - 0.1}),
-							$author$project$Effect$none);
-					case 'ResetZoom':
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{scale: 1}),
-							$author$project$Effect$none);
-					default:
-						var t = msg.a;
-						return function (x) {
-							return _Utils_Tuple2(x, $author$project$Effect$none);
-						}(
-							function () {
-								var _v2 = model.animation;
-								if (_v2.$ === 'ForceAnimation') {
-									var forceState = _v2.a;
-									if ($author$project$Graph$Force$isCompleted(forceState)) {
-										return $author$project$Component$Canvas$stopAnimation(model);
-									} else {
-										var _v3 = A2($author$project$Graph$GraphFile$forceTick, forceState, model.graph);
-										var newForceState = _v3.a;
-										var newGF_ = _v3.b;
-										var newGF = newGF_;
-										return _Utils_update(
-											model,
-											{
-												animation: $author$project$Component$Canvas$ForceAnimation(newForceState),
-												timeList: A2(
-													$elm$core$List$take,
-													42,
-													A2($elm$core$List$cons, t, model.timeList))
-											});
-									}
-								} else {
-									return model;
-								}
-							}());
-				}
-			}());
-	});
-var $author$project$Pages$Flow_buildr$updateWithCanvasMsg = F2(
-	function (msg, model) {
-		return _Utils_Tuple2(model, $author$project$Effect$none);
-	});
 var $author$project$Pages$Flow_buildr$update = F2(
 	function (msg, model) {
+		var canvas = model.canvas;
 		switch (msg.$) {
 			case 'NoOp':
 				return _Utils_Tuple2(model, $author$project$Effect$none);
@@ -13519,34 +11566,55 @@ var $author$project$Pages$Flow_buildr$update = F2(
 						model,
 						{pickedUpFlowAction: $elm$core$Maybe$Nothing}),
 					$author$project$Effect$none);
-			default:
-				var msg_ = msg.a;
-				var _v2 = A2(
-					$elm$core$Tuple$mapSecond,
-					$author$project$Effect$map($author$project$Pages$Flow_buildr$CanvasMsg),
-					A2($author$project$Component$Canvas$update, msg_, model.canvasState));
-				var updatedCanvasState = _v2.a;
-				var canvasEffect = _v2.b;
-				var _v3 = A2(
-					$author$project$Pages$Flow_buildr$updateWithCanvasMsg,
-					msg_,
+			case 'ZoomIn':
+				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{canvasState: updatedCanvasState}));
-				var updatedModel = _v3.a;
-				var effect = _v3.b;
+						{
+							canvas: _Utils_update(
+								canvas,
+								{scale: canvas.scale + 0.1})
+						}),
+					$author$project$Effect$none);
+			case 'ZoomOut':
 				return _Utils_Tuple2(
-					updatedModel,
-					$author$project$Effect$batch(
-						_List_fromArray(
-							[canvasEffect, effect])));
+					_Utils_update(
+						model,
+						{
+							canvas: _Utils_update(
+								canvas,
+								{scale: canvas.scale - 0.1})
+						}),
+					$author$project$Effect$none);
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							canvas: _Utils_update(
+								canvas,
+								{scale: 1})
+						}),
+					$author$project$Effect$none);
 		}
 	});
 var $author$project$Pages$Flow_buildr$MovedFlowActionTo = F2(
 	function (a, b) {
 		return {$: 'MovedFlowActionTo', a: a, b: b};
 	});
+var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
+	function (a, b, c, d) {
+		return {$: 'Rgba', a: a, b: b, c: c, d: d};
+	});
+var $mdgriffith$elm_ui$Element$rgb255 = F3(
+	function (red, green, blue) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
+	});
 var $author$project$UI$darkness = A3($mdgriffith$elm_ui$Element$rgb255, 25, 25, 27);
+var $mdgriffith$elm_ui$Element$rgb = F3(
+	function (r, g, b) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
+	});
 var $author$project$UI$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
 var $mdgriffith$elm_ui$Element$rgba = $mdgriffith$elm_ui$Internal$Model$Rgba;
 var $mdgriffith$elm_ui$Element$toRgb = function (_v0) {
@@ -13904,6 +11972,14 @@ var $mdgriffith$elm_ui$Internal$Model$formatBoxShadow = function (shadow) {
 					$mdgriffith$elm_ui$Internal$Model$formatColor(shadow.color))
 				])));
 };
+var $elm$core$Tuple$mapFirst = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
 var $mdgriffith$elm_ui$Internal$Model$renderFocusStyle = function (focus) {
 	return _List_fromArray(
 		[
@@ -16128,6 +14204,10 @@ var $mdgriffith$elm_ui$Internal$Model$hasSmallCaps = function (typeface) {
 		return false;
 	}
 };
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
+	});
 var $mdgriffith$elm_ui$Internal$Model$renderProps = F3(
 	function (force, _v0, existing) {
 		var key = _v0.a;
@@ -17483,6 +15563,7 @@ var $mdgriffith$elm_ui$Internal$Flag$Field = F2(
 	function (a, b) {
 		return {$: 'Field', a: a, b: b};
 	});
+var $elm$core$Bitwise$or = _Bitwise_or;
 var $mdgriffith$elm_ui$Internal$Flag$add = F2(
 	function (myFlag, _v0) {
 		var one = _v0.a;
@@ -19299,6 +17380,7 @@ var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
 			'border-radius',
 			$elm$core$String$fromInt(radius) + 'px'));
 };
+var $author$project$Colors$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
 var $author$project$Colors$withAlpha = F2(
 	function (alpha, color) {
 		var rgbColor = $mdgriffith$elm_ui$Element$toRgb(color);
@@ -19836,40 +17918,22 @@ var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onMove = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousemove', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onUp = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mouseup', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $author$project$Pages$Flow_buildr$actionBarWidth = 0;
-var $mdgriffith$elm_ui$Internal$Model$Transparency = F2(
-	function (a, b) {
-		return {$: 'Transparency', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$transparency = $mdgriffith$elm_ui$Internal$Flag$flag(0);
-var $mdgriffith$elm_ui$Element$alpha = function (o) {
-	var transparency = function (x) {
-		return 1 - x;
-	}(
-		A2(
-			$elm$core$Basics$min,
-			1.0,
-			A2($elm$core$Basics$max, 0.0, o)));
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$transparency,
-		A2(
-			$mdgriffith$elm_ui$Internal$Model$Transparency,
-			'transparency-' + $mdgriffith$elm_ui$Internal$Model$floatClass(transparency),
-			transparency));
-};
-var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
-var $mdgriffith$elm_ui$Element$behindContent = function (element) {
-	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
-};
 var $mdgriffith$elm_ui$Internal$Model$InFront = {$: 'InFront'};
 var $mdgriffith$elm_ui$Element$inFront = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
 };
-var $mdgriffith$elm_ui$Element$scrollbars = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.scrollbars);
-var $mdgriffith$elm_ui$Element$Background$tiled = function (src) {
-	return $mdgriffith$elm_ui$Internal$Model$Attr(
-		A2($elm$virtual_dom$VirtualDom$style, 'background', 'url(\"' + (src + '\") repeat')));
+var $mdgriffith$elm_ui$Internal$Model$Scale = function (a) {
+	return {$: 'Scale', a: a};
 };
+var $mdgriffith$elm_ui$Internal$Flag$scale = $mdgriffith$elm_ui$Internal$Flag$flag(23);
+var $mdgriffith$elm_ui$Element$scale = function (n) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$scale,
+		$mdgriffith$elm_ui$Internal$Model$Scale(
+			_Utils_Tuple3(n, n, 1)));
+};
+var $mdgriffith$elm_ui$Element$scrollbars = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.scrollbars);
 var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
 var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
@@ -19963,6 +18027,7 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
 var $author$project$Colors$grey = A3($mdgriffith$elm_ui$Element$rgb255, 143, 139, 168);
+var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
 var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
 	return {$: 'Color', a: a};
 };
@@ -20277,6 +18342,352 @@ var $author$project$Pages$Flow_buildr$viewCanvasHeader = function (model) {
 				})
 			]));
 };
+var $author$project$Pages$Flow_buildr$ResetZoom = {$: 'ResetZoom'};
+var $author$project$Pages$Flow_buildr$ZoomIn = {$: 'ZoomIn'};
+var $author$project$Pages$Flow_buildr$ZoomOut = {$: 'ZoomOut'};
+var $mdgriffith$elm_ui$Internal$Model$Bottom = {$: 'Bottom'};
+var $mdgriffith$elm_ui$Element$alignBottom = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Bottom);
+var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
+var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
+var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
+var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
+	return {$: 'Describe', a: a};
+};
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
+	});
+var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
+var $mdgriffith$elm_ui$Element$Input$enter = 'Enter';
+var $mdgriffith$elm_ui$Element$Input$hasFocusStyle = function (attr) {
+	if (((attr.$ === 'StyleClass') && (attr.b.$ === 'PseudoSelector')) && (attr.b.a.$ === 'Focus')) {
+		var _v1 = attr.b;
+		var _v2 = _v1.a;
+		return true;
+	} else {
+		return false;
+	}
+};
+var $mdgriffith$elm_ui$Element$Input$focusDefault = function (attrs) {
+	return A2($elm$core$List$any, $mdgriffith$elm_ui$Element$Input$hasFocusStyle, attrs) ? $mdgriffith$elm_ui$Internal$Model$NoAttribute : $mdgriffith$elm_ui$Internal$Model$htmlClass('focusable');
+};
+var $mdgriffith$elm_ui$Element$Events$onClick = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onClick);
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$html$Html$Events$preventDefaultOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
+	});
+var $mdgriffith$elm_ui$Element$Input$onKeyLookup = function (lookup) {
+	var decode = function (code) {
+		var _v0 = lookup(code);
+		if (_v0.$ === 'Nothing') {
+			return $elm$json$Json$Decode$fail('No key matched');
+		} else {
+			var msg = _v0.a;
+			return $elm$json$Json$Decode$succeed(msg);
+		}
+	};
+	var isKey = A2(
+		$elm$json$Json$Decode$andThen,
+		decode,
+		A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+	return $mdgriffith$elm_ui$Internal$Model$Attr(
+		A2(
+			$elm$html$Html$Events$preventDefaultOn,
+			'keydown',
+			A2(
+				$elm$json$Json$Decode$map,
+				function (fired) {
+					return _Utils_Tuple2(fired, true);
+				},
+				isKey)));
+};
+var $mdgriffith$elm_ui$Internal$Flag$cursor = $mdgriffith$elm_ui$Internal$Flag$flag(21);
+var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cursorPointer);
+var $mdgriffith$elm_ui$Element$Input$space = ' ';
+var $elm$html$Html$Attributes$tabindex = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'tabIndex',
+		$elm$core$String$fromInt(n));
+};
+var $mdgriffith$elm_ui$Element$Input$button = F2(
+	function (attrs, _v0) {
+		var onPress = _v0.onPress;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.seButton + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.noTextSelection)))))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$pointer,
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$Input$focusDefault(attrs),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Button),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											$elm$html$Html$Attributes$tabindex(0)),
+										function () {
+											if (onPress.$ === 'Nothing') {
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Internal$Model$Attr(
+														$elm$html$Html$Attributes$disabled(true)),
+													attrs);
+											} else {
+												var msg = onPress.a;
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Element$Events$onClick(msg),
+													A2(
+														$elm$core$List$cons,
+														$mdgriffith$elm_ui$Element$Input$onKeyLookup(
+															function (code) {
+																return _Utils_eq(code, $mdgriffith$elm_ui$Element$Input$enter) ? $elm$core$Maybe$Just(msg) : (_Utils_eq(code, $mdgriffith$elm_ui$Element$Input$space) ? $elm$core$Maybe$Just(msg) : $elm$core$Maybe$Nothing);
+															}),
+														attrs));
+											}
+										}()))))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
+var $icidasset$elm_material_icons$Material$Icons$zoom_in = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$zoom_out = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z')
+				]),
+			_List_Nil)
+		]));
+var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
+var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
+var $icidasset$elm_material_icons$Material$Icons$zoom_out_map = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$enableBackground('new 0 0 24 24'),
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$g,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$rect,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$fill('none')
+						]),
+					_List_Nil)
+				])),
+			A2(
+			$elm$svg$Svg$g,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$g,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$g,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M15,3l2.3,2.3l-2.89,2.87l1.42,1.42L18.7,6.7L21,9V3H15z M3,9l2.3-2.3l2.87,2.89l1.42-1.42L6.7,5.3L9,3H3V9z M9,21 l-2.3-2.3l2.89-2.87l-1.42-1.42L5.3,17.3L3,15v6H9z M21,15l-2.3,2.3l-2.87-2.89l-1.42,1.42l2.89,2.87L15,21h6V15z')
+										]),
+									_List_Nil)
+								]))
+						]))
+				]))
+		]));
+var $author$project$Pages$Flow_buildr$viewChrome = function (model) {
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$alignBottom,
+				$mdgriffith$elm_ui$Element$alignLeft,
+				$mdgriffith$elm_ui$Element$moveUp(30),
+				$mdgriffith$elm_ui$Element$moveRight(40),
+				$mdgriffith$elm_ui$Element$spacing(12)
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$padding(6),
+						$mdgriffith$elm_ui$Element$Border$rounded(6),
+						$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+						$mdgriffith$elm_ui$Element$Border$shadow(
+						{
+							blur: 6,
+							color: A2($author$project$Colors$withAlpha, 0.2, $author$project$Colors$black),
+							offset: _Utils_Tuple2(0, 3),
+							size: 1
+						})
+					]),
+				A2(
+					$mdgriffith$elm_ui$Element$Input$button,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$padding(2),
+							$mdgriffith$elm_ui$Element$Border$rounded(2)
+						]),
+					{
+						label: A2(
+							$author$project$MaterialIcons$material,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+							{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_out_map, size: 22}),
+						onPress: $elm$core$Maybe$Just($author$project$Pages$Flow_buildr$ResetZoom)
+					})),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+						$mdgriffith$elm_ui$Element$padding(6),
+						$mdgriffith$elm_ui$Element$spacing(6),
+						$mdgriffith$elm_ui$Element$Border$rounded(6),
+						$mdgriffith$elm_ui$Element$Border$shadow(
+						{
+							blur: 6,
+							color: A2($author$project$Colors$withAlpha, 0.2, $author$project$Colors$black),
+							offset: _Utils_Tuple2(0, 3),
+							size: 1
+						})
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$padding(2),
+								$mdgriffith$elm_ui$Element$Border$rounded(2)
+							]),
+						{
+							label: A2(
+								$author$project$MaterialIcons$material,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_in, size: 24}),
+							onPress: (model.scale > 1.6) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just($author$project$Pages$Flow_buildr$ZoomIn)
+						}),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(20)),
+								$mdgriffith$elm_ui$Element$centerX,
+								$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$grey),
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(1))
+							]),
+						$mdgriffith$elm_ui$Element$none),
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$padding(2),
+								$mdgriffith$elm_ui$Element$Border$rounded(2)
+							]),
+						{
+							label: A2(
+								$author$project$MaterialIcons$material,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_out, size: 24}),
+							onPress: (model.scale < 0.7) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just($author$project$Pages$Flow_buildr$ZoomOut)
+						})
+					]))
+			]));
+};
 var $author$project$Pages$Flow_buildr$Node = F2(
 	function (a, b) {
 		return {$: 'Node', a: a, b: b};
@@ -20285,8 +18696,6 @@ var $author$project$Pages$Flow_buildr$NodeAttr = F2(
 	function (color, expanded) {
 		return {color: color, expanded: expanded};
 	});
-var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
-var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
 var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
 var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
 var $author$project$Colors$green = A3($mdgriffith$elm_ui$Element$rgb255, 110, 228, 193);
@@ -20304,10 +18713,18 @@ var $author$project$Pages$Flow_buildr$numberOfChildren = function (node) {
 	var a = $author$project$Pages$Flow_buildr$numberOfChildren_(node);
 	return (a === 1) ? a : a;
 };
+var $mdgriffith$elm_ui$Element$Background$tiled = function (src) {
+	return $mdgriffith$elm_ui$Internal$Model$Attr(
+		A2($elm$virtual_dom$VirtualDom$style, 'background', 'url(\"' + (src + '\") repeat')));
+};
 var $author$project$Pages$Flow_buildr$Center = {$: 'Center'};
 var $author$project$Pages$Flow_buildr$Left = {$: 'Left'};
 var $author$project$Pages$Flow_buildr$Right = {$: 'Right'};
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
 var $author$project$Pages$Flow_buildr$circleWidth = 64;
+var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
@@ -20575,8 +18992,8 @@ var $author$project$Pages$Flow_buildr$verticalLine = function (lineHeight) {
 			]),
 		$mdgriffith$elm_ui$Element$none);
 };
-var $author$project$Pages$Flow_buildr$viewHtmlTree = F3(
-	function (canvasWidth, _v0, node) {
+var $author$project$Pages$Flow_buildr$viewHtmlTree = F2(
+	function (_v0, node) {
 		var hasParent = _v0.hasParent;
 		var hasSibling = _v0.hasSibling;
 		var parentWidth = _v0.parentWidth;
@@ -20713,9 +19130,8 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree = F3(
 												$author$project$Pages$Flow_buildr$numberOfChildren(sibling),
 												A2(
 													$elm$core$List$cons,
-													A3(
+													A2(
 														$author$project$Pages$Flow_buildr$viewHtmlTree,
-														canvasWidth,
 														{
 															hasParent: true,
 															hasSibling: $elm$core$List$length(children) > 1,
@@ -20731,7 +19147,7 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree = F3(
 									children)))))
 				]));
 	});
-var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function (canvasWidth) {
+var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function () {
 	var tree = A2(
 		$author$project$Pages$Flow_buildr$Node,
 		A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$purple, true),
@@ -20827,7 +19243,31 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function (canvasWidth) {
 										A2(
 										$author$project$Pages$Flow_buildr$Node,
 										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-										_List_Nil),
+										_List_fromArray(
+											[
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+												_List_fromArray(
+													[
+														A2(
+														$author$project$Pages$Flow_buildr$Node,
+														A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+														_List_fromArray(
+															[
+																A2(
+																$author$project$Pages$Flow_buildr$Node,
+																A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+																_List_fromArray(
+																	[
+																		A2(
+																		$author$project$Pages$Flow_buildr$Node,
+																		A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+																		_List_Nil)
+																	]))
+															]))
+													]))
+											])),
 										A2(
 										$author$project$Pages$Flow_buildr$Node,
 										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
@@ -20857,10 +19297,19 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function (canvasWidth) {
 	return A2(
 		$mdgriffith$elm_ui$Element$el,
 		_List_fromArray(
-			[$mdgriffith$elm_ui$Element$alignLeft]),
-		A3(
+			[
+				$mdgriffith$elm_ui$Element$alignLeft,
+				$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png'),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'width', 'auto')),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'min-width', '100%')),
+				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$paddingEach(
+				{bottom: 30, left: 24, right: 24, top: 90})
+			]),
+		A2(
 			$author$project$Pages$Flow_buildr$viewHtmlTree,
-			canvasWidth,
 			{
 				hasParent: false,
 				hasSibling: false,
@@ -20870,53 +19319,43 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function (canvasWidth) {
 				widthOfLeftSiblings: 0
 			},
 			tree));
-};
+}();
 var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 	var canvasWidth = (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth;
 	return A2(
 		$mdgriffith$elm_ui$Element$el,
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(model.viewHeight)),
 				$mdgriffith$elm_ui$Element$width(
 				$mdgriffith$elm_ui$Element$px(canvasWidth)),
 				$mdgriffith$elm_ui$Element$htmlAttribute(
 				A2($elm$html$Html$Attributes$style, 'z-index', '1')),
-				$mdgriffith$elm_ui$Element$behindContent(
-				A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-							$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$lightGrey)
-						]),
-					$mdgriffith$elm_ui$Element$none)),
-				$mdgriffith$elm_ui$Element$behindContent(
-				A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-							$mdgriffith$elm_ui$Element$alpha(0.4),
-							$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png')
-						]),
-					$mdgriffith$elm_ui$Element$none)),
 				$mdgriffith$elm_ui$Element$inFront(
-				$author$project$Pages$Flow_buildr$viewCanvasHeader(model))
+				$author$project$Pages$Flow_buildr$viewCanvasHeader(model)),
+				$mdgriffith$elm_ui$Element$inFront(
+				$author$project$Pages$Flow_buildr$viewChrome(model.canvas))
 			]),
 		A2(
 			$mdgriffith$elm_ui$Element$el,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-					$mdgriffith$elm_ui$Element$scrollbars,
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 30, left: 24, right: 24, top: 90})
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(canvasWidth)),
+					$mdgriffith$elm_ui$Element$scrollbars
 				]),
-			$author$project$Pages$Flow_buildr$viewHtmlTree_(canvasWidth)));
+			A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+						$mdgriffith$elm_ui$Element$scale(
+						A2($elm$core$Basics$max, 1, model.canvas.scale))
+					]),
+				$author$project$Pages$Flow_buildr$viewHtmlTree_)));
 };
 var $author$project$Pages$Flow_buildr$view = function (model) {
 	return {
@@ -21753,4 +20192,4 @@ var $author$project$Main$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangedUrl, onUrlRequest: $author$project$Main$ClickedLink, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"CanvasMsg":["Component.Canvas.Msg"],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}},"Component.Canvas.Msg":{"args":[],"tags":{"ZoomIn":[],"ZoomOut":[],"ResetZoom":[],"ForceTick":["Time.Posix"]}},"Time.Posix":{"args":[],"tags":{"Posix":["Basics.Int"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"ZoomIn":[],"ZoomOut":[],"ResetZoom":[],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}}}}})}});}(this));

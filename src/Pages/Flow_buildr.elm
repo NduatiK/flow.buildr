@@ -49,7 +49,12 @@ type alias Model =
     , viewWidth : Int
     , viewHeight : Int
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
-    , canvasState : CanvasComponent.Model
+    , canvas : CanvasModel
+    }
+
+
+type alias CanvasModel =
+    { scale : Float
     }
 
 
@@ -60,7 +65,9 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
-      , canvasState = CanvasComponent.init
+      , canvas =
+            { scale = 1
+            }
       }
     , Effect.fromCmd (UI.getSizeOfWindow GotWindowSize)
     )
@@ -89,7 +96,9 @@ type Msg
     | Frame Float
     | GotWindowSize Int Int
       ---
-    | CanvasMsg CanvasComponent.Msg
+    | ZoomIn
+    | ZoomOut
+    | ResetZoom
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
@@ -97,7 +106,7 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
-update msg model =
+update msg ({ canvas } as model) =
     case msg of
         NoOp ->
             ( model, Effect.none )
@@ -135,20 +144,19 @@ update msg model =
             , Effect.none
             )
 
-        CanvasMsg msg_ ->
-            let
-                ( updatedCanvasState, canvasEffect ) =
-                    CanvasComponent.update msg_ model.canvasState
-                        |> Tuple.mapSecond (Effect.map CanvasMsg)
+        ZoomIn ->
+            ( { model | canvas = { canvas | scale = canvas.scale + 0.1 } }
+            , Effect.none
+            )
 
-                ( updatedModel, effect ) =
-                    updateWithCanvasMsg msg_ { model | canvasState = updatedCanvasState }
-            in
-            ( updatedModel
-            , Effect.batch
-                [ canvasEffect
-                , effect
-                ]
+        ZoomOut ->
+            ( { model | canvas = { canvas | scale = canvas.scale - 0.1 } }
+            , Effect.none
+            )
+
+        ResetZoom ->
+            ( { model | canvas = { canvas | scale = 1 } }
+            , Effect.none
             )
 
 
@@ -182,7 +190,6 @@ subscriptions model =
                     )
 
         -- , Browser.Events.onAnimationFrameDelta Frame
-        , Sub.map CanvasMsg (CanvasComponent.subscriptions model.canvasState)
         ]
 
 
@@ -519,60 +526,36 @@ viewCanvas model =
             model.viewWidth - actionBarWidth - UI.sidebarWidth
     in
     el
-        [ height fill
+        [ height (px model.viewHeight)
         , width (px canvasWidth)
-
-        -- , width fill
         , htmlAttribute (Html.Attributes.style "z-index" "1")
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , Background.color Colors.lightGrey
-                ]
-                none
-            )
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , alpha 0.4
-                , Background.tiled "dist/DotGrid.png"
-                ]
-                none
-            )
-
-        -- , inFront <|
-        -- Element.map CanvasMsg <|
-        --     CanvasComponent.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model.canvasState model
         , inFront (viewCanvasHeader model)
-
-        -- , behindContent
-        --     (paragraph
-        --         [ Font.size 14
-        --         , alpha 0.8
-        --         , alignBottom
-        --         , paddingXY 104 32
-        --         ]
-        --         [ text
-        --             (Debug.toString model.canvasState)
-        --         ]
-        --     )
+        , inFront (viewChrome model.canvas)
         ]
     <|
         el
-            [ width fill
-            , height fill
+            [ height fill
+            , width (px canvasWidth)
             , scrollbars
-            , paddingEach
-                { top = 90
-                , left = 24
-                , right = 24
-                , bottom = 30
-                }
             ]
         <|
-            viewHtmlTree_ canvasWidth
+            el
+                [ width fill
+                , height fill
+
+                -- , behindContent
+                --     (el
+                --         [ htmlAttribute (Html.Attributes.style "width" "100%")
+                --         , height fill
+                --         -- ,
+                --         , Background.color Colors.orange
+                --         ]
+                --         none
+                --     )
+                , scale (max 1 model.canvas.scale)
+                ]
+            <|
+                viewHtmlTree_
 
 
 type Node
@@ -608,7 +591,7 @@ numberOfChildren_ (Node { expanded } children) =
             |> List.sum
 
 
-viewHtmlTree_ canvasWidth =
+viewHtmlTree_ =
     let
         tree =
             Node (NodeAttr Colors.purple True)
@@ -635,7 +618,7 @@ viewHtmlTree_ canvasWidth =
                         , Node (NodeAttr Colors.blue True)
                             [ Node (NodeAttr Colors.green True) []
                             , Node (NodeAttr Colors.lime True) []
-                            , Node (NodeAttr Colors.grey True) []
+                            , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
                             , Node (NodeAttr Colors.grey True) []
                             ]
                         ]
@@ -647,8 +630,21 @@ viewHtmlTree_ canvasWidth =
                 , Node (NodeAttr Colors.lime True) []
                 ]
     in
-    el [ alignLeft ] <|
-        viewHtmlTree canvasWidth
+    el
+        [ alignLeft
+        , Background.tiled "dist/DotGrid.png"
+        , htmlAttribute (Html.Attributes.style "width" "auto")
+        , htmlAttribute (Html.Attributes.style "min-width" "100%")
+        , height fill
+        , paddingEach
+            { top = 90
+            , left = 24
+            , right = 24
+            , bottom = 30
+            }
+        ]
+    <|
+        viewHtmlTree
             { hasParent = False
             , hasSibling = False
             , parentWidth = numberOfChildren tree
@@ -664,18 +660,16 @@ siblingPadding =
 
 
 viewHtmlTree :
-    Int
-    ->
-        { hasParent : Bool
-        , hasSibling : Bool
-        , parentWidth : Int
-        , widthOfLeftSiblings : Int
-        , widthOfLeftSibling : Int
-        , siblingCount : Int
-        }
+    { hasParent : Bool
+    , hasSibling : Bool
+    , parentWidth : Int
+    , widthOfLeftSiblings : Int
+    , widthOfLeftSibling : Int
+    , siblingCount : Int
+    }
     -> Node
     -> Element Msg
-viewHtmlTree canvasWidth { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded } children) as node) =
+viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded } children) as node) =
     let
         nodeWidth =
             numberOfChildren node
@@ -805,7 +799,7 @@ viewHtmlTree canvasWidth { hasParent, hasSibling, parentWidth, widthOfLeftSiblin
                                 (\sibling ( leftSiblingsWidth, leftSiblingWidth, acc ) ->
                                     ( leftSiblingsWidth + numberOfChildren sibling
                                     , numberOfChildren sibling
-                                    , viewHtmlTree canvasWidth
+                                    , viewHtmlTree
                                         { hasParent = True
                                         , hasSibling = List.length children > 1
                                         , parentWidth = nodeWidth
@@ -1152,4 +1146,94 @@ viewCanvasHeader model =
                         }
                     ]
             }
+        ]
+
+
+viewChrome model =
+    column
+        [ alignBottom
+        , alignLeft
+        , moveUp 30
+        , moveRight 40
+        , spacing 12
+        ]
+        [ el
+            [ padding 6
+            , Border.rounded 6
+            , Background.color Colors.white
+            , Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+          <|
+            Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_out_map
+                        , size = 22
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    Just ResetZoom
+                }
+        , column
+            [ Background.color Colors.white
+            , padding 6
+            , spacing 6
+            , Border.rounded 6
+            , Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+            [ Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_in
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale > 1.6 then
+                        Nothing
+
+                    else
+                        Just ZoomIn
+                }
+            , el
+                [ width (px 20)
+                , centerX
+                , Background.color Colors.grey
+                , height (px 1)
+                ]
+                none
+            , Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_out
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale < 0.7 then
+                        Nothing
+
+                    else
+                        Just ZoomOut
+                }
+            ]
         ]
