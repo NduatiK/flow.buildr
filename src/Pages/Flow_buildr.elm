@@ -447,6 +447,36 @@ renderDragableAction model defaultSize i ( color, icon ) =
 
         colorExploded =
             Element.toRgb color
+
+        offsetV =
+            { y =
+                if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                    moveDownDist
+
+                else
+                    offset
+            , x =
+                if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                    moveRightDist
+
+                else
+                    offset
+            }
+
+        offsetChild =
+            { y =
+                if useFilter then
+                    moveDownDist
+
+                else
+                    centerDist
+            , x =
+                if useFilter then
+                    moveRightDist
+
+                else
+                    centerDist
+            }
     in
     el
         [ width (px defaultSize)
@@ -477,16 +507,18 @@ renderDragableAction model defaultSize i ( color, icon ) =
             , height (px parentSize)
             , Border.rounded 50
             , Background.color color
-            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
-                moveDown moveDownDist
-
-              else
-                moveDown offset
-            , if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
-                moveRight moveRightDist
-
-              else
-                moveRight offset
+            , htmlAttribute
+                (Html.Attributes.style "transform"
+                    (String.join
+                        ""
+                        [ "translate3d("
+                        , String.fromFloat offsetV.x
+                        , "px,"
+                        , String.fromFloat offsetV.y
+                        , "px,0px)"
+                        ]
+                    )
+                )
             , htmlAttribute
                 (Html.Attributes.style "filter"
                     "url('#goo')"
@@ -495,23 +527,25 @@ renderDragableAction model defaultSize i ( color, icon ) =
                 (Html.Attributes.style "-webkit-filter"
                     "url('#goo')"
                 )
-            , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease")
-            , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease")
+            , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease-out, width 0.1s ease,height 0.1s ease")
+            , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease-out, width 0.3s ease,height 0.3s ease")
             , behindContent
                 -- , inFront
                 (el
                     [ width (px childSize)
                     , height (px childSize)
-                    , if useFilter then
-                        moveDown moveDownDist
-
-                      else
-                        moveDown centerDist
-                    , if useFilter then
-                        moveRight moveRightDist
-
-                      else
-                        moveRight centerDist
+                    , htmlAttribute
+                        (Html.Attributes.style "transform"
+                            (String.join
+                                ""
+                                [ "translate3d("
+                                , String.fromFloat offsetChild.x
+                                , "px,"
+                                , String.fromFloat offsetChild.y
+                                , "px,0px)"
+                                ]
+                            )
+                        )
                     , if useFilter then
                         Border.glow color 1
 
@@ -522,8 +556,8 @@ renderDragableAction model defaultSize i ( color, icon ) =
                     , Background.color color
 
                     -- , Background.color Colors.black
-                    , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease")
-                    , htmlAttribute (Html.Attributes.style "transition" "transform 0.2s ease")
+                    , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease-out")
+                    , htmlAttribute (Html.Attributes.style "transition" "transform 0.2s ease-out")
                     , htmlAttribute
                         (Html.Attributes.style "filter"
                             "url('#goo')"
