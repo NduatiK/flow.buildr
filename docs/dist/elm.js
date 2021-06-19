@@ -20662,6 +20662,8 @@ var $mdgriffith$elm_ui$Internal$Model$Below = {$: 'Below'};
 var $mdgriffith$elm_ui$Element$below = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Below, element);
 };
+var $mdgriffith$elm_ui$Internal$Flag$fontAlignment = $mdgriffith$elm_ui$Internal$Flag$flag(12);
+var $mdgriffith$elm_ui$Element$Font$center = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontAlignment, $mdgriffith$elm_ui$Internal$Style$classes.textCenter);
 var $author$project$Pages$Flow_buildr$circleWidth = 64;
 var $elm$svg$Svg$Attributes$fillOpacity = _VirtualDom_attribute('fill-opacity');
 var $author$project$Colors$midGrey = A3($mdgriffith$elm_ui$Element$rgb255, 203, 209, 218);
@@ -20850,7 +20852,7 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 									_List_Nil,
 									{
 										label: A2(
-											$author$project$MaterialIcons$material,
+											$mdgriffith$elm_ui$Element$el,
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$centerX,
@@ -20861,7 +20863,28 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 													$mdgriffith$elm_ui$Element$Border$width(2),
 													$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange)
 												]),
-											{color: $author$project$Colors$orange, icon: $icidasset$elm_material_icons$Material$Icons$more_horiz, size: 20}),
+											A2(
+												$mdgriffith$elm_ui$Element$el,
+												_List_fromArray(
+													[
+														$mdgriffith$elm_ui$Element$width(
+														$mdgriffith$elm_ui$Element$px(
+															16 * $elm$core$String$length(
+																$elm$core$String$fromInt(
+																	$elm$core$List$length(children))))),
+														$mdgriffith$elm_ui$Element$height(
+														$mdgriffith$elm_ui$Element$px(
+															16 * $elm$core$String$length(
+																$elm$core$String$fromInt(
+																	$elm$core$List$length(children))))),
+														$mdgriffith$elm_ui$Element$Font$size(14),
+														$mdgriffith$elm_ui$Element$moveDown(1),
+														$mdgriffith$elm_ui$Element$Font$center,
+														$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$grey)
+													]),
+												$mdgriffith$elm_ui$Element$text(
+													$elm$core$String$fromInt(
+														$elm$core$List$length(children))))),
 										onPress: $elm$core$Maybe$Just(
 											$author$project$Pages$Flow_buildr$ToggleExpandOnNode(index))
 									})
