@@ -11253,9 +11253,9 @@ var $author$project$Pages$Flow_buildr$Node = F2(
 	function (a, b) {
 		return {$: 'Node', a: a, b: b};
 	});
-var $author$project$Pages$Flow_buildr$NodeAttr = F3(
-	function (color, expanded, dropNode) {
-		return {color: color, dropNode: dropNode, expanded: expanded};
+var $author$project$Pages$Flow_buildr$NodeAttr = F4(
+	function (color, index, expanded, dropNode) {
+		return {color: color, dropNode: dropNode, expanded: expanded, index: index};
 	});
 var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
 	function (a, b, c, d) {
@@ -11292,124 +11292,124 @@ var $author$project$Pages$Flow_buildr$init = function (req) {
 			req: req,
 			tree: A2(
 				$author$project$Pages$Flow_buildr$Node,
-				A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$purple, true, false),
+				A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$purple, 1, true, false),
 				_List_fromArray(
 					[
 						A2(
 						$author$project$Pages$Flow_buildr$Node,
-						A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, true),
+						A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 2, true, true),
 						_List_Nil),
 						A2(
 						$author$project$Pages$Flow_buildr$Node,
-						A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, false, false),
+						A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 3, false, false),
 						_List_fromArray(
 							[
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 4, true, false),
 								_List_Nil),
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 5, true, false),
 								_List_Nil)
 							])),
 						A2(
 						$author$project$Pages$Flow_buildr$Node,
-						A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true, false),
+						A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, 6, true, false),
 						_List_fromArray(
 							[
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 7, true, false),
 								_List_Nil),
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 8, true, false),
 								_List_fromArray(
 									[
 										A2(
 										$author$project$Pages$Flow_buildr$Node,
-										A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+										A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 9, true, false),
 										_List_Nil)
 									])),
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 10, true, false),
 								_List_Nil),
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, false, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 11, false, false),
 								_List_fromArray(
 									[
 										A2(
 										$author$project$Pages$Flow_buildr$Node,
-										A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true, false),
+										A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, 12, true, false),
 										_List_fromArray(
 											[
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 13, true, false),
 												_List_Nil),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 14, true, false),
 												_List_fromArray(
 													[
 														A2(
 														$author$project$Pages$Flow_buildr$Node,
-														A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+														A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 15, true, false),
 														_List_Nil)
 													])),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 16, true, false),
 												_List_Nil),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 17, true, false),
 												_List_Nil)
 											])),
 										A2(
 										$author$project$Pages$Flow_buildr$Node,
-										A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true, false),
+										A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, 18, true, false),
 										_List_fromArray(
 											[
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 19, true, false),
 												_List_Nil),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 20, true, false),
 												_List_Nil),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 21, true, false),
 												_List_Nil),
 												A2(
 												$author$project$Pages$Flow_buildr$Node,
-												A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true, false),
+												A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, 22, true, false),
 												_List_Nil)
 											]))
 									]))
 							])),
 						A2(
 						$author$project$Pages$Flow_buildr$Node,
-						A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true, false),
+						A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, 23, true, false),
 						_List_fromArray(
 							[
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 24, true, false),
 								_List_Nil),
 								A2(
 								$author$project$Pages$Flow_buildr$Node,
-								A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+								A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 25, true, false),
 								_List_Nil)
 							])),
 						A2(
 						$author$project$Pages$Flow_buildr$Node,
-						A3($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true, false),
+						A4($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, 26, true, false),
 						_List_Nil)
 					])),
 			viewHeight: 800,
@@ -11655,6 +11655,18 @@ var $author$project$Pages$Flow_buildr$Path = F2(
 	function (start, current) {
 		return {current: current, start: start};
 	});
+var $author$project$Pages$Flow_buildr$findAndUpdateNode = F3(
+	function (nodeId_, updateFn, tree) {
+		var attr = tree.a;
+		var children = tree.b;
+		return _Utils_eq(attr.index, nodeId_) ? updateFn(tree) : A2(
+			$author$project$Pages$Flow_buildr$Node,
+			attr,
+			A2(
+				$elm$core$List$map,
+				A2($author$project$Pages$Flow_buildr$findAndUpdateNode, nodeId_, updateFn),
+				children));
+	});
 var $author$project$Pages$Flow_buildr$update = F2(
 	function (msg, model) {
 		var canvas = model.canvas;
@@ -11708,6 +11720,28 @@ var $author$project$Pages$Flow_buildr$update = F2(
 					_Utils_update(
 						model,
 						{pickedUpFlowAction: $elm$core$Maybe$Nothing}),
+					$author$project$Effect$none);
+			case 'ToggleExpandOnNode':
+				var nodeId = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							tree: A3(
+								$author$project$Pages$Flow_buildr$findAndUpdateNode,
+								nodeId,
+								function (_v2) {
+									var attr = _v2.a;
+									var children = _v2.b;
+									return A2(
+										$author$project$Pages$Flow_buildr$Node,
+										_Utils_update(
+											attr,
+											{expanded: !attr.expanded}),
+										children);
+								},
+								model.tree)
+						}),
 					$author$project$Effect$none);
 			case 'ZoomIn':
 				return _Utils_Tuple2(
@@ -18782,6 +18816,10 @@ var $author$project$UI$Css$animatableToString = function (animatable) {
 			return 'width';
 		case 'Shadow':
 			return 'box-shadow';
+		case 'BorderWidth':
+			return 'border-width';
+		case 'BorderColor':
+			return 'border-color';
 		case 'Translation':
 			return 'transform';
 		default:
@@ -20608,7 +20646,11 @@ var $mdgriffith$elm_ui$Element$Background$tiled = function (src) {
 var $author$project$Pages$Flow_buildr$Center = {$: 'Center'};
 var $author$project$Pages$Flow_buildr$Left = {$: 'Left'};
 var $author$project$Pages$Flow_buildr$Right = {$: 'Right'};
+var $author$project$UI$Css$BorderWidth = {$: 'BorderWidth'};
 var $author$project$UI$Css$Scale = {$: 'Scale'};
+var $author$project$Pages$Flow_buildr$ToggleExpandOnNode = function (a) {
+	return {$: 'ToggleExpandOnNode', a: a};
+};
 var $author$project$UI$Css$animationDuration = function (duration) {
 	return $mdgriffith$elm_ui$Element$htmlAttribute(
 		A2(
@@ -20737,6 +20779,30 @@ var $author$project$Colors$toString = function (color) {
 		$elm$core$Basics$round(o.green * 255))) + ((',' + $elm$core$String$fromInt(
 		$elm$core$Basics$round(o.blue * 255))) + ((',' + $elm$core$String$fromFloat(o.alpha)) + ')'))));
 };
+var $icidasset$elm_material_icons$Material$Icons$unfold_less = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M7.41 18.59L8.83 20 12 16.83 15.17 20l1.41-1.41L12 14l-4.59 4.59zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10l4.59-4.59z')
+				]),
+			_List_Nil)
+		]));
 var $author$project$Pages$Flow_buildr$circle = F2(
 	function (attr, _v0) {
 		var node = _v0.node;
@@ -20747,6 +20813,8 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 		var expanded = _v1.a.expanded;
 		var color = _v1.a.color;
 		var dropNode = _v1.a.dropNode;
+		var index = _v1.a.index;
+		var children = _v1.b;
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
 			_Utils_ap(
@@ -20778,19 +20846,74 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 										]),
 									$mdgriffith$elm_ui$Element$none),
 									A2(
-									$author$project$MaterialIcons$material,
+									$mdgriffith$elm_ui$Element$Input$button,
+									_List_Nil,
+									{
+										label: A2(
+											$author$project$MaterialIcons$material,
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$centerX,
+													$mdgriffith$elm_ui$Element$alignBottom,
+													$mdgriffith$elm_ui$Element$padding(4),
+													$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+													$mdgriffith$elm_ui$Element$Border$rounded(20),
+													$mdgriffith$elm_ui$Element$Border$width(2),
+													$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange)
+												]),
+											{color: $author$project$Colors$orange, icon: $icidasset$elm_material_icons$Material$Icons$more_horiz, size: 20}),
+										onPress: $elm$core$Maybe$Just(
+											$author$project$Pages$Flow_buildr$ToggleExpandOnNode(index))
+									})
+								]))) : ((!_Utils_eq(children, _List_Nil)) ? $mdgriffith$elm_ui$Element$below(
+						A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$pointer,
+									$mdgriffith$elm_ui$Element$alpha(0.4),
+									$mdgriffith$elm_ui$Element$mouseOver(
 									_List_fromArray(
 										[
+											$mdgriffith$elm_ui$Element$alpha(1)
+										])),
+									$mdgriffith$elm_ui$Element$moveRight(24)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$mdgriffith$elm_ui$Element$el,
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$width(
+											$mdgriffith$elm_ui$Element$px(2)),
 											$mdgriffith$elm_ui$Element$centerX,
-											$mdgriffith$elm_ui$Element$alignBottom,
-											$mdgriffith$elm_ui$Element$padding(4),
-											$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
-											$mdgriffith$elm_ui$Element$Border$rounded(20),
-											$mdgriffith$elm_ui$Element$Border$width(2),
-											$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange)
+											$mdgriffith$elm_ui$Element$height(
+											$mdgriffith$elm_ui$Element$px(10))
 										]),
-									{color: $author$project$Colors$orange, icon: $icidasset$elm_material_icons$Material$Icons$more_horiz, size: 20})
-								]))) : $mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$none),
+									A2(
+									$mdgriffith$elm_ui$Element$Input$button,
+									_List_Nil,
+									{
+										label: A2(
+											$author$project$MaterialIcons$material,
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$centerX,
+													$mdgriffith$elm_ui$Element$alignBottom,
+													$mdgriffith$elm_ui$Element$padding(4),
+													$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+													$mdgriffith$elm_ui$Element$Border$rounded(20),
+													$mdgriffith$elm_ui$Element$Border$width(2),
+													$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange)
+												]),
+											{color: $author$project$Colors$orange, icon: $icidasset$elm_material_icons$Material$Icons$unfold_less, size: 20}),
+										onPress: $elm$core$Maybe$Just(
+											$author$project$Pages$Flow_buildr$ToggleExpandOnNode(index))
+									})
+								]))) : $mdgriffith$elm_ui$Element$centerX),
 						$mdgriffith$elm_ui$Element$inFront(
 						A2(
 							$mdgriffith$elm_ui$Element$el,
@@ -20831,7 +20954,11 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 											$mdgriffith$elm_ui$Element$centerX,
 											$mdgriffith$elm_ui$Element$centerY,
 											$mdgriffith$elm_ui$Element$Border$rounded($author$project$Pages$Flow_buildr$circleWidth),
-											$mdgriffith$elm_ui$Element$Border$width(4),
+											$author$project$UI$Css$transition(
+											_List_fromArray(
+												[
+													_Utils_Tuple3($author$project$UI$Css$BorderWidth, 300, 'ease')
+												])),
 											$mdgriffith$elm_ui$Element$Background$color(color),
 											$mdgriffith$elm_ui$Element$Border$shadow(
 											{
@@ -20848,11 +20975,7 @@ var $author$project$Pages$Flow_buildr$circle = F2(
 										[
 											$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$midGrey),
 											$mdgriffith$elm_ui$Element$Border$width(0)
-										]) : _List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$Border$color(
-											expanded ? color : $author$project$Colors$orange)
-										])),
+										]) : (expanded ? _List_Nil : _List_Nil)),
 								$mdgriffith$elm_ui$Element$none))),
 						$mdgriffith$elm_ui$Element$inFront(
 						A2(
@@ -21237,7 +21360,7 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree = F3(
 								if (!_v1.b.b.b) {
 									var _v2 = _v1.b;
 									var oneChild = _v2.a;
-									return $author$project$Pages$Flow_buildr$verticalLine(40);
+									return $author$project$Pages$Flow_buildr$verticalLine(50);
 								} else {
 									return A2(
 										$mdgriffith$elm_ui$Element$column,
@@ -22236,4 +22359,4 @@ var $author$project$Main$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangedUrl, onUrlRequest: $author$project$Main$ClickedLink, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"ZoomIn":[],"ZoomOut":[],"ResetZoom":[],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"ZoomIn":[],"ZoomOut":[],"ResetZoom":[],"ToggleExpandOnNode":["Basics.Int"],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}}}}})}});}(this));

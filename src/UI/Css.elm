@@ -47,6 +47,8 @@ type Animatable
     = Height
     | Width
     | Shadow
+    | BorderWidth
+    | BorderColor
     | Translation
     | Scale
 
@@ -61,6 +63,12 @@ animatableToString animatable =
 
         Shadow ->
             "box-shadow"
+
+        BorderWidth ->
+            "border-width"
+
+        BorderColor ->
+            "border-color"
 
         Translation ->
             "transform"

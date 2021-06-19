@@ -68,40 +68,40 @@ init req =
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
       , tree =
-            Node (NodeAttr Colors.purple True False)
-                [ Node (NodeAttr Colors.green True True) []
-                , Node (NodeAttr Colors.green False False)
-                    [ Node (NodeAttr Colors.green True False) []
-                    , Node (NodeAttr Colors.green True False) []
+            Node (NodeAttr Colors.purple 1 True False)
+                [ Node (NodeAttr Colors.green 2 True True) []
+                , Node (NodeAttr Colors.green 3 False False)
+                    [ Node (NodeAttr Colors.green 4 True False) []
+                    , Node (NodeAttr Colors.green 5 True False) []
                     ]
-                , Node (NodeAttr Colors.darkBlue True False)
-                    [ Node (NodeAttr Colors.green True False) []
-                    , Node (NodeAttr Colors.green True False)
-                        [ Node (NodeAttr Colors.green True False) []
+                , Node (NodeAttr Colors.darkBlue 6 True False)
+                    [ Node (NodeAttr Colors.green 7 True False) []
+                    , Node (NodeAttr Colors.green 8 True False)
+                        [ Node (NodeAttr Colors.green 9 True False) []
                         ]
-                    , Node (NodeAttr Colors.grey True False) []
-                    , Node (NodeAttr Colors.grey False False)
-                        [ Node (NodeAttr Colors.darkBlue True False)
-                            [ Node (NodeAttr Colors.green True False) []
-                            , Node (NodeAttr Colors.green True False)
-                                [ Node (NodeAttr Colors.green True False) []
+                    , Node (NodeAttr Colors.grey 10 True False) []
+                    , Node (NodeAttr Colors.grey 11 False False)
+                        [ Node (NodeAttr Colors.darkBlue 12 True False)
+                            [ Node (NodeAttr Colors.green 13 True False) []
+                            , Node (NodeAttr Colors.green 14 True False)
+                                [ Node (NodeAttr Colors.green 15 True False) []
                                 ]
-                            , Node (NodeAttr Colors.grey True False) []
-                            , Node (NodeAttr Colors.grey True False) []
+                            , Node (NodeAttr Colors.grey 16 True False) []
+                            , Node (NodeAttr Colors.grey 17 True False) []
                             ]
-                        , Node (NodeAttr Colors.blue True False)
-                            [ Node (NodeAttr Colors.green True False) []
-                            , Node (NodeAttr Colors.green True False) []
-                            , Node (NodeAttr Colors.grey True False) []
-                            , Node (NodeAttr Colors.grey True False) []
+                        , Node (NodeAttr Colors.blue 18 True False)
+                            [ Node (NodeAttr Colors.green 19 True False) []
+                            , Node (NodeAttr Colors.green 20 True False) []
+                            , Node (NodeAttr Colors.grey 21 True False) []
+                            , Node (NodeAttr Colors.grey 22 True False) []
                             ]
                         ]
                     ]
-                , Node (NodeAttr Colors.blue True False)
-                    [ Node (NodeAttr Colors.green True False) []
-                    , Node (NodeAttr Colors.green True False) []
+                , Node (NodeAttr Colors.blue 23 True False)
+                    [ Node (NodeAttr Colors.green 24 True False) []
+                    , Node (NodeAttr Colors.green 25 True False) []
                     ]
-                , Node (NodeAttr Colors.green True False) []
+                , Node (NodeAttr Colors.green 26 True False) []
                 ]
       , canvas =
             { scale = 1
@@ -137,6 +137,8 @@ type Msg
     | ZoomIn
     | ZoomOut
     | ResetZoom
+      ---
+    | ToggleExpandOnNode Int
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
@@ -182,6 +184,18 @@ update msg ({ canvas } as model) =
             , Effect.none
             )
 
+        ToggleExpandOnNode nodeId ->
+            ( { model
+                | tree =
+                    findAndUpdateNode nodeId
+                        (\(Node attr children) ->
+                            Node { attr | expanded = not attr.expanded } children
+                        )
+                        model.tree
+              }
+            , Effect.none
+            )
+
         ZoomIn ->
             ( { model | canvas = { canvas | scale = canvas.scale + 0.1 } }
             , Effect.none
@@ -196,6 +210,14 @@ update msg ({ canvas } as model) =
             ( { model | canvas = { canvas | scale = 1 } }
             , Effect.none
             )
+
+
+findAndUpdateNode nodeId_ updateFn ((Node attr children) as tree) =
+    if attr.index == nodeId_ then
+        updateFn tree
+
+    else
+        Node attr (List.map (findAndUpdateNode nodeId_ updateFn) children)
 
 
 
@@ -640,6 +662,7 @@ type Node
 
 type alias NodeAttr =
     { color : Color
+    , index : Int
     , expanded : Bool
     , dropNode : Bool
     }
@@ -812,7 +835,7 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
                 none
 
             ( _, [ oneChild ] ) ->
-                verticalLine 40
+                verticalLine 50
 
             _ ->
                 column
@@ -1050,7 +1073,7 @@ circleWidth =
 
 circle attr { node, icon, dragging } =
     let
-        (Node { expanded, color, dropNode } _) =
+        (Node { expanded, color, dropNode, index } children) =
             node
 
         scaler =
@@ -1065,18 +1088,46 @@ circle attr { node, icon, dragging } =
             below
                 (column [ centerX, pointer ]
                     [ el [ width (px 2), centerX, height (px 10), Background.color Colors.orange ] none
-                    , MaterialIcons.material
-                        [ centerX
-                        , alignBottom
-                        , padding 4
-                        , Background.color Colors.white
-                        , Border.rounded 20
-                        , Border.width 2
-                        , Border.color Colors.orange
-                        ]
-                        { icon = Material.Icons.more_horiz
-                        , size = 20
-                        , color = Colors.orange
+                    , Input.button []
+                        { label =
+                            MaterialIcons.material
+                                [ centerX
+                                , alignBottom
+                                , padding 4
+                                , Background.color Colors.white
+                                , Border.rounded 20
+                                , Border.width 2
+                                , Border.color Colors.orange
+                                ]
+                                { icon = Material.Icons.more_horiz
+                                , size = 20
+                                , color = Colors.orange
+                                }
+                        , onPress = Just (ToggleExpandOnNode index)
+                        }
+                    ]
+                )
+
+           else if children /= [] then
+            below
+                (column [ centerX, pointer, alpha 0.4, mouseOver [ alpha 1 ], moveRight 24 ]
+                    [ el [ width (px 2), centerX, height (px 10) ] none
+                    , Input.button []
+                        { label =
+                            MaterialIcons.material
+                                [ centerX
+                                , alignBottom
+                                , padding 4
+                                , Background.color Colors.white
+                                , Border.rounded 20
+                                , Border.width 2
+                                , Border.color Colors.orange
+                                ]
+                                { icon = Material.Icons.unfold_less
+                                , size = 20
+                                , color = Colors.orange
+                                }
+                        , onPress = Just (ToggleExpandOnNode index)
                         }
                     ]
                 )
@@ -1109,7 +1160,11 @@ circle attr { node, icon, dragging } =
                      , centerX
                      , centerY
                      , Border.rounded circleWidth
-                     , Border.width 4
+                     , Css.transition
+                        [ ( Css.BorderWidth, 300, "ease" )
+
+                        -- , ( Css.BorderColor, 1500, "ease" )
+                        ]
                      , Background.color color
                      , Border.shadow
                         { offset = ( 0, 4 )
@@ -1131,15 +1186,13 @@ circle attr { node, icon, dragging } =
                                 , Border.width 0
                                 ]
 
-                            else
-                                [ Border.color
-                                    (if expanded then
-                                        color
+                            else if expanded then
+                                []
+                                -- [ Border.color Colors.orange, Border.width 0 ]
 
-                                     else
-                                        Colors.orange
-                                    )
-                                ]
+                            else
+                                []
+                            -- [ Border.color Colors.orange, Border.width 4 ]
                            )
                     )
                     none
