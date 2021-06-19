@@ -293,20 +293,21 @@ viewActionBar model =
             , blur = 8
             , color = Colors.withAlpha 0.1 Colors.black
             }
-        , behindContent
-            (paragraph
-                [ Font.size 12
-                , alignBottom
-                , padding 32
-                ]
-                [ text
-                    (Debug.toString
-                        { count = model.count
-                        , pickedUpFlowAction = model.pickedUpFlowAction
-                        }
-                    )
-                ]
-            )
+
+        -- , behindContent
+        --     (paragraph
+        --         [ Font.size 12
+        --         , alignBottom
+        --         , padding 32
+        --         ]
+        --         [ text
+        --             (Debug.toString
+        --                 { count = model.count
+        --                 , pickedUpFlowAction = model.pickedUpFlowAction
+        --                 }
+        --             )
+        --         ]
+        --     )
         ]
         [ row [ width fill ]
             [ el [ Font.size 20 ] <| text "Intro Call Flow"
@@ -344,9 +345,9 @@ viewActionBar model =
                     in
                     row
                         [ spacing 12
+
                         -- , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
                         --     htmlAttribute (Html.Attributes.style "z-index" "11")
-
                         --   else
                         --     spacing 12
                         ]
