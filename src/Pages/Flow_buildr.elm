@@ -1089,8 +1089,32 @@ circle attr { node, icon, dragging } =
                 (column [ centerX, pointer ]
                     [ el [ width (px 2), centerX, height (px 10), Background.color Colors.orange ] none
                     , Input.button []
+                        -- [ onRight
+                        --     -- el
+                        --     --         [ centerX
+                        --     --         , alignBottom
+                        --     --         , padding 4
+                        --     --         , Background.color Colors.white
+                        --     --         , Border.rounded 20
+                        --     --         , Border.width 2
+                        --     --         , Border.color Colors.orange
+                        --     --         ]
+                        --     --     <|
+                        --     (el
+                        --         [ Font.size 14
+                        --         , moveDown 1
+                        --         , moveRight 8
+                        --         , Background.color Colors.white
+                        --         , Border.rounded 20
+                        --         , Font.center
+                        --         , Font.color Colors.grey
+                        --         , centerY
+                        --         ]
+                        --         (text (String.fromInt (List.length children)))
+                        --     )
+                        -- ]
                         { label =
-                            el
+                            MaterialIcons.material
                                 [ centerX
                                 , alignBottom
                                 , padding 4
@@ -1099,30 +1123,10 @@ circle attr { node, icon, dragging } =
                                 , Border.width 2
                                 , Border.color Colors.orange
                                 ]
-                            <|
-                                el
-                                    [ width (px (16 * String.length (String.fromInt (List.length children))))
-                                    , height (px (16 * String.length (String.fromInt (List.length children))))
-                                    , Font.size 14
-                                    , moveDown 1
-                                    , Font.center
-                                    , Font.color Colors.grey
-                                    ]
-                                    (text (String.fromInt (List.length children)))
-
-                        -- MaterialIcons.material
-                        --     [ centerX
-                        --     , alignBottom
-                        --     , padding 4
-                        --     , Background.color Colors.white
-                        --     , Border.rounded 20
-                        --     , Border.width 2
-                        --     , Border.color Colors.orange
-                        --     ]
-                        --     { icon = Material.Icons.more_horiz
-                        --     , size = 20
-                        --     , color = Colors.orange
-                        --     }
+                                { icon = Material.Icons.more_horiz
+                                , size = 20
+                                , color = Colors.orange
+                                }
                         , onPress = Just (ToggleExpandOnNode index)
                         }
                     ]
