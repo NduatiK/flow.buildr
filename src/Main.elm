@@ -142,3 +142,4 @@ subscriptions model =
         [ Pages.subscriptions model.page model.shared model.url model.key |> Sub.map Page
         , Shared.subscriptions (Request.create () model.url model.key) model.shared |> Sub.map Shared
         ]
+
