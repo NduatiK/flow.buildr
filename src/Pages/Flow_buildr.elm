@@ -49,6 +49,7 @@ type alias Model =
     , viewHeight : Int
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
     , canvas : CanvasModel
+    , tree : Node
     }
 
 
@@ -64,6 +65,42 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
+      , tree =
+            Node (NodeAttr Colors.purple True)
+                [ Node (NodeAttr Colors.green True) []
+                , Node (NodeAttr Colors.green False)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.green True) []
+                    ]
+                , Node (NodeAttr Colors.darkBlue True)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.green True)
+                        [ Node (NodeAttr Colors.green True) []
+                        ]
+                    , Node (NodeAttr Colors.grey True) []
+                    , Node (NodeAttr Colors.grey False)
+                        [ Node (NodeAttr Colors.darkBlue True)
+                            [ Node (NodeAttr Colors.green True) []
+                            , Node (NodeAttr Colors.green True)
+                                [ Node (NodeAttr Colors.green True) []
+                                ]
+                            , Node (NodeAttr Colors.grey True) []
+                            , Node (NodeAttr Colors.grey True) []
+                            ]
+                        , Node (NodeAttr Colors.blue True)
+                            [ Node (NodeAttr Colors.green True) []
+                            , Node (NodeAttr Colors.green True) []
+                            , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
+                            , Node (NodeAttr Colors.grey True) []
+                            ]
+                        ]
+                    ]
+                , Node (NodeAttr Colors.blue True)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.green True) []
+                    ]
+                , Node (NodeAttr Colors.green True) []
+                ]
       , canvas =
             { scale = 1
             }
@@ -543,9 +580,11 @@ viewCanvas model =
                 --         none
                 --     )
                 , scale (max 1 model.canvas.scale)
+                , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease, zoom 0.2s ease")
+                , htmlAttribute (Html.Attributes.style "transition" "transform 0.1s ease, zoom 0.2s ease")
                 ]
             <|
-                viewHtmlTree_
+                viewHtmlTree_ (toFloat model.viewHeight * max 0 ((model.canvas.scale - 1) / 3)) model.tree
 
 
 type Node
@@ -581,51 +620,17 @@ numberOfChildren_ (Node { expanded } children) =
             |> List.sum
 
 
-viewHtmlTree_ =
-    let
-        tree =
-            Node (NodeAttr Colors.purple True)
-                [ Node (NodeAttr Colors.green True) []
-                , Node (NodeAttr Colors.green False)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True) []
-                    ]
-                , Node (NodeAttr Colors.darkBlue True)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True)
-                        [ Node (NodeAttr Colors.green True) []
-                        ]
-                    , Node (NodeAttr Colors.grey True) []
-                    , Node (NodeAttr Colors.grey False)
-                        [ Node (NodeAttr Colors.darkBlue True)
-                            [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.green True)
-                                [ Node (NodeAttr Colors.green True) []
-                                ]
-                            , Node (NodeAttr Colors.grey True) []
-                            , Node (NodeAttr Colors.grey True) []
-                            ]
-                        , Node (NodeAttr Colors.blue True)
-                            [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
-                            , Node (NodeAttr Colors.grey True) []
-                            ]
-                        ]
-                    ]
-                , Node (NodeAttr Colors.blue True)
-                    [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.green True) []
-                    ]
-                , Node (NodeAttr Colors.green True) []
-                ]
-    in
+viewHtmlTree_ offset tree =
     el
         [ alignLeft
         , Background.tiled "dist/DotGrid.png"
         , htmlAttribute (Html.Attributes.style "width" "auto")
         , htmlAttribute (Html.Attributes.style "min-width" "100%")
         , height fill
+        , moveDown offset
+        , moveRight offset
+        , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease, zoom 0.2s ease")
+        , htmlAttribute (Html.Attributes.style "transition" "transform 0.1s ease, zoom 0.2s ease")
         , paddingEach
             { top = 90
             , left = 24

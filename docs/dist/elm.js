@@ -11249,6 +11249,24 @@ var $author$project$Pages$Flow_buildr$GotWindowSize = F2(
 	function (a, b) {
 		return {$: 'GotWindowSize', a: a, b: b};
 	});
+var $author$project$Pages$Flow_buildr$Node = F2(
+	function (a, b) {
+		return {$: 'Node', a: a, b: b};
+	});
+var $author$project$Pages$Flow_buildr$NodeAttr = F2(
+	function (color, expanded) {
+		return {color: color, expanded: expanded};
+	});
+var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
+	function (a, b, c, d) {
+		return {$: 'Rgba', a: a, b: b, c: c, d: d};
+	});
+var $mdgriffith$elm_ui$Element$rgb255 = F3(
+	function (red, green, blue) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
+	});
+var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
+var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
 var $elm$browser$Browser$Dom$getViewport = _Browser_withWindow(_Browser_getViewport);
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$UI$getSizeOfWindow = function (msg) {
@@ -11262,6 +11280,9 @@ var $author$project$UI$getSizeOfWindow = function (msg) {
 		},
 		$elm$browser$Browser$Dom$getViewport);
 };
+var $author$project$Colors$green = A3($mdgriffith$elm_ui$Element$rgb255, 110, 228, 193);
+var $author$project$Colors$grey = A3($mdgriffith$elm_ui$Element$rgb255, 143, 139, 168);
+var $author$project$Colors$purple = A3($mdgriffith$elm_ui$Element$rgb255, 102, 55, 241);
 var $author$project$Pages$Flow_buildr$init = function (req) {
 	return _Utils_Tuple2(
 		{
@@ -11269,6 +11290,152 @@ var $author$project$Pages$Flow_buildr$init = function (req) {
 			count: 0,
 			pickedUpFlowAction: $elm$core$Maybe$Nothing,
 			req: req,
+			tree: A2(
+				$author$project$Pages$Flow_buildr$Node,
+				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$purple, true),
+				_List_fromArray(
+					[
+						A2(
+						$author$project$Pages$Flow_buildr$Node,
+						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+						_List_Nil),
+						A2(
+						$author$project$Pages$Flow_buildr$Node,
+						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, false),
+						_List_fromArray(
+							[
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_Nil),
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_Nil)
+							])),
+						A2(
+						$author$project$Pages$Flow_buildr$Node,
+						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true),
+						_List_fromArray(
+							[
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_Nil),
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_fromArray(
+									[
+										A2(
+										$author$project$Pages$Flow_buildr$Node,
+										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+										_List_Nil)
+									])),
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+								_List_Nil),
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, false),
+								_List_fromArray(
+									[
+										A2(
+										$author$project$Pages$Flow_buildr$Node,
+										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true),
+										_List_fromArray(
+											[
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+												_List_Nil),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+												_List_fromArray(
+													[
+														A2(
+														$author$project$Pages$Flow_buildr$Node,
+														A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+														_List_Nil)
+													])),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+												_List_Nil),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+												_List_Nil)
+											])),
+										A2(
+										$author$project$Pages$Flow_buildr$Node,
+										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true),
+										_List_fromArray(
+											[
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+												_List_Nil),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+												_List_Nil),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+												_List_fromArray(
+													[
+														A2(
+														$author$project$Pages$Flow_buildr$Node,
+														A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+														_List_fromArray(
+															[
+																A2(
+																$author$project$Pages$Flow_buildr$Node,
+																A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+																_List_fromArray(
+																	[
+																		A2(
+																		$author$project$Pages$Flow_buildr$Node,
+																		A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+																		_List_fromArray(
+																			[
+																				A2(
+																				$author$project$Pages$Flow_buildr$Node,
+																				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+																				_List_Nil)
+																			]))
+																	]))
+															]))
+													])),
+												A2(
+												$author$project$Pages$Flow_buildr$Node,
+												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
+												_List_Nil)
+											]))
+									]))
+							])),
+						A2(
+						$author$project$Pages$Flow_buildr$Node,
+						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true),
+						_List_fromArray(
+							[
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_Nil),
+								A2(
+								$author$project$Pages$Flow_buildr$Node,
+								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+								_List_Nil)
+							])),
+						A2(
+						$author$project$Pages$Flow_buildr$Node,
+						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
+						_List_Nil)
+					])),
 			viewHeight: 800,
 			viewWidth: 800
 		},
@@ -11601,14 +11768,6 @@ var $author$project$Pages$Flow_buildr$update = F2(
 var $author$project$Pages$Flow_buildr$MovedFlowActionTo = F2(
 	function (a, b) {
 		return {$: 'MovedFlowActionTo', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
-	function (a, b, c, d) {
-		return {$: 'Rgba', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Element$rgb255 = F3(
-	function (red, green, blue) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
 	});
 var $author$project$UI$darkness = A3($mdgriffith$elm_ui$Element$rgb255, 25, 25, 27);
 var $mdgriffith$elm_ui$Element$rgb = F3(
@@ -17235,7 +17394,6 @@ var $mdgriffith$elm_ui$Element$createNearby = F2(
 var $mdgriffith$elm_ui$Element$onRight = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$OnRight, element);
 };
-var $author$project$Colors$purple = A3($mdgriffith$elm_ui$Element$rgb255, 102, 55, 241);
 var $elm$svg$Svg$Attributes$class = _VirtualDom_attribute('class');
 var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
 var $elm$svg$Svg$map = $elm$virtual_dom$VirtualDom$map;
@@ -18023,7 +18181,6 @@ var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
 var $mdgriffith$elm_ui$Element$behindContent = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
 };
-var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
 var $author$project$Model$Actions$Text = function (a) {
@@ -18092,7 +18249,6 @@ var $icidasset$elm_material_icons$Material$Icons$alt_route = A2(
 					_List_Nil)
 				]))
 		]));
-var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
 var $author$project$Colors$darkGreen = A3($mdgriffith$elm_ui$Element$rgb255, 0, 150, 136);
 var $icidasset$elm_material_icons$Material$Icons$dialpad = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
@@ -18142,8 +18298,6 @@ var $icidasset$elm_material_icons$Material$Icons$exit_to_app = A2(
 				]),
 			_List_Nil)
 		]));
-var $author$project$Colors$green = A3($mdgriffith$elm_ui$Element$rgb255, 110, 228, 193);
-var $author$project$Colors$grey = A3($mdgriffith$elm_ui$Element$rgb255, 143, 139, 168);
 var $author$project$Colors$lime = A3($mdgriffith$elm_ui$Element$rgb255, 214, 228, 40);
 var $icidasset$elm_material_icons$Material$Icons$message = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
@@ -20371,14 +20525,6 @@ var $author$project$Pages$Flow_buildr$viewChrome = function (model) {
 					]))
 			]));
 };
-var $author$project$Pages$Flow_buildr$Node = F2(
-	function (a, b) {
-		return {$: 'Node', a: a, b: b};
-	});
-var $author$project$Pages$Flow_buildr$NodeAttr = F2(
-	function (color, expanded) {
-		return {color: color, expanded: expanded};
-	});
 var $elm$core$List$sum = function (numbers) {
 	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
 };
@@ -20846,179 +20992,40 @@ var $author$project$Pages$Flow_buildr$viewHtmlTree = F2(
 									children)))))
 				]));
 	});
-var $author$project$Pages$Flow_buildr$viewHtmlTree_ = function () {
-	var tree = A2(
-		$author$project$Pages$Flow_buildr$Node,
-		A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$purple, true),
-		_List_fromArray(
-			[
-				A2(
-				$author$project$Pages$Flow_buildr$Node,
-				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-				_List_Nil),
-				A2(
-				$author$project$Pages$Flow_buildr$Node,
-				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, false),
-				_List_fromArray(
-					[
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_Nil),
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_Nil)
-					])),
-				A2(
-				$author$project$Pages$Flow_buildr$Node,
-				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true),
-				_List_fromArray(
-					[
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_Nil),
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_fromArray(
-							[
-								A2(
-								$author$project$Pages$Flow_buildr$Node,
-								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-								_List_Nil)
-							])),
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-						_List_Nil),
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, false),
-						_List_fromArray(
-							[
-								A2(
-								$author$project$Pages$Flow_buildr$Node,
-								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$darkBlue, true),
-								_List_fromArray(
-									[
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-										_List_Nil),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-										_List_fromArray(
-											[
-												A2(
-												$author$project$Pages$Flow_buildr$Node,
-												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-												_List_Nil)
-											])),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-										_List_Nil),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-										_List_Nil)
-									])),
-								A2(
-								$author$project$Pages$Flow_buildr$Node,
-								A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true),
-								_List_fromArray(
-									[
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-										_List_Nil),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-										_List_Nil),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-										_List_fromArray(
-											[
-												A2(
-												$author$project$Pages$Flow_buildr$Node,
-												A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-												_List_fromArray(
-													[
-														A2(
-														$author$project$Pages$Flow_buildr$Node,
-														A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-														_List_fromArray(
-															[
-																A2(
-																$author$project$Pages$Flow_buildr$Node,
-																A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-																_List_fromArray(
-																	[
-																		A2(
-																		$author$project$Pages$Flow_buildr$Node,
-																		A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-																		_List_Nil)
-																	]))
-															]))
-													]))
-											])),
-										A2(
-										$author$project$Pages$Flow_buildr$Node,
-										A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$grey, true),
-										_List_Nil)
-									]))
-							]))
-					])),
-				A2(
-				$author$project$Pages$Flow_buildr$Node,
-				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$blue, true),
-				_List_fromArray(
-					[
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_Nil),
-						A2(
-						$author$project$Pages$Flow_buildr$Node,
-						A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-						_List_Nil)
-					])),
-				A2(
-				$author$project$Pages$Flow_buildr$Node,
-				A2($author$project$Pages$Flow_buildr$NodeAttr, $author$project$Colors$green, true),
-				_List_Nil)
-			]));
-	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$alignLeft,
-				$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png'),
-				$mdgriffith$elm_ui$Element$htmlAttribute(
-				A2($elm$html$Html$Attributes$style, 'width', 'auto')),
-				$mdgriffith$elm_ui$Element$htmlAttribute(
-				A2($elm$html$Html$Attributes$style, 'min-width', '100%')),
-				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-				$mdgriffith$elm_ui$Element$paddingEach(
-				{bottom: 30, left: 24, right: 24, top: 90})
-			]),
-		A2(
-			$author$project$Pages$Flow_buildr$viewHtmlTree,
-			{
-				hasParent: false,
-				hasSibling: false,
-				parentWidth: $author$project$Pages$Flow_buildr$numberOfChildren(tree),
-				siblingCount: 0,
-				widthOfLeftSibling: 0,
-				widthOfLeftSiblings: 0
-			},
-			tree));
-}();
+var $author$project$Pages$Flow_buildr$viewHtmlTree_ = F2(
+	function (offset, tree) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$alignLeft,
+					$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png'),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'width', 'auto')),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'min-width', '100%')),
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$moveDown(offset),
+					$mdgriffith$elm_ui$Element$moveRight(offset),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease, zoom 0.2s ease')),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.1s ease, zoom 0.2s ease')),
+					$mdgriffith$elm_ui$Element$paddingEach(
+					{bottom: 30, left: 24, right: 24, top: 90})
+				]),
+			A2(
+				$author$project$Pages$Flow_buildr$viewHtmlTree,
+				{
+					hasParent: false,
+					hasSibling: false,
+					parentWidth: $author$project$Pages$Flow_buildr$numberOfChildren(tree),
+					siblingCount: 0,
+					widthOfLeftSibling: 0,
+					widthOfLeftSiblings: 0
+				},
+				tree));
+	});
 var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 	var canvasWidth = (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth;
 	return A2(
@@ -21052,9 +21059,16 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 						$mdgriffith$elm_ui$Element$scale(
-						A2($elm$core$Basics$max, 1, model.canvas.scale))
+						A2($elm$core$Basics$max, 1, model.canvas.scale)),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease, zoom 0.2s ease')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.1s ease, zoom 0.2s ease'))
 					]),
-				$author$project$Pages$Flow_buildr$viewHtmlTree_)));
+				A2(
+					$author$project$Pages$Flow_buildr$viewHtmlTree_,
+					model.viewHeight * A2($elm$core$Basics$max, 0, (model.canvas.scale - 1) / 3),
+					model.tree))));
 };
 var $author$project$Pages$Flow_buildr$view = function (model) {
 	return {
