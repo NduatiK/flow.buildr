@@ -2,7 +2,6 @@ module Pages.Flow_buildr exposing (Model, Msg, page)
 
 import Browser.Events
 import Colors
-import Component.Canvas as CanvasComponent
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -49,7 +48,12 @@ type alias Model =
     , viewWidth : Int
     , viewHeight : Int
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
-    , canvasState : CanvasComponent.Model
+    , canvas : CanvasModel
+    }
+
+
+type alias CanvasModel =
+    { scale : Float
     }
 
 
@@ -60,7 +64,9 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
-      , canvasState = CanvasComponent.init
+      , canvas =
+            { scale = 1
+            }
       }
     , Effect.fromCmd (UI.getSizeOfWindow GotWindowSize)
     )
@@ -89,7 +95,9 @@ type Msg
     | Frame Float
     | GotWindowSize Int Int
       ---
-    | CanvasMsg CanvasComponent.Msg
+    | ZoomIn
+    | ZoomOut
+    | ResetZoom
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
@@ -97,7 +105,7 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
-update msg model =
+update msg ({ canvas } as model) =
     case msg of
         NoOp ->
             ( model, Effect.none )
@@ -135,28 +143,20 @@ update msg model =
             , Effect.none
             )
 
-        CanvasMsg msg_ ->
-            let
-                ( updatedCanvasState, canvasEffect ) =
-                    CanvasComponent.update msg_ model.canvasState
-                        |> Tuple.mapSecond (Effect.map CanvasMsg)
-
-                ( updatedModel, effect ) =
-                    updateWithCanvasMsg msg_ { model | canvasState = updatedCanvasState }
-            in
-            ( updatedModel
-            , Effect.batch
-                [ canvasEffect
-                , effect
-                ]
+        ZoomIn ->
+            ( { model | canvas = { canvas | scale = canvas.scale + 0.1 } }
+            , Effect.none
             )
 
+        ZoomOut ->
+            ( { model | canvas = { canvas | scale = canvas.scale - 0.1 } }
+            , Effect.none
+            )
 
-updateWithCanvasMsg : CanvasComponent.Msg -> Model -> ( Model, Effect Msg )
-updateWithCanvasMsg msg model =
-    case msg of
-        _ ->
-            ( model, Effect.none )
+        ResetZoom ->
+            ( { model | canvas = { canvas | scale = 1 } }
+            , Effect.none
+            )
 
 
 
@@ -233,15 +233,17 @@ view model =
           <|
             UI.layout model.req.route UI.defaultPalette <|
                 row [ width fill, height fill ]
-                    [ viewActionBar model
-                    , viewCanvas model
+                    [ --      viewActionBar model
+                      -- ,
+                      viewCanvas model
                     ]
         ]
     }
 
 
 actionBarWidth =
-    300
+    -- 300
+    0
 
 
 viewActionBar model =
@@ -266,7 +268,6 @@ viewActionBar model =
                     (Debug.toString
                         { count = model.count
                         , pickedUpFlowAction = model.pickedUpFlowAction
-                        , state = model.canvasState
                         }
                     )
                 ]
@@ -380,19 +381,6 @@ calculateOffset defaultSize mids i pickedUpFlowAction =
 
         Nothing ->
             ( ( mids, mids ), False )
-
-
-yellowEllipse =
-    html <|
-        Svg.svg [] <|
-            [ Svg.circle
-                [ Svg.Attributes.fill "rgba(240,240,10,0.5)"
-                , Svg.Attributes.cx "60"
-                , Svg.Attributes.cy "120"
-                , Svg.Attributes.r "30"
-                ]
-                []
-            ]
 
 
 renderDragableAction model defaultSize i ( color, icon ) =
@@ -525,76 +513,316 @@ renderDragableAction model defaultSize i ( color, icon ) =
 
 
 viewCanvas model =
+    let
+        canvasWidth =
+            model.viewWidth - actionBarWidth - UI.sidebarWidth
+    in
     el
-        [ height fill
-        , width fill
+        [ height (px model.viewHeight)
+        , width (px canvasWidth)
+        , htmlAttribute (Html.Attributes.style "z-index" "1")
+        , inFront (viewCanvasHeader model)
+        , inFront (viewChrome model.canvas)
+        ]
+    <|
+        el
+            [ height fill
+            , width (px canvasWidth)
+            , scrollbars
+            ]
+        <|
+            el
+                [ width fill
+                , height fill
+
+                -- , behindContent
+                --     (el
+                --         [ htmlAttribute (Html.Attributes.style "width" "100%")
+                --         , height fill
+                --         -- ,
+                --         , Background.color Colors.orange
+                --         ]
+                --         none
+                --     )
+                , scale (max 1 model.canvas.scale)
+                ]
+            <|
+                viewHtmlTree_
+
+
+type Node
+    = Node NodeAttr (List Node)
+
+
+type alias NodeAttr =
+    { color : Color
+    , expanded : Bool
+    }
+
+
+numberOfChildren node =
+    let
+        a =
+            numberOfChildren_ node
+    in
+    if a == 1 then
+        a
+
+    else
+        a
+
+
+numberOfChildren_ : Node -> Int
+numberOfChildren_ (Node { expanded } children) =
+    if not expanded || children == [] then
+        1
+
+    else
+        children
+            |> List.map numberOfChildren_
+            |> List.sum
+
+
+viewHtmlTree_ =
+    let
+        tree =
+            Node (NodeAttr Colors.purple True)
+                [ Node (NodeAttr Colors.lime True) []
+                , Node (NodeAttr Colors.lime False)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.lime True) []
+                    ]
+                , Node (NodeAttr Colors.darkBlue True)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.lime True)
+                        [ Node (NodeAttr Colors.lime True) []
+                        ]
+                    , Node (NodeAttr Colors.grey True) []
+                    , Node (NodeAttr Colors.grey True)
+                        [ Node (NodeAttr Colors.darkBlue True)
+                            [ Node (NodeAttr Colors.green True) []
+                            , Node (NodeAttr Colors.lime True)
+                                [ Node (NodeAttr Colors.lime True) []
+                                ]
+                            , Node (NodeAttr Colors.grey True) []
+                            , Node (NodeAttr Colors.grey True) []
+                            ]
+                        , Node (NodeAttr Colors.blue True)
+                            [ Node (NodeAttr Colors.green True) []
+                            , Node (NodeAttr Colors.lime True) []
+                            , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
+                            , Node (NodeAttr Colors.grey True) []
+                            ]
+                        ]
+                    ]
+                , Node (NodeAttr Colors.blue True)
+                    [ Node (NodeAttr Colors.green True) []
+                    , Node (NodeAttr Colors.lime True) []
+                    ]
+                , Node (NodeAttr Colors.lime True) []
+                ]
+    in
+    el
+        [ alignLeft
+        , Background.tiled "dist/DotGrid.png"
+        , htmlAttribute (Html.Attributes.style "width" "auto")
+        , htmlAttribute (Html.Attributes.style "min-width" "100%")
+        , height fill
         , paddingEach
             { top = 90
             , left = 24
             , right = 24
             , bottom = 30
             }
-        , htmlAttribute (Html.Attributes.style "z-index" "1")
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , Background.color Colors.lightGrey
-                ]
-                none
-            )
-        , behindContent
-            (el
-                [ height fill
-                , width fill
-                , alpha 0.4
-                , Background.tiled "dist/DotGrid.png"
-                ]
-                none
-            )
-        , inFront <|
-            Element.map CanvasMsg <|
-                CanvasComponent.renderCanvas (model.viewWidth - actionBarWidth - UI.sidebarWidth) model.canvasState model
-        , inFront (viewCanvasHeader model)
         ]
-        (column
-            [ centerX
+    <|
+        viewHtmlTree
+            { hasParent = False
+            , hasSibling = False
+            , parentWidth = numberOfChildren tree
+            , widthOfLeftSiblings = 0
+            , siblingCount = 0
+            , widthOfLeftSibling = 0
+            }
+            tree
 
-            -- , Background.color Colors.orange
-            , height fill
-            , width fill
-            , spacing 60
+
+siblingPadding =
+    40
+
+
+viewHtmlTree :
+    { hasParent : Bool
+    , hasSibling : Bool
+    , parentWidth : Int
+    , widthOfLeftSiblings : Int
+    , widthOfLeftSibling : Int
+    , siblingCount : Int
+    }
+    -> Node
+    -> Element Msg
+viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded } children) as node) =
+    let
+        nodeWidth =
+            numberOfChildren node
+
+        locationRelativeToParent =
+            toFloat widthOfLeftSiblings + (toFloat (nodeWidth + 1) / 2)
+
+        onSide =
+            if locationRelativeToParent == (toFloat (parentWidth + 1) / 2) then
+                Center
+
+            else if locationRelativeToParent < (toFloat (parentWidth + 1) / 2) then
+                Left
+
+            else
+                Right
+
+        label =
+            String.fromInt nodeWidth
+                ++ "-s"
+                ++ String.fromInt widthOfLeftSiblings
+                ++ "-p"
+                ++ String.fromInt parentWidth
+                ++ "("
+                ++ String.fromFloat locationRelativeToParent
+                ++ ")"
+    in
+    column
+        [ height fill
+        , width fill
+        , centerX
+
+        -- , Background.color bgcolor
+        , moveUp 4
+
+        -- , if not hasParent then
+        --     behindContent
+        --         (verticalLine 1000)
+        --   else
+        --     moveUp 4
+        -- , spacing 60
+        ]
+        [ column [ centerX ]
+            [ if hasParent && hasSibling then
+                let
+                    relativeDistToCenter_ =
+                        locationRelativeToParent - (toFloat (parentWidth + 1) / 2)
+
+                    distToCenter =
+                        if relativeDistToCenter_ == 0 then
+                            0
+
+                        else if relativeDistToCenter_ < 0 then
+                            -- onLeft
+                            abs relativeDistToCenter_
+                                * (siblingPadding - 4 - 4 + circleWidth)
+                                - siblingPadding
+                                - (if circleWidth > 100 then
+                                    2.9 * circleWidth / 10
+
+                                   else if circleWidth > 50 then
+                                    1.6 * circleWidth / 10
+
+                                   else
+                                    0
+                                  )
+                                + (if modBy 2 siblingCount == 0 then
+                                    2
+
+                                   else
+                                    6.0
+                                  )
+
+                        else
+                            -- onRight
+                            relativeDistToCenter_
+                                * (siblingPadding - 4 - 4 + circleWidth)
+                                - siblingPadding
+                in
+                cornerToParent onSide (round distToCenter) []
+
+              else
+                none
+            , circle
+                [ inFront
+                    -- (el [ centerX, centerY, Font.size 12 ] <|
+                    --     text label
+                    -- )
+                    (MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.rotate_left
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                    )
+                ]
+                node
             ]
-            [ circle
-                [ below <|
-                    column
-                        [ centerX ]
-                        [ verticalLine
-                        , row [ centerX, spacing -4, moveUp 1 ]
-                            [ cornerOut Left []
-                            , cornerOut Right []
-                            ]
+        , case ( expanded, children ) of
+            ( False, _ ) ->
+                none
+
+            ( _, [] ) ->
+                none
+
+            ( _, [ oneChild ] ) ->
+                verticalLine 40
+
+            _ ->
+                column
+                    [ centerX ]
+                    [ verticalLine 40
+                    , row [ centerX, spacing -4, moveUp 1 ]
+                        [ cornerToChildren Left []
+                        , cornerToChildren Right []
+                        , cornerToChildren Center []
                         ]
-                ]
-            , row [ centerX, spacing -4, moveUp 1 ]
-                [ column [ moveUp 4, moveRight 10 ]
-                    [ cornerDown Left []
-                    , circle [ moveLeft 24 ]
                     ]
-                , el [ width (px (280 - 4)) ] none
-                , column [ moveUp 4 ]
-                    [ cornerDown Right []
-                    , circle [ moveRight 11 ]
-                    ]
-                ]
-            ]
-        )
+        , if not expanded then
+            none
+
+          else
+            row [ centerX, spacing -4, moveUp 1 ] <|
+                List.intersperse (el [ width (px siblingPadding) ] none) <|
+                    List.reverse <|
+                        (\( _, _, a ) -> a) <|
+                            List.foldl
+                                (\sibling ( leftSiblingsWidth, leftSiblingWidth, acc ) ->
+                                    ( leftSiblingsWidth + numberOfChildren sibling
+                                    , numberOfChildren sibling
+                                    , viewHtmlTree
+                                        { hasParent = True
+                                        , hasSibling = List.length children > 1
+                                        , parentWidth = nodeWidth
+                                        , widthOfLeftSiblings = leftSiblingsWidth
+                                        , widthOfLeftSibling = leftSiblingWidth
+                                        , siblingCount = List.length children
+                                        }
+                                        sibling
+                                        :: acc
+                                    )
+                                )
+                                ( 0, 0, [] )
+                                children
+
+        -- [ column [ moveUp 4, moveRight 10 ]
+        --     [ cornerDown Left []
+        --     , circle [ moveLeft 24 ]
+        --     ]
+        -- , el [ width (px (280 - 4)) ] none
+        -- , column [ moveUp 4 ]
+        --     [ cornerDown Right []
+        --     , circle [ moveRight 11 ]
+        --     ]
+        -- ]
+        ]
 
 
-verticalLine =
+verticalLine lineHeight =
     el
         [ width (px 4)
-        , height (px 40)
+        , height (px lineHeight)
         , centerX
         , moveUp 1
         , Background.color Colors.orange
@@ -605,55 +833,86 @@ verticalLine =
 type Side
     = Left
     | Right
+    | Center
 
 
-cornerOut side attr =
-    el
-        ([ Border.color Colors.orange
-         , height (px 20)
-         , width (px 140)
-         ]
-            ++ (case side of
-                    Left ->
-                        [ Border.roundEach
-                            { topLeft = 0
-                            , topRight = 0
-                            , bottomLeft = 0
-                            , bottomRight = 20
-                            }
-                        , Border.widthEach
-                            { top = 0
-                            , bottom = 4
-                            , left = 0
-                            , right = 4
-                            }
-                        ]
+cornerOutWidth =
+    18
 
-                    Right ->
-                        [ Border.roundEach
-                            { topLeft = 0
-                            , topRight = 0
-                            , bottomLeft = 20
-                            , bottomRight = 0
-                            }
-                        , Border.widthEach
-                            { top = 0
-                            , bottom = 4
-                            , left = 4
-                            , right = 0
-                            }
-                        ]
-               )
-            ++ attr
-        )
+
+cornerToChildren side attr =
+    let
+        color =
+            Colors.orange
+    in
+    if side == Center then
         none
 
+    else
+        el
+            ([ Border.color color
+             , height (px 20)
+             , width (px cornerOutWidth)
+             ]
+                ++ (case side of
+                        Left ->
+                            [ Border.roundEach
+                                { topLeft = 0
+                                , topRight = 0
+                                , bottomLeft = 0
+                                , bottomRight = 20
+                                }
+                            , Border.widthEach
+                                { top = 0
+                                , bottom = 4
+                                , left = 0
+                                , right = 4
+                                }
+                            ]
 
-cornerDown side attr =
+                        Right ->
+                            [ Border.roundEach
+                                { topLeft = 0
+                                , topRight = 0
+                                , bottomLeft = 20
+                                , bottomRight = 0
+                                }
+                            , Border.widthEach
+                                { top = 0
+                                , bottom = 4
+                                , left = 4
+                                , right = 0
+                                }
+                            ]
+
+                        Center ->
+                            [ width (px 4)
+                            , centerX
+                            , Background.color color
+                            , Border.width 0
+                            ]
+                   )
+                ++ attr
+            )
+            none
+
+
+cornerToParentWidth =
+    round ((circleWidth / 2) + 4)
+
+
+cornerToParent side extensionWidth attr =
+    let
+        color =
+            Colors.orange
+
+        shapeHeight =
+            40
+    in
     el
-        ([ Border.color Colors.orange
-         , height (px 40)
-         , width (px 40)
+        ([ Border.color color
+         , height (px shapeHeight)
+         , width (px cornerToParentWidth)
          ]
             ++ (case side of
                     Left ->
@@ -669,6 +928,22 @@ cornerDown side attr =
                             , left = 4
                             , right = 0
                             }
+                        , alignRight
+                        , onRight
+                            (el
+                                [ width (px (max 0 extensionWidth))
+                                , Background.color color
+                                , height (px 4)
+                                , moveUp 4
+                                , Border.roundEach
+                                    { topLeft = 0
+                                    , topRight = 0
+                                    , bottomLeft = 0
+                                    , bottomRight = 0
+                                    }
+                                ]
+                                none
+                            )
                         ]
 
                     Right ->
@@ -684,6 +959,39 @@ cornerDown side attr =
                             , left = 0
                             , right = 4
                             }
+                        , moveLeft 12
+                        , centerX
+                        , onLeft
+                            (el
+                                [ width (px (max 0 (extensionWidth - 4)))
+                                , Background.color color
+                                , height (px 4)
+                                , moveUp 4
+                                , Border.roundEach
+                                    { topLeft = 4
+                                    , topRight = 0
+                                    , bottomLeft = 4
+                                    , bottomRight = 0
+                                    }
+                                ]
+                                none
+                            )
+                        ]
+
+                    Center ->
+                        [ width (px 4)
+                        , centerX
+                        , above
+                            (el
+                                [ width (px 4)
+                                , height (px 10)
+                                , Background.color color
+                                ]
+                                none
+                            )
+                        , moveUp 1
+                        , alignTop
+                        , Background.color color
                         ]
                )
             ++ attr
@@ -691,13 +999,25 @@ cornerDown side attr =
         none
 
 
-circle attr =
+circleWidth =
+    64
+
+
+circle attr (Node { expanded, color } _) =
     el
-        ([ width (px 54)
-         , height (px 54)
+        ([ width (px circleWidth)
+         , height (px circleWidth)
          , centerX
-         , Border.rounded 44
-         , Background.color Colors.orange
+         , Border.rounded circleWidth
+         , Border.width 4
+         , Border.color
+            (if expanded then
+                Colors.lightGrey
+
+             else
+                Colors.orange
+            )
+         , Background.color Colors.lightGrey
          , Border.shadow
             { offset = ( 0, 4 )
             , size = 4
@@ -818,4 +1138,94 @@ viewCanvasHeader model =
                         }
                     ]
             }
+        ]
+
+
+viewChrome model =
+    column
+        [ alignBottom
+        , alignLeft
+        , moveUp 30
+        , moveRight 40
+        , spacing 12
+        ]
+        [ el
+            [ padding 6
+            , Border.rounded 6
+            , Background.color Colors.white
+            , Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+          <|
+            Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_out_map
+                        , size = 22
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    Just ResetZoom
+                }
+        , column
+            [ Background.color Colors.white
+            , padding 6
+            , spacing 6
+            , Border.rounded 6
+            , Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+            [ Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_in
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale > 1.6 then
+                        Nothing
+
+                    else
+                        Just ZoomIn
+                }
+            , el
+                [ width (px 20)
+                , centerX
+                , Background.color Colors.grey
+                , height (px 1)
+                ]
+                none
+            , Input.button
+                [ padding 2
+                , Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_out
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale < 0.7 then
+                        Nothing
+
+                    else
+                        Just ZoomOut
+                }
+            ]
         ]

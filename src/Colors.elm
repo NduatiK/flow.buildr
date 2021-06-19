@@ -75,3 +75,37 @@ withAlpha alpha color =
             toRgb color
     in
     rgba rgbColor.red rgbColor.green rgbColor.blue alpha
+
+
+toString : Color -> String
+toString color =
+    let
+        o =
+            toRgb color
+    in
+    "rgba("
+        ++ String.fromInt (round (o.red * 255))
+        ++ ("," ++ String.fromInt (round (o.green * 255)))
+        ++ ("," ++ String.fromInt (round (o.blue * 255)))
+        ++ ("," ++ String.fromFloat o.alpha)
+        ++ ")"
+
+
+linearTransition : Float -> Color -> Color -> Color
+linearTransition k start end =
+    let
+        ( s, e ) =
+            ( toRgb start, toRgb end )
+
+        tr s_ e_ =
+            s_ + k * (e_ - s_)
+    in
+    rgba
+        (tr s.red e.red)
+        (tr s.green e.green)
+        (tr s.blue e.blue)
+        (tr s.alpha e.alpha)
+
+
+
+--
