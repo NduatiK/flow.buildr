@@ -233,17 +233,15 @@ view model =
           <|
             UI.layout model.req.route UI.defaultPalette <|
                 row [ width fill, height fill ]
-                    [ --      viewActionBar model
-                      -- ,
-                      viewCanvas model
+                    [ viewActionBar model
+                    , viewCanvas model
                     ]
         ]
     }
 
 
 actionBarWidth =
-    -- 300
-    0
+    300
 
 
 viewActionBar model =
@@ -587,29 +585,29 @@ viewHtmlTree_ =
     let
         tree =
             Node (NodeAttr Colors.purple True)
-                [ Node (NodeAttr Colors.lime True) []
-                , Node (NodeAttr Colors.lime False)
+                [ Node (NodeAttr Colors.green True) []
+                , Node (NodeAttr Colors.green False)
                     [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.lime True) []
+                    , Node (NodeAttr Colors.green True) []
                     ]
                 , Node (NodeAttr Colors.darkBlue True)
                     [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.lime True)
-                        [ Node (NodeAttr Colors.lime True) []
+                    , Node (NodeAttr Colors.green True)
+                        [ Node (NodeAttr Colors.green True) []
                         ]
                     , Node (NodeAttr Colors.grey True) []
-                    , Node (NodeAttr Colors.grey True)
+                    , Node (NodeAttr Colors.grey False)
                         [ Node (NodeAttr Colors.darkBlue True)
                             [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.lime True)
-                                [ Node (NodeAttr Colors.lime True) []
+                            , Node (NodeAttr Colors.green True)
+                                [ Node (NodeAttr Colors.green True) []
                                 ]
                             , Node (NodeAttr Colors.grey True) []
                             , Node (NodeAttr Colors.grey True) []
                             ]
                         , Node (NodeAttr Colors.blue True)
                             [ Node (NodeAttr Colors.green True) []
-                            , Node (NodeAttr Colors.lime True) []
+                            , Node (NodeAttr Colors.green True) []
                             , Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [ Node (NodeAttr Colors.grey True) [] ] ] ] ]
                             , Node (NodeAttr Colors.grey True) []
                             ]
@@ -617,9 +615,9 @@ viewHtmlTree_ =
                     ]
                 , Node (NodeAttr Colors.blue True)
                     [ Node (NodeAttr Colors.green True) []
-                    , Node (NodeAttr Colors.lime True) []
+                    , Node (NodeAttr Colors.green True) []
                     ]
-                , Node (NodeAttr Colors.lime True) []
+                , Node (NodeAttr Colors.green True) []
                 ]
     in
     el
@@ -753,7 +751,7 @@ viewHtmlTree { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingC
                     (MaterialIcons.material [ centerX, centerY ]
                         { icon = Material.Icons.rotate_left
                         , size = 24
-                        , color = Colors.grey
+                        , color = Colors.white
                         }
                     )
                 ]
@@ -1012,17 +1010,47 @@ circle attr (Node { expanded, color } _) =
          , Border.width 4
          , Border.color
             (if expanded then
-                Colors.lightGrey
+                color
 
              else
                 Colors.orange
             )
-         , Background.color Colors.lightGrey
+         , if not expanded then
+            below
+                (column [ centerX, pointer ]
+                    [ el [ width (px 2), centerX, height (px 10), Background.color Colors.orange ] none
+                    , MaterialIcons.material
+                        [ centerX
+                        , alignBottom
+                        , padding 4
+                        , Background.color Colors.white
+                        , Border.rounded 20
+                        , Border.width 2
+                        , Border.color Colors.orange
+                        ]
+                        { icon = Material.Icons.more_horiz
+                        , size = 20
+                        , color = Colors.orange
+                        }
+                    ]
+                )
+
+           else
+            Background.color color
+         , Background.color color
          , Border.shadow
             { offset = ( 0, 4 )
             , size = 4
             , blur = 4 * 2
-            , color = Colors.withAlpha 0.05 Colors.black
+            , color =
+                Colors.withAlpha
+                    (if expanded then
+                        0.05
+
+                     else
+                        0.1
+                    )
+                    Colors.black
             }
          ]
             ++ attr
