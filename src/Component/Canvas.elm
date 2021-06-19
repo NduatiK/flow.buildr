@@ -1,84 +1,182 @@
-module Component.Canvas exposing (renderCanvas)
+module Component.Canvas exposing
+    ( Model
+    , Msg(..)
+    , init
+    , renderCanvas
+    , update
+    )
 
-import Canvas exposing (..)
-import Canvas.Settings exposing (..)
-import Canvas.Settings.Advanced exposing (..)
+-- import Html exposing (Html, div)
+-- import Html.Attributes exposing (style)
+
 import Color
-import Element
-import Html exposing (Html, div)
-import Html.Attributes exposing (style)
+import Colors
+import Effect
+import Element exposing (..)
+import Element.Background
+import Element.Border
+import Element.Font
+import Element.Input
+import Grid
+import Material.Icons
+import Material.Icons.Round
+import MaterialIcons
 
 
-centerX viewWidth =
-    viewWidth / 2
+type Model
+    = Model InternalModel
 
 
-centerY viewHeight =
-    viewHeight / 2
+type alias InternalModel =
+    { scale : Float
+    }
+
+
+init : Model
+init =
+    Model
+        { scale = 1
+        }
 
 
 
--- renderCanvas : Model -> Element.Element Msg
+--- UPDATE
 
 
-renderCanvas viewWidth { count, viewHeight } =
+type Msg
+    = ZoomIn
+    | ZoomOut
+    | ResetZoom
+
+
+update msg (Model model) =
+    Tuple.mapFirst Model <|
+        case msg of
+            ZoomIn ->
+                ( { model | scale = model.scale + 0.1 }
+                , Effect.none
+                )
+
+            ZoomOut ->
+                ( { model | scale = model.scale - 0.1 }
+                , Effect.none
+                )
+
+            ResetZoom ->
+                ( { model | scale = 1 }
+                , Effect.none
+                )
+
+
+
+--- VIEW
+
+
+renderCanvas viewWidth canvasModel { count, viewHeight } =
     let
-        width =
-            toFloat viewWidth
-
-        height =
-            toFloat viewHeight
+        (Model model) =
+            canvasModel
     in
-    Element.html <|
-        -- Html.div
-        --     [ Html.Attributes.style "display" "flex"
-        --     , Html.Attributes.style "justify-content" "center"
-        --     , Html.Attributes.style "align-items" "center"
-        --     ]
-        --     [
-        Canvas.toHtml
-            ( viewWidth, viewHeight )
-            [ Html.Attributes.style "display" "flex"
-            ]
-            [ clearScreen width height
-            , render count width height
-            ]
-
-
-
--- ]
-
-
-clearScreen width height =
-    shapes
-        [ fill (Color.rgba 0 0 0 0)
+    el
+        [ width fill
+        , height fill
+        , pointer
+        , inFront
+            (viewChrome model)
         ]
-        [ rect ( 0, 0 ) width height ]
+    <|
+        render model count width height
 
 
-render count width height =
-    let
-        size =
-            100
-
-        x =
-            0
-
-        -- -(size / 2)
-        y =
-            -(size / 2)
-
-        color =
-            toFloat (remainderBy 100 (round (count * 10)))
-                / 100
-                |> Debug.log "c"
-    in
-    shapes
-        [ transform
-            [ translate (centerX width) (centerY height)
-
-            -- , rotate (degrees (count * 3))
-            ]
-        , fill (Color.hsl color 0.7 0.7)
+viewChrome model =
+    column
+        [ alignBottom
+        , alignLeft
+        , moveUp 30
+        , moveRight 40
+        , spacing 12
         ]
-        [ circle ( x, y ) size ]
+        [ el
+            [ padding 6
+            , Element.Border.rounded 6
+            , Element.Background.color Colors.white
+            , Element.Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+          <|
+            Element.Input.button
+                [ padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.Round.zoom_out_map
+                        , size = 22
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    Just ResetZoom
+                }
+        , column
+            [ Element.Background.color Colors.white
+            , padding 6
+            , spacing 6
+            , Element.Border.rounded 6
+            , Element.Border.shadow
+                { offset = ( 0, 3 )
+                , size = 1
+                , blur = 6
+                , color = Colors.withAlpha 0.2 Colors.black
+                }
+            ]
+            [ Element.Input.button
+                [ padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_in
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale > 1.6 then
+                        Nothing
+
+                    else
+                        Just ZoomIn
+                }
+            , el
+                [ width (px 20)
+                , centerX
+                , Element.Background.color Colors.grey
+                , height (px 1)
+                ]
+                none
+            , Element.Input.button
+                [ padding 2
+                , Element.Border.rounded 2
+                ]
+                { label =
+                    MaterialIcons.material [ centerX, centerY ]
+                        { icon = Material.Icons.zoom_out
+                        , size = 24
+                        , color = Colors.grey
+                        }
+                , onPress =
+                    if model.scale < 0.7 then
+                        Nothing
+
+                    else
+                        Just ZoomOut
+                }
+            ]
+        ]
+
+
+render model count width height =
+    column [] []

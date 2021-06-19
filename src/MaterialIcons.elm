@@ -1,4 +1,4 @@
-module MaterialIcons exposing (material)
+module MaterialIcons exposing (material, colorToMaterialColor)
 
 import Color as MaterialColor
 import Element exposing (..)

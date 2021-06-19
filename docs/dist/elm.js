@@ -11262,147 +11262,20 @@ var $author$project$UI$getSizeOfWindow = function (msg) {
 		},
 		$elm$browser$Browser$Dom$getViewport);
 };
+var $author$project$Component$Canvas$Model = function (a) {
+	return {$: 'Model', a: a};
+};
+var $author$project$Component$Canvas$init = $author$project$Component$Canvas$Model(
+	{scale: 1});
 var $author$project$Pages$Flow_buildr$init = function (req) {
 	return _Utils_Tuple2(
-		{count: 0, pickedUpFlowAction: $elm$core$Maybe$Nothing, req: req, viewHeight: 800, viewWidth: 800},
+		{canvasState: $author$project$Component$Canvas$init, count: 0, pickedUpFlowAction: $elm$core$Maybe$Nothing, req: req, viewHeight: 800, viewWidth: 800},
 		$author$project$Effect$fromCmd(
 			$author$project$UI$getSizeOfWindow($author$project$Pages$Flow_buildr$GotWindowSize)));
-};
-var $author$project$Pages$Flow_buildr$Frame = function (a) {
-	return {$: 'Frame', a: a};
 };
 var $elm$browser$Browser$Events$Hidden = {$: 'Hidden'};
 var $author$project$Pages$Flow_buildr$NoOp = {$: 'NoOp'};
 var $author$project$Pages$Flow_buildr$ReleasedFlowAction = {$: 'ReleasedFlowAction'};
-var $elm$browser$Browser$AnimationManager$Delta = function (a) {
-	return {$: 'Delta', a: a};
-};
-var $elm$browser$Browser$AnimationManager$State = F3(
-	function (subs, request, oldTime) {
-		return {oldTime: oldTime, request: request, subs: subs};
-	});
-var $elm$browser$Browser$AnimationManager$init = $elm$core$Task$succeed(
-	A3($elm$browser$Browser$AnimationManager$State, _List_Nil, $elm$core$Maybe$Nothing, 0));
-var $elm$core$Process$kill = _Scheduler_kill;
-var $elm$browser$Browser$AnimationManager$now = _Browser_now(_Utils_Tuple0);
-var $elm$browser$Browser$AnimationManager$rAF = _Browser_rAF(_Utils_Tuple0);
-var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
-var $elm$core$Process$spawn = _Scheduler_spawn;
-var $elm$browser$Browser$AnimationManager$onEffects = F3(
-	function (router, subs, _v0) {
-		var request = _v0.request;
-		var oldTime = _v0.oldTime;
-		var _v1 = _Utils_Tuple2(request, subs);
-		if (_v1.a.$ === 'Nothing') {
-			if (!_v1.b.b) {
-				var _v2 = _v1.a;
-				return $elm$browser$Browser$AnimationManager$init;
-			} else {
-				var _v4 = _v1.a;
-				return A2(
-					$elm$core$Task$andThen,
-					function (pid) {
-						return A2(
-							$elm$core$Task$andThen,
-							function (time) {
-								return $elm$core$Task$succeed(
-									A3(
-										$elm$browser$Browser$AnimationManager$State,
-										subs,
-										$elm$core$Maybe$Just(pid),
-										time));
-							},
-							$elm$browser$Browser$AnimationManager$now);
-					},
-					$elm$core$Process$spawn(
-						A2(
-							$elm$core$Task$andThen,
-							$elm$core$Platform$sendToSelf(router),
-							$elm$browser$Browser$AnimationManager$rAF)));
-			}
-		} else {
-			if (!_v1.b.b) {
-				var pid = _v1.a.a;
-				return A2(
-					$elm$core$Task$andThen,
-					function (_v3) {
-						return $elm$browser$Browser$AnimationManager$init;
-					},
-					$elm$core$Process$kill(pid));
-			} else {
-				return $elm$core$Task$succeed(
-					A3($elm$browser$Browser$AnimationManager$State, subs, request, oldTime));
-			}
-		}
-	});
-var $elm$time$Time$Posix = function (a) {
-	return {$: 'Posix', a: a};
-};
-var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
-var $elm$browser$Browser$AnimationManager$onSelfMsg = F3(
-	function (router, newTime, _v0) {
-		var subs = _v0.subs;
-		var oldTime = _v0.oldTime;
-		var send = function (sub) {
-			if (sub.$ === 'Time') {
-				var tagger = sub.a;
-				return A2(
-					$elm$core$Platform$sendToApp,
-					router,
-					tagger(
-						$elm$time$Time$millisToPosix(newTime)));
-			} else {
-				var tagger = sub.a;
-				return A2(
-					$elm$core$Platform$sendToApp,
-					router,
-					tagger(newTime - oldTime));
-			}
-		};
-		return A2(
-			$elm$core$Task$andThen,
-			function (pid) {
-				return A2(
-					$elm$core$Task$andThen,
-					function (_v1) {
-						return $elm$core$Task$succeed(
-							A3(
-								$elm$browser$Browser$AnimationManager$State,
-								subs,
-								$elm$core$Maybe$Just(pid),
-								newTime));
-					},
-					$elm$core$Task$sequence(
-						A2($elm$core$List$map, send, subs)));
-			},
-			$elm$core$Process$spawn(
-				A2(
-					$elm$core$Task$andThen,
-					$elm$core$Platform$sendToSelf(router),
-					$elm$browser$Browser$AnimationManager$rAF)));
-	});
-var $elm$browser$Browser$AnimationManager$Time = function (a) {
-	return {$: 'Time', a: a};
-};
-var $elm$browser$Browser$AnimationManager$subMap = F2(
-	function (func, sub) {
-		if (sub.$ === 'Time') {
-			var tagger = sub.a;
-			return $elm$browser$Browser$AnimationManager$Time(
-				A2($elm$core$Basics$composeL, func, tagger));
-		} else {
-			var tagger = sub.a;
-			return $elm$browser$Browser$AnimationManager$Delta(
-				A2($elm$core$Basics$composeL, func, tagger));
-		}
-	});
-_Platform_effectManagers['Browser.AnimationManager'] = _Platform_createManager($elm$browser$Browser$AnimationManager$init, $elm$browser$Browser$AnimationManager$onEffects, $elm$browser$Browser$AnimationManager$onSelfMsg, 0, $elm$browser$Browser$AnimationManager$subMap);
-var $elm$browser$Browser$AnimationManager$subscription = _Platform_leaf('Browser.AnimationManager');
-var $elm$browser$Browser$AnimationManager$onAnimationFrameDelta = function (tagger) {
-	return $elm$browser$Browser$AnimationManager$subscription(
-		$elm$browser$Browser$AnimationManager$Delta(tagger));
-};
-var $elm$browser$Browser$Events$onAnimationFrameDelta = $elm$browser$Browser$AnimationManager$onAnimationFrameDelta;
 var $elm$browser$Browser$Events$Window = {$: 'Window'};
 var $elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
@@ -11430,10 +11303,12 @@ var $elm$browser$Browser$Events$addKey = function (sub) {
 			name),
 		sub);
 };
+var $elm$core$Process$kill = _Scheduler_kill;
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
 		return {event: event, key: key};
 	});
+var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$browser$Browser$Events$spawn = F3(
 	function (router, key, _v0) {
 		var node = _v0.a;
@@ -11628,13 +11503,57 @@ var $author$project$Pages$Flow_buildr$subscriptions = function (model) {
 							return _Utils_eq(x, $elm$browser$Browser$Events$Hidden) ? $author$project$Pages$Flow_buildr$ReleasedFlowAction : $author$project$Pages$Flow_buildr$NoOp;
 						});
 				}
-			}(),
-				$elm$browser$Browser$Events$onAnimationFrameDelta($author$project$Pages$Flow_buildr$Frame)
+			}()
 			]));
+};
+var $author$project$Pages$Flow_buildr$CanvasMsg = function (a) {
+	return {$: 'CanvasMsg', a: a};
 };
 var $author$project$Pages$Flow_buildr$Path = F2(
 	function (start, current) {
 		return {current: current, start: start};
+	});
+var $author$project$Effect$batch = $author$project$Effect$Batch;
+var $elm$core$Tuple$mapFirst = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
+var $author$project$Component$Canvas$update = F2(
+	function (msg, _v0) {
+		var model = _v0.a;
+		return A2(
+			$elm$core$Tuple$mapFirst,
+			$author$project$Component$Canvas$Model,
+			function () {
+				switch (msg.$) {
+					case 'ZoomIn':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{scale: model.scale + 0.1}),
+							$author$project$Effect$none);
+					case 'ZoomOut':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{scale: model.scale - 0.1}),
+							$author$project$Effect$none);
+					default:
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{scale: 1}),
+							$author$project$Effect$none);
+				}
+			}());
+	});
+var $author$project$Pages$Flow_buildr$updateWithCanvasMsg = F2(
+	function (msg, model) {
+		return _Utils_Tuple2(model, $author$project$Effect$none);
 	});
 var $author$project$Pages$Flow_buildr$update = F2(
 	function (msg, model) {
@@ -11683,12 +11602,33 @@ var $author$project$Pages$Flow_buildr$update = F2(
 								model.pickedUpFlowAction)
 						}),
 					$author$project$Effect$none);
-			default:
+			case 'ReleasedFlowAction':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{pickedUpFlowAction: $elm$core$Maybe$Nothing}),
 					$author$project$Effect$none);
+			default:
+				var msg_ = msg.a;
+				var _v2 = A2(
+					$elm$core$Tuple$mapSecond,
+					$author$project$Effect$map($author$project$Pages$Flow_buildr$CanvasMsg),
+					A2($author$project$Component$Canvas$update, msg_, model.canvasState));
+				var updatedCanvasState = _v2.a;
+				var canvasEffect = _v2.b;
+				var _v3 = A2(
+					$author$project$Pages$Flow_buildr$updateWithCanvasMsg,
+					msg_,
+					_Utils_update(
+						model,
+						{canvasState: updatedCanvasState}));
+				var updatedModel = _v3.a;
+				var effect = _v3.b;
+				return _Utils_Tuple2(
+					updatedModel,
+					$author$project$Effect$batch(
+						_List_fromArray(
+							[canvasEffect, effect])));
 		}
 	});
 var $author$project$Pages$Flow_buildr$MovedFlowActionTo = F2(
@@ -12065,14 +12005,6 @@ var $mdgriffith$elm_ui$Internal$Model$formatBoxShadow = function (shadow) {
 					$mdgriffith$elm_ui$Internal$Model$formatColor(shadow.color))
 				])));
 };
-var $elm$core$Tuple$mapFirst = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			func(x),
-			y);
-	});
 var $mdgriffith$elm_ui$Internal$Model$renderFocusStyle = function (focus) {
 	return _List_fromArray(
 		[
@@ -18010,17 +17942,16 @@ var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 	});
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onMove = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousemove', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onUp = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mouseup', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
-var $author$project$Pages$Flow_buildr$Active = function (a) {
-	return {$: 'Active', a: a};
-};
-var $author$project$Pages$Flow_buildr$ClickedDownOnFlowAction = F2(
-	function (a, b) {
-		return {$: 'ClickedDownOnFlowAction', a: a, b: b};
-	});
-var $author$project$Pages$Flow_buildr$Disabled = {$: 'Disabled'};
-var $author$project$Pages$Flow_buildr$FlowAction = function (a) {
-	return {$: 'FlowAction', a: a};
-};
+var $author$project$Model$Actions$MakePayment = {$: 'MakePayment'};
+var $author$project$Model$Actions$PhoneCall = {$: 'PhoneCall'};
+var $author$project$Model$Actions$PhoneKeyboard = {$: 'PhoneKeyboard'};
+var $author$project$Model$Actions$RecordCallAudio = {$: 'RecordCallAudio'};
+var $author$project$Model$Actions$Redirect = {$: 'Redirect'};
+var $author$project$Model$Actions$Say = {$: 'Say'};
+var $author$project$Model$Actions$Translate = {$: 'Translate'};
+var $author$project$Model$Actions$UnsubscribeFromGroup = {$: 'UnsubscribeFromGroup'};
+var $author$project$Model$Actions$Wait = {$: 'Wait'};
+var $author$project$Pages$Flow_buildr$actionBarWidth = 300;
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
 var $avh4$elm_color$Color$toCssString = function (_v0) {
 	var r = _v0.a;
@@ -18082,38 +18013,6 @@ var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
 					nodes)
 				]));
 	});
-var $icidasset$elm_material_icons$Material$Icons$access_time = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z')
-				]),
-			_List_Nil)
-		]));
-var $author$project$Pages$Flow_buildr$actionBarWidth = 300;
 var $icidasset$elm_material_icons$Material$Icons$add = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -18145,6 +18044,47 @@ var $mdgriffith$elm_ui$Internal$Model$Bottom = {$: 'Bottom'};
 var $mdgriffith$elm_ui$Element$alignBottom = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Bottom);
 var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
 var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
+var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
+var $mdgriffith$elm_ui$Element$behindContent = function (element) {
+	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
+};
+var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
+var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
+var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
+var $author$project$Model$Actions$Text = function (a) {
+	return {$: 'Text', a: a};
+};
+var $icidasset$elm_material_icons$Material$Icons$access_time = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z')
+				]),
+			_List_Nil)
+		]));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
 var $icidasset$elm_material_icons$Material$Icons$alt_route = A2(
@@ -18177,88 +18117,8 @@ var $icidasset$elm_material_icons$Material$Icons$alt_route = A2(
 					_List_Nil)
 				]))
 		]));
-var $mdgriffith$elm_ui$Internal$Model$Behind = {$: 'Behind'};
-var $mdgriffith$elm_ui$Element$behindContent = function (element) {
-	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Behind, element);
-};
-var $author$project$Colors$blue = A3($mdgriffith$elm_ui$Element$rgb255, 92, 192, 243);
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
-var $author$project$Pages$Flow_buildr$calculateOffset = F3(
-	function (mids, i, pickedUpFlowAction) {
-		if (pickedUpFlowAction.$ === 'Just') {
-			var _v1 = pickedUpFlowAction.a;
-			var selI = _v1.a.a;
-			var path = _v1.b;
-			var calcDelta = function (fn) {
-				var offset = fn(path.current) - fn(path.start);
-				return _Utils_Tuple2(
-					$elm$core$Basics$abs(offset) > 50,
-					offset + mids);
-			};
-			if (_Utils_eq(selI, i)) {
-				var _v2 = _Utils_Tuple2(
-					calcDelta($elm$core$Tuple$first),
-					calcDelta($elm$core$Tuple$second));
-				if (_v2.b.a) {
-					var _v3 = _v2.a;
-					var x = _v3.b;
-					var _v4 = _v2.b;
-					var y = _v4.b;
-					return _Utils_Tuple2(
-						_Utils_Tuple2(x, y),
-						false);
-				} else {
-					if (_v2.a.a) {
-						var _v5 = _v2.a;
-						var x = _v5.b;
-						var _v6 = _v2.b;
-						var y = _v6.b;
-						return _Utils_Tuple2(
-							_Utils_Tuple2(x, y),
-							false);
-					} else {
-						var _v7 = _v2.a;
-						var x = _v7.b;
-						var _v8 = _v2.b;
-						var y = _v8.b;
-						return _Utils_Tuple2(
-							_Utils_Tuple2((x / 1.5) + (mids / 1.5), (y / 1.5) + (mids / 1.5)),
-							true);
-					}
-				}
-			} else {
-				return _Utils_Tuple2(
-					_Utils_Tuple2(mids, mids),
-					false);
-			}
-		} else {
-			return _Utils_Tuple2(
-				_Utils_Tuple2(mids, mids),
-				false);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
-var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
-var $author$project$UI$customIcon = F3(
-	function (icon, size, iconColor) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$color(iconColor)
-				]),
-			$mdgriffith$elm_ui$Element$html(
-				A2(
-					$feathericons$elm_feather$FeatherIcons$toHtml,
-					_List_Nil,
-					A2(
-						$feathericons$elm_feather$FeatherIcons$withStrokeWidth,
-						2.4,
-						A2($feathericons$elm_feather$FeatherIcons$withSize, size, icon)))));
-	});
 var $author$project$Colors$darkBlue = A3($mdgriffith$elm_ui$Element$rgb255, 77, 119, 243);
+var $author$project$Colors$darkGreen = A3($mdgriffith$elm_ui$Element$rgb255, 0, 150, 136);
 var $icidasset$elm_material_icons$Material$Icons$dialpad = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -18309,6 +18169,276 @@ var $icidasset$elm_material_icons$Material$Icons$exit_to_app = A2(
 		]));
 var $author$project$Colors$green = A3($mdgriffith$elm_ui$Element$rgb255, 110, 228, 193);
 var $author$project$Colors$grey = A3($mdgriffith$elm_ui$Element$rgb255, 143, 139, 168);
+var $author$project$Colors$lime = A3($mdgriffith$elm_ui$Element$rgb255, 214, 228, 40);
+var $icidasset$elm_material_icons$Material$Icons$message = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Colors$orange = A3($mdgriffith$elm_ui$Element$rgb255, 232, 125, 125);
+var $icidasset$elm_material_icons$Material$Icons$payment = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$record_voice_over = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$circle,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$cx('9'),
+					$elm$svg$Svg$Attributes$cy('9'),
+					$elm$svg$Svg$Attributes$r('4')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76-9.64l-1.68 1.69c.84 1.18.84 2.71 0 3.89l1.68 1.69c2.02-2.02 2.02-5.07 0-7.27zM20.07 2l-1.63 1.63c2.77 3.02 2.77 7.56 0 10.74L20.07 16c3.9-3.89 3.91-9.95 0-14z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$smartphone = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Colors$teal = A3($mdgriffith$elm_ui$Element$rgb255, 84, 218, 210);
+var $icidasset$elm_material_icons$Material$Icons$translate = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Model$Actions$config = function (action) {
+	switch (action.$) {
+		case 'PhoneCall':
+			return {
+				color: $author$project$Colors$purple,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$smartphone,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Phone Call'
+			};
+		case 'Wait':
+			return {
+				color: $author$project$Colors$darkBlue,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$access_time,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Wait'
+			};
+		case 'Say':
+			return {
+				color: $author$project$Colors$blue,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$message,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Say'
+			};
+		case 'Redirect':
+			return {
+				color: $author$project$Colors$teal,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$alt_route,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Redirect'
+			};
+		case 'PhoneKeyboard':
+			return {
+				color: $author$project$Colors$green,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$dialpad,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Phone Keyboard'
+			};
+		case 'RecordCallAudio':
+			return {
+				color: $author$project$Colors$lime,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$record_voice_over,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Record Call Audio'
+			};
+		case 'Translate':
+			return {
+				color: $author$project$Colors$orange,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$translate,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Translate'
+			};
+		case 'UnsubscribeFromGroup':
+			return {
+				color: $author$project$Colors$grey,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$exit_to_app,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Unsubscribe from Group'
+			};
+		default:
+			return {
+				color: $author$project$Colors$darkGreen,
+				defaultChildren: _List_Nil,
+				icon: $icidasset$elm_material_icons$Material$Icons$payment,
+				inputs: _List_fromArray(
+					[
+						$author$project$Model$Actions$Text('')
+					]),
+				maxChildren: 1,
+				minChildren: 0,
+				title: 'Trigger Payment'
+			};
+	}
+};
+var $author$project$UI$customIcon = F3(
+	function (icon, size, iconColor) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Font$color(iconColor)
+				]),
+			$mdgriffith$elm_ui$Element$html(
+				A2(
+					$feathericons$elm_feather$FeatherIcons$toHtml,
+					_List_Nil,
+					A2(
+						$feathericons$elm_feather$FeatherIcons$withStrokeWidth,
+						2.4,
+						A2($feathericons$elm_feather$FeatherIcons$withSize, size, icon)))));
+	});
 var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
 var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
 var $author$project$UI$gridIcon = $feathericons$elm_feather$FeatherIcons$customIcon(
@@ -18363,7 +18493,6 @@ var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
 	return {$: 'HiddenLabel', a: a};
 };
 var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
-var $author$project$Colors$lime = A3($mdgriffith$elm_ui$Element$rgb255, 214, 228, 40);
 var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
 	return {$: 'Color', a: a};
 };
@@ -18394,31 +18523,6 @@ var $author$project$MaterialIcons$material = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
-var $icidasset$elm_material_icons$Material$Icons$message = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z')
-				]),
-			_List_Nil)
-		]));
-var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousedown', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
 var $mdgriffith$elm_ui$Element$paddingXY = F2(
 	function (x, y) {
 		if (_Utils_eq(x, y)) {
@@ -18475,39 +18579,203 @@ var $mdgriffith$elm_ui$Element$Input$Placeholder = F2(
 		return {$: 'Placeholder', a: a, b: b};
 	});
 var $mdgriffith$elm_ui$Element$Input$placeholder = $mdgriffith$elm_ui$Element$Input$Placeholder;
-var $icidasset$elm_material_icons$Material$Icons$record_voice_over = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
+var $author$project$Pages$Flow_buildr$ClickedDownOnFlowAction = F2(
+	function (a, b) {
+		return {$: 'ClickedDownOnFlowAction', a: a, b: b};
+	});
+var $author$project$Pages$Flow_buildr$FlowAction = function (a) {
+	return {$: 'FlowAction', a: a};
+};
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $author$project$Pages$Flow_buildr$calculateOffset = F4(
+	function (defaultSize, mids, i, pickedUpFlowAction) {
+		if (pickedUpFlowAction.$ === 'Just') {
+			var _v1 = pickedUpFlowAction.a;
+			var selI = _v1.a.a;
+			var path = _v1.b;
+			var calcDelta = function (fn) {
+				var offset = fn(path.current) - fn(path.start);
+				return _Utils_Tuple2(
+					_Utils_cmp(
+						$elm$core$Basics$abs(offset),
+						defaultSize) > 0,
+					offset + mids);
+			};
+			if (_Utils_eq(selI, i)) {
+				var _v2 = _Utils_Tuple2(
+					calcDelta($elm$core$Tuple$first),
+					calcDelta($elm$core$Tuple$second));
+				if (_v2.b.a) {
+					var _v3 = _v2.a;
+					var x = _v3.b;
+					var _v4 = _v2.b;
+					var y = _v4.b;
+					return _Utils_Tuple2(
+						_Utils_Tuple2(x, y),
+						false);
+				} else {
+					if (_v2.a.a) {
+						var _v5 = _v2.a;
+						var x = _v5.b;
+						var _v6 = _v2.b;
+						var y = _v6.b;
+						return _Utils_Tuple2(
+							_Utils_Tuple2(x, y),
+							false);
+					} else {
+						var _v7 = _v2.a;
+						var x = _v7.b;
+						var _v8 = _v2.b;
+						var y = _v8.b;
+						return _Utils_Tuple2(
+							_Utils_Tuple2((x / 1.5) + (mids / 1.5), (y / 1.5) + (mids / 1.5)),
+							true);
+					}
+				}
+			} else {
+				return _Utils_Tuple2(
+					_Utils_Tuple2(mids, mids),
+					false);
+			}
+		} else {
+			return _Utils_Tuple2(
+				_Utils_Tuple2(mids, mids),
+				false);
+		}
+	});
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$dashed = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderDashed);
+var $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2($mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousedown', $mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$defaultOptions);
+var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
+	function (a, b, c, d, e) {
+		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Element$Border$width = function (v) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + $elm$core$String$fromInt(v),
+			v,
+			v,
+			v,
+			v));
+};
+var $author$project$Pages$Flow_buildr$renderDragableAction = F4(
+	function (model, defaultSize, i, _v0) {
+		var color = _v0.a;
+		var icon = _v0.b;
+		var colorExploded = $mdgriffith$elm_ui$Element$toRgb(color);
+		var childSize = $elm$core$Basics$round((defaultSize * 40) / 54);
+		var centerDist = (defaultSize - childSize) / 2;
+		var _v1 = A4($author$project$Pages$Flow_buildr$calculateOffset, defaultSize, centerDist, i, model.pickedUpFlowAction);
+		var _v2 = _v1.a;
+		var moveRightDist = _v2.a;
+		var moveDownDist = _v2.b;
+		var useFilter = _v1.b;
+		var _v3 = useFilter ? _Utils_Tuple2(defaultSize + 4, -2) : _Utils_Tuple2(defaultSize, 0);
+		var parentSize = _v3.a;
+		var offset = _v3.b;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
 			_List_fromArray(
 				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(defaultSize)),
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(defaultSize)),
+					$mdgriffith$elm_ui$Element$behindContent(
+					A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(defaultSize)),
+								$mdgriffith$elm_ui$Element$centerX,
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(defaultSize - 2)),
+								$mdgriffith$elm_ui$Element$centerY,
+								$mdgriffith$elm_ui$Element$Border$width(2),
+								$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$grey),
+								$mdgriffith$elm_ui$Element$Background$color(
+								A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black)),
+								$mdgriffith$elm_ui$Element$Border$dashed,
+								$mdgriffith$elm_ui$Element$Border$rounded(50)
+							]),
+						$mdgriffith$elm_ui$Element$none)),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'z-index', '10'))
 				]),
-			_List_Nil),
 			A2(
-			$elm$svg$Svg$circle,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$cx('9'),
-					$elm$svg$Svg$Attributes$cy('9'),
-					$elm$svg$Svg$Attributes$r('4')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76-9.64l-1.68 1.69c.84 1.18.84 2.71 0 3.89l1.68 1.69c2.02-2.02 2.02-5.07 0-7.27zM20.07 2l-1.63 1.63c2.77 3.02 2.77 7.56 0 10.74L20.07 16c3.9-3.89 3.91-9.95 0-14z')
-				]),
-			_List_Nil)
-		]));
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(parentSize)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(parentSize)),
+						$mdgriffith$elm_ui$Element$Border$rounded(50),
+						$mdgriffith$elm_ui$Element$Background$color(color),
+						((!useFilter) && _Utils_eq(
+						A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
+						$elm$core$Maybe$Just(
+							$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(offset),
+						((!useFilter) && _Utils_eq(
+						A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
+						$elm$core$Maybe$Just(
+							$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(offset),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, '-webkit-transition', 'box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease')),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						A2($elm$html$Html$Attributes$style, 'transition', 'box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease')),
+						$mdgriffith$elm_ui$Element$behindContent(
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(childSize)),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(childSize)),
+									useFilter ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(centerDist),
+									useFilter ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(centerDist),
+									useFilter ? A2($mdgriffith$elm_ui$Element$Border$glow, color, 1) : A2($mdgriffith$elm_ui$Element$Border$glow, color, 0),
+									$mdgriffith$elm_ui$Element$Border$color(color),
+									$mdgriffith$elm_ui$Element$Border$rounded(22),
+									$mdgriffith$elm_ui$Element$Background$color(color),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.2s ease')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')'))
+								]),
+							$mdgriffith$elm_ui$Element$none)),
+						_Utils_eq(model.pickedUpFlowAction, $elm$core$Maybe$Nothing) ? $mdgriffith$elm_ui$Element$htmlAttribute(
+						$mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
+							A2(
+								$elm$core$Basics$composeR,
+								function (x) {
+									return _Utils_Tuple2(x.pagePos.a, x.pagePos.b);
+								},
+								$author$project$Pages$Flow_buildr$ClickedDownOnFlowAction(
+									$author$project$Pages$Flow_buildr$FlowAction(i))))) : $mdgriffith$elm_ui$Element$Border$rounded(50)
+					]),
+				A2(
+					$author$project$MaterialIcons$material,
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+					{color: $author$project$Colors$white, icon: icon, size: 20})));
+	});
 var $mdgriffith$elm_ui$Internal$Model$FontSize = function (a) {
 	return {$: 'FontSize', a: a};
 };
@@ -18518,31 +18786,6 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $icidasset$elm_material_icons$Material$Icons$smartphone = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z')
-				]),
-			_List_Nil)
-		]));
-var $author$project$Colors$teal = A3($mdgriffith$elm_ui$Element$rgb255, 84, 218, 210);
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
 	return {$: 'TextInputNode', a: a};
 };
@@ -18660,22 +18903,6 @@ var $mdgriffith$elm_ui$Internal$Flag$cursor = $mdgriffith$elm_ui$Internal$Flag$f
 var $mdgriffith$elm_ui$Element$Input$darkGrey = A3($mdgriffith$elm_ui$Element$rgb, 186 / 255, 189 / 255, 182 / 255);
 var $mdgriffith$elm_ui$Element$Input$defaultTextPadding = A2($mdgriffith$elm_ui$Element$paddingXY, 12, 12);
 var $mdgriffith$elm_ui$Element$Input$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
-var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
-	function (a, b, c, d, e) {
-		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Element$Border$width = function (v) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-			'b-' + $elm$core$String$fromInt(v),
-			v,
-			v,
-			v,
-			v));
-};
 var $mdgriffith$elm_ui$Element$Input$defaultTextBoxStyle = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$Input$defaultTextPadding,
@@ -19341,39 +19568,6 @@ var $mdgriffith$elm_ui$Element$Input$text = $mdgriffith$elm_ui$Element$Input$tex
 		type_: $mdgriffith$elm_ui$Element$Input$TextInputNode('text')
 	});
 var $elm$core$Debug$toString = _Debug_toString;
-var $icidasset$elm_material_icons$Material$Icons$translate = A2(
-	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
-	_List_fromArray(
-		[
-			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M0 0h24v24H0z'),
-					$elm$svg$Svg$Attributes$fill('none')
-				]),
-			_List_Nil),
-			A2(
-			$elm$svg$Svg$path,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$d('M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z')
-				]),
-			_List_Nil)
-		]));
-var $mdgriffith$elm_ui$Element$transparent = function (on) {
-	return on ? A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$transparency,
-		A2($mdgriffith$elm_ui$Internal$Model$Transparency, 'transparent', 1.0)) : A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$transparency,
-		A2($mdgriffith$elm_ui$Internal$Model$Transparency, 'visible', 0.0));
-};
 var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
@@ -19385,6 +19579,13 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 				$mdgriffith$elm_ui$Element$htmlAttribute(
 				A2($elm$html$Html$Attributes$style, 'z-index', '2')),
 				$mdgriffith$elm_ui$Element$padding(32),
+				$mdgriffith$elm_ui$Element$Border$shadow(
+				{
+					blur: 8,
+					color: A2($author$project$Colors$withAlpha, 0.1, $author$project$Colors$black),
+					offset: _Utils_Tuple2(0, 0),
+					size: 0
+				}),
 				$mdgriffith$elm_ui$Element$behindContent(
 				A2(
 					$mdgriffith$elm_ui$Element$paragraph,
@@ -19397,7 +19598,8 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 					_List_fromArray(
 						[
 							$mdgriffith$elm_ui$Element$text(
-							$elm$core$Debug$toString(model))
+							$elm$core$Debug$toString(
+								{count: model.count, pickedUpFlowAction: model.pickedUpFlowAction, state: model.canvasState}))
 						])))
 			]),
 		_List_fromArray(
@@ -19490,94 +19692,7 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 					]),
 				A2(
 					$elm$core$List$indexedMap,
-					F2(
-						function (i, _v0) {
-							var color = _v0.a;
-							var icon = _v0.b;
-							var childSize = 40;
-							var centerDist = (54 - childSize) / 2;
-							var _v1 = A3($author$project$Pages$Flow_buildr$calculateOffset, centerDist, i, model.pickedUpFlowAction);
-							var _v2 = _v1.a;
-							var moveRightDist = _v2.a;
-							var moveDownDist = _v2.b;
-							var useFilter = _v1.b;
-							var parentSize = useFilter ? 58 : 54;
-							return A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$width(
-										$mdgriffith$elm_ui$Element$px(54)),
-										$mdgriffith$elm_ui$Element$height(
-										$mdgriffith$elm_ui$Element$px(54))
-									]),
-								A2(
-									$mdgriffith$elm_ui$Element$el,
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$width(
-											$mdgriffith$elm_ui$Element$px(parentSize)),
-											$mdgriffith$elm_ui$Element$height(
-											$mdgriffith$elm_ui$Element$px(parentSize)),
-											$mdgriffith$elm_ui$Element$Border$rounded(50),
-											$mdgriffith$elm_ui$Element$Background$color(color),
-											((!useFilter) && _Utils_eq(
-											A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
-											$elm$core$Maybe$Just(
-												$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$transparent(false),
-											((!useFilter) && _Utils_eq(
-											A2($elm$core$Maybe$map, $elm$core$Tuple$first, model.pickedUpFlowAction),
-											$elm$core$Maybe$Just(
-												$author$project$Pages$Flow_buildr$FlowAction(i)))) ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$transparent(false),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, '-webkit-transition', 'box-shadow 0.1s ease, transform 0.1s ease, width 0.1s ease,height 0.1s ease')),
-											$mdgriffith$elm_ui$Element$htmlAttribute(
-											A2($elm$html$Html$Attributes$style, 'transition', 'box-shadow 0.1s ease, transform 0.2s ease, width 0.3s ease,height 0.3s ease')),
-											$mdgriffith$elm_ui$Element$behindContent(
-											A2(
-												$mdgriffith$elm_ui$Element$el,
-												_List_fromArray(
-													[
-														$mdgriffith$elm_ui$Element$width(
-														$mdgriffith$elm_ui$Element$px(childSize)),
-														$mdgriffith$elm_ui$Element$height(
-														$mdgriffith$elm_ui$Element$px(childSize)),
-														useFilter ? $mdgriffith$elm_ui$Element$moveDown(moveDownDist) : $mdgriffith$elm_ui$Element$moveDown(centerDist),
-														useFilter ? $mdgriffith$elm_ui$Element$moveRight(moveRightDist) : $mdgriffith$elm_ui$Element$moveRight(centerDist),
-														useFilter ? A2($mdgriffith$elm_ui$Element$Border$glow, color, 1) : $mdgriffith$elm_ui$Element$transparent(false),
-														$mdgriffith$elm_ui$Element$Border$color(color),
-														$mdgriffith$elm_ui$Element$Border$rounded(22),
-														$mdgriffith$elm_ui$Element$Background$color(color),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, '-webkit-transition', 'transform 0.1s ease')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, 'transition', 'transform 0.2s ease')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, 'filter', 'url(\'#goo\')')),
-														$mdgriffith$elm_ui$Element$htmlAttribute(
-														A2($elm$html$Html$Attributes$style, '-webkit-filter', 'url(\'#goo\')'))
-													]),
-												$mdgriffith$elm_ui$Element$none)),
-											_Utils_eq(model.pickedUpFlowAction, $elm$core$Maybe$Nothing) ? $mdgriffith$elm_ui$Element$htmlAttribute(
-											$mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
-												A2(
-													$elm$core$Basics$composeR,
-													function (x) {
-														return _Utils_Tuple2(x.pagePos.a, x.pagePos.b);
-													},
-													$author$project$Pages$Flow_buildr$ClickedDownOnFlowAction(
-														$author$project$Pages$Flow_buildr$FlowAction(i))))) : $mdgriffith$elm_ui$Element$transparent(false)
-										]),
-									A2(
-										$author$project$MaterialIcons$material,
-										_List_fromArray(
-											[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-										{color: $author$project$Colors$white, icon: icon, size: 20})));
-						}),
+					A2($author$project$Pages$Flow_buildr$renderDragableAction, model, 54),
 					_List_fromArray(
 						[
 							_Utils_Tuple2($author$project$Colors$purple, $icidasset$elm_material_icons$Material$Icons$smartphone),
@@ -19618,10 +19733,11 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 				A2(
 					$elm$core$List$indexedMap,
 					F2(
-						function (i, _v3) {
-							var state = _v3.a;
-							var icon = _v3.b;
-							var message = _v3.c;
+						function (i, action) {
+							var _v0 = $author$project$Model$Actions$config(action);
+							var color = _v0.color;
+							var icon = _v0.icon;
+							var title = _v0.title;
 							return A2(
 								$mdgriffith$elm_ui$Element$row,
 								_List_fromArray(
@@ -19630,40 +19746,12 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 									]),
 								_List_fromArray(
 									[
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$width(
-												$mdgriffith$elm_ui$Element$px(44)),
-												$mdgriffith$elm_ui$Element$height(
-												$mdgriffith$elm_ui$Element$px(44)),
-												$mdgriffith$elm_ui$Element$Border$rounded(22),
-												$mdgriffith$elm_ui$Element$Background$color(
-												function () {
-													if (state.$ === 'Active') {
-														var color = state.a;
-														return color;
-													} else {
-														return A2($author$project$Colors$withAlpha, 0.3, $author$project$Colors$grey);
-													}
-												}())
-											]),
-										A2(
-											$author$project$MaterialIcons$material,
-											_List_fromArray(
-												[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-											{
-												color: function () {
-													if (state.$ === 'Active') {
-														return $author$project$Colors$white;
-													} else {
-														return $author$project$Colors$grey;
-													}
-												}(),
-												icon: icon,
-												size: 20
-											})),
+										A4(
+										$author$project$Pages$Flow_buildr$renderDragableAction,
+										model,
+										44,
+										i + 3,
+										_Utils_Tuple2(color, icon)),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -19671,38 +19759,11 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 												$mdgriffith$elm_ui$Element$Font$size(15),
 												$mdgriffith$elm_ui$Element$Font$medium
 											]),
-										$mdgriffith$elm_ui$Element$text(message))
+										$mdgriffith$elm_ui$Element$text(title))
 									]));
 						}),
 					_List_fromArray(
-						[
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$purple),
-							$icidasset$elm_material_icons$Material$Icons$smartphone,
-							'Phone Call'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$darkBlue),
-							$icidasset$elm_material_icons$Material$Icons$access_time,
-							'Wait'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$blue),
-							$icidasset$elm_material_icons$Material$Icons$message,
-							'Say'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$teal),
-							$icidasset$elm_material_icons$Material$Icons$alt_route,
-							'Redirect'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$green),
-							$icidasset$elm_material_icons$Material$Icons$dialpad,
-							'Phone Keyboard'),
-							_Utils_Tuple3(
-							$author$project$Pages$Flow_buildr$Active($author$project$Colors$lime),
-							$icidasset$elm_material_icons$Material$Icons$record_voice_over,
-							'Record Call Audio'),
-							_Utils_Tuple3($author$project$Pages$Flow_buildr$Disabled, $icidasset$elm_material_icons$Material$Icons$translate, 'Translate'),
-							_Utils_Tuple3($author$project$Pages$Flow_buildr$Disabled, $icidasset$elm_material_icons$Material$Icons$exit_to_app, 'Unsubscribe from Group')
-						]))),
+						[$author$project$Model$Actions$PhoneCall, $author$project$Model$Actions$Wait, $author$project$Model$Actions$Say, $author$project$Model$Actions$Redirect, $author$project$Model$Actions$PhoneKeyboard, $author$project$Model$Actions$RecordCallAudio, $author$project$Model$Actions$Translate, $author$project$Model$Actions$UnsubscribeFromGroup, $author$project$Model$Actions$MakePayment]))),
 				A2(
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
@@ -19730,1005 +19791,494 @@ var $author$project$Pages$Flow_buildr$viewActionBar = function (model) {
 					{color: $author$project$Colors$white, icon: $icidasset$elm_material_icons$Material$Icons$add, size: 20}))
 			]));
 };
-var $mdgriffith$elm_ui$Element$Border$innerShadow = function (almostShade) {
-	var shade = {blur: almostShade.blur, color: almostShade.color, inset: true, offset: almostShade.offset, size: almostShade.size};
+var $author$project$Pages$Flow_buildr$Left = {$: 'Left'};
+var $author$project$Pages$Flow_buildr$Right = {$: 'Right'};
+var $mdgriffith$elm_ui$Internal$Model$Below = {$: 'Below'};
+var $mdgriffith$elm_ui$Element$below = function (element) {
+	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$Below, element);
+};
+var $author$project$Pages$Flow_buildr$circle = function (attr) {
+	return A2(
+		$mdgriffith$elm_ui$Element$el,
+		_Utils_ap(
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(54)),
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(54)),
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$Border$rounded(44),
+					$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$orange),
+					$mdgriffith$elm_ui$Element$Border$shadow(
+					{
+						blur: 4 * 2,
+						color: A2($author$project$Colors$withAlpha, 0.05, $author$project$Colors$black),
+						offset: _Utils_Tuple2(0, 4),
+						size: 4
+					})
+				]),
+			attr),
+		$mdgriffith$elm_ui$Element$none);
+};
+var $mdgriffith$elm_ui$Element$Border$roundEach = function (_v0) {
+	var topLeft = _v0.topLeft;
+	var topRight = _v0.topRight;
+	var bottomLeft = _v0.bottomLeft;
+	var bottomRight = _v0.bottomRight;
 	return A2(
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$shadows,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
 		A3(
 			$mdgriffith$elm_ui$Internal$Model$Single,
-			$mdgriffith$elm_ui$Internal$Model$boxShadowClass(shade),
-			'box-shadow',
-			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
+			'br-' + ($elm$core$String$fromInt(topLeft) + ('-' + ($elm$core$String$fromInt(topRight) + ($elm$core$String$fromInt(bottomLeft) + ('-' + $elm$core$String$fromInt(bottomRight)))))),
+			'border-radius',
+			$elm$core$String$fromInt(topLeft) + ('px ' + ($elm$core$String$fromInt(topRight) + ('px ' + ($elm$core$String$fromInt(bottomRight) + ('px ' + ($elm$core$String$fromInt(bottomLeft) + 'px'))))))));
 };
-var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp = function (a) {
-	return {$: 'SettingDrawOp', a: a};
-};
-var $joakin$elm_canvas$Canvas$Settings$fill = function (color) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingDrawOp(
-		$joakin$elm_canvas$Canvas$Internal$Canvas$Fill(color));
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Rect = F3(
-	function (a, b, c) {
-		return {$: 'Rect', a: a, b: b, c: c};
-	});
-var $joakin$elm_canvas$Canvas$rect = F3(
-	function (pos, width, height) {
-		return A3($joakin$elm_canvas$Canvas$Internal$Canvas$Rect, pos, width, height);
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableShapes = function (a) {
-	return {$: 'DrawableShapes', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified = {$: 'NotSpecified'};
-var $joakin$elm_canvas$Canvas$Renderable = function (a) {
-	return {$: 'Renderable', a: a};
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke = F2(
-	function (a, b) {
-		return {$: 'FillAndStroke', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Stroke = function (a) {
-	return {$: 'Stroke', a: a};
-};
-var $joakin$elm_canvas$Canvas$mergeDrawOp = F2(
-	function (op1, op2) {
-		var _v0 = _Utils_Tuple2(op1, op2);
-		_v0$7:
-		while (true) {
-			switch (_v0.b.$) {
-				case 'FillAndStroke':
-					var _v1 = _v0.b;
-					var c = _v1.a;
-					var sc = _v1.b;
-					return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c, sc);
-				case 'Fill':
-					switch (_v0.a.$) {
-						case 'Fill':
-							var c = _v0.b.a;
-							return $joakin$elm_canvas$Canvas$Internal$Canvas$Fill(c);
-						case 'Stroke':
-							var c1 = _v0.a.a;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c2, c1);
-						case 'FillAndStroke':
-							var _v2 = _v0.a;
-							var c = _v2.a;
-							var sc = _v2.b;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c2, sc);
-						default:
-							break _v0$7;
-					}
-				case 'Stroke':
-					switch (_v0.a.$) {
-						case 'Stroke':
-							var c = _v0.b.a;
-							return $joakin$elm_canvas$Canvas$Internal$Canvas$Stroke(c);
-						case 'Fill':
-							var c1 = _v0.a.a;
-							var c2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c1, c2);
-						case 'FillAndStroke':
-							var _v3 = _v0.a;
-							var c = _v3.a;
-							var sc = _v3.b;
-							var sc2 = _v0.b.a;
-							return A2($joakin$elm_canvas$Canvas$Internal$Canvas$FillAndStroke, c, sc2);
-						default:
-							break _v0$7;
-					}
-				default:
-					if (_v0.a.$ === 'NotSpecified') {
-						break _v0$7;
-					} else {
-						var whatever = _v0.a;
-						var _v5 = _v0.b;
-						return whatever;
-					}
-			}
-		}
-		var _v4 = _v0.a;
-		var whatever = _v0.b;
-		return whatever;
-	});
-var $joakin$elm_canvas$Canvas$addSettingsToRenderable = F2(
-	function (settings, renderable) {
-		var addSetting = F2(
-			function (setting, _v1) {
-				var r = _v1.a;
-				return $joakin$elm_canvas$Canvas$Renderable(
-					function () {
-						switch (setting.$) {
-							case 'SettingCommand':
-								var cmd = setting.a;
-								return _Utils_update(
-									r,
-									{
-										commands: A2($elm$core$List$cons, cmd, r.commands)
-									});
-							case 'SettingCommands':
-								var cmds = setting.a;
-								return _Utils_update(
-									r,
-									{
-										commands: A3($elm$core$List$foldl, $elm$core$List$cons, r.commands, cmds)
-									});
-							case 'SettingUpdateDrawable':
-								var f = setting.a;
-								return _Utils_update(
-									r,
-									{
-										drawable: f(r.drawable)
-									});
-							default:
-								var op = setting.a;
-								return _Utils_update(
-									r,
-									{
-										drawOp: A2($joakin$elm_canvas$Canvas$mergeDrawOp, r.drawOp, op)
-									});
-						}
-					}());
-			});
-		return A3($elm$core$List$foldl, addSetting, renderable, settings);
-	});
-var $joakin$elm_canvas$Canvas$shapes = F2(
-	function (settings, ss) {
-		return A2(
-			$joakin$elm_canvas$Canvas$addSettingsToRenderable,
-			settings,
-			$joakin$elm_canvas$Canvas$Renderable(
-				{
-					commands: _List_Nil,
-					drawOp: $joakin$elm_canvas$Canvas$Internal$Canvas$NotSpecified,
-					drawable: $joakin$elm_canvas$Canvas$Internal$Canvas$DrawableShapes(ss)
-				}));
-	});
-var $author$project$Component$Canvas$clearScreen = F2(
-	function (width, height) {
-		return A2(
-			$joakin$elm_canvas$Canvas$shapes,
-			_List_fromArray(
-				[
-					$joakin$elm_canvas$Canvas$Settings$fill(
-					A4($avh4$elm_color$Color$rgba, 0, 0, 0, 0))
-				]),
-			_List_fromArray(
-				[
-					A3(
-					$joakin$elm_canvas$Canvas$rect,
-					_Utils_Tuple2(0, 0),
-					width,
-					height)
-				]));
-	});
-var $author$project$Component$Canvas$centerX = function (viewWidth) {
-	return viewWidth / 2;
-};
-var $author$project$Component$Canvas$centerY = function (viewHeight) {
-	return viewHeight / 2;
-};
-var $joakin$elm_canvas$Canvas$Internal$Canvas$Circle = F2(
-	function (a, b) {
-		return {$: 'Circle', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$circle = F2(
-	function (pos, radius) {
-		return A2($joakin$elm_canvas$Canvas$Internal$Canvas$Circle, pos, radius);
-	});
-var $avh4$elm_color$Color$hsla = F4(
-	function (hue, sat, light, alpha) {
-		var _v0 = _Utils_Tuple3(hue, sat, light);
-		var h = _v0.a;
-		var s = _v0.b;
-		var l = _v0.c;
-		var m2 = (l <= 0.5) ? (l * (s + 1)) : ((l + s) - (l * s));
-		var m1 = (l * 2) - m2;
-		var hueToRgb = function (h__) {
-			var h_ = (h__ < 0) ? (h__ + 1) : ((h__ > 1) ? (h__ - 1) : h__);
-			return ((h_ * 6) < 1) ? (m1 + (((m2 - m1) * h_) * 6)) : (((h_ * 2) < 1) ? m2 : (((h_ * 3) < 2) ? (m1 + (((m2 - m1) * ((2 / 3) - h_)) * 6)) : m1));
-		};
-		var b = hueToRgb(h - (1 / 3));
-		var g = hueToRgb(h);
-		var r = hueToRgb(h + (1 / 3));
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, alpha);
-	});
-var $avh4$elm_color$Color$hsl = F3(
-	function (h, s, l) {
-		return A4($avh4$elm_color$Color$hsla, h, s, l, 1.0);
-	});
-var $elm$core$Debug$log = _Debug_log;
-var $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands = function (a) {
-	return {$: 'SettingCommands', a: a};
-};
-var $elm$json$Json$Encode$float = _Json_wrap;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn = F2(
-	function (name, args) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'type',
-					$elm$json$Json$Encode$string('function')),
-					_Utils_Tuple2(
-					'name',
-					$elm$json$Json$Encode$string(name)),
-					_Utils_Tuple2(
-					'args',
-					A2($elm$json$Json$Encode$list, $elm$core$Basics$identity, args))
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rotate = function (angle) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-		'rotate',
-		_List_fromArray(
-			[
-				$elm$json$Json$Encode$float(angle)
-			]));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$scale = F2(
+var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
 	function (x, y) {
 		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'scale',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+				y,
+				x,
+				y,
+				x));
 	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$transform = F6(
-	function (a, b, c, d, e, f) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'transform',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(a),
-					$elm$json$Json$Encode$float(b),
-					$elm$json$Json$Encode$float(c),
-					$elm$json$Json$Encode$float(d),
-					$elm$json$Json$Encode$float(e),
-					$elm$json$Json$Encode$float(f)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$translate = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'translate',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$transform = function (transforms) {
-	return $joakin$elm_canvas$Canvas$Internal$Canvas$SettingCommands(
-		A2(
-			$elm$core$List$map,
-			function (t) {
-				switch (t.$) {
-					case 'Rotate':
-						var angle = t.a;
-						return $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rotate(angle);
-					case 'Scale':
-						var x = t.a;
-						var y = t.b;
-						return A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$scale, x, y);
-					case 'Translate':
-						var x = t.a;
-						var y = t.b;
-						return A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$translate, x, y);
-					default:
-						var m11 = t.a.m11;
-						var m12 = t.a.m12;
-						var m21 = t.a.m21;
-						var m22 = t.a.m22;
-						var dx = t.a.dx;
-						var dy = t.a.dy;
-						return A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$transform, m11, m12, m21, m22, dx, dy);
-				}
-			},
-			transforms));
+var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
+	var bottom = _v0.bottom;
+	var top = _v0.top;
+	var left = _v0.left;
+	var right = _v0.right;
+	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
+			top,
+			right,
+			bottom,
+			left));
 };
-var $joakin$elm_canvas$Canvas$Settings$Advanced$Translate = F2(
-	function (a, b) {
-		return {$: 'Translate', a: a, b: b};
-	});
-var $joakin$elm_canvas$Canvas$Settings$Advanced$translate = $joakin$elm_canvas$Canvas$Settings$Advanced$Translate;
-var $author$project$Component$Canvas$render = F3(
-	function (count, width, height) {
-		var x = 0;
-		var size = 100;
-		var y = -(size / 2);
-		var color = A2(
-			$elm$core$Debug$log,
-			'c',
-			($elm$core$Basics$round(count * 10) % 100) / 100);
+var $author$project$Pages$Flow_buildr$cornerDown = F2(
+	function (side, attr) {
 		return A2(
-			$joakin$elm_canvas$Canvas$shapes,
-			_List_fromArray(
-				[
-					$joakin$elm_canvas$Canvas$Settings$Advanced$transform(
-					_List_fromArray(
-						[
-							A2(
-							$joakin$elm_canvas$Canvas$Settings$Advanced$translate,
-							$author$project$Component$Canvas$centerX(width),
-							$author$project$Component$Canvas$centerY(height))
-						])),
-					$joakin$elm_canvas$Canvas$Settings$fill(
-					A3($avh4$elm_color$Color$hsl, color, 0.7, 0.7))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$joakin$elm_canvas$Canvas$circle,
-					_Utils_Tuple2(x, y),
-					size)
-				]));
-	});
-var $elm$html$Html$canvas = _VirtualDom_node('canvas');
-var $joakin$elm_canvas$Canvas$cnvs = A2($elm$html$Html$canvas, _List_Nil, _List_Nil);
-var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$commands = function (list) {
-	return A2(
-		$elm$html$Html$Attributes$property,
-		'cmds',
-		A2($elm$json$Json$Encode$list, $elm$core$Basics$identity, list));
-};
-var $elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		$elm$core$String$fromInt(n));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$empty = _List_Nil;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$beginPath = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'beginPath', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$clearRect = F4(
-	function (x, y, width, height) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'clearRect',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(width),
-					$elm$json$Json$Encode$float(height)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$renderClear = F4(
-	function (_v0, w, h, cmds) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$clearRect, x, y, w, h),
-			cmds);
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc = F6(
-	function (x, y, radius, startAngle, endAngle, anticlockwise) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'arc',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(radius),
-					$elm$json$Json$Encode$float(startAngle),
-					$elm$json$Json$Encode$float(endAngle),
-					$elm$json$Json$Encode$bool(anticlockwise)
-				]));
-	});
-var $elm$core$Basics$pi = _Basics_pi;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$circle = F3(
-	function (x, y, r) {
-		return A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc, x, y, r, 0, 2 * $elm$core$Basics$pi, false);
-	});
-var $elm$core$Basics$cos = _Basics_cos;
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'moveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rect = F4(
-	function (x, y, w, h) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'rect',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y),
-					$elm$json$Json$Encode$float(w),
-					$elm$json$Json$Encode$float(h)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arcTo = F5(
-	function (x1, y1, x2, y2, radius) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'arcTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x1),
-					$elm$json$Json$Encode$float(y1),
-					$elm$json$Json$Encode$float(x2),
-					$elm$json$Json$Encode$float(y2),
-					$elm$json$Json$Encode$float(radius)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$bezierCurveTo = F6(
-	function (cp1x, cp1y, cp2x, cp2y, x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'bezierCurveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(cp1x),
-					$elm$json$Json$Encode$float(cp1y),
-					$elm$json$Json$Encode$float(cp2x),
-					$elm$json$Json$Encode$float(cp2y),
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$lineTo = F2(
-	function (x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'lineTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$quadraticCurveTo = F4(
-	function (cpx, cpy, x, y) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'quadraticCurveTo',
-			_List_fromArray(
-				[
-					$elm$json$Json$Encode$float(cpx),
-					$elm$json$Json$Encode$float(cpy),
-					$elm$json$Json$Encode$float(x),
-					$elm$json$Json$Encode$float(y)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$renderLineSegment = F2(
-	function (segment, cmds) {
-		switch (segment.$) {
-			case 'ArcTo':
-				var _v1 = segment.a;
-				var x = _v1.a;
-				var y = _v1.b;
-				var _v2 = segment.b;
-				var x2 = _v2.a;
-				var y2 = _v2.b;
-				var radius = segment.c;
-				return A2(
-					$elm$core$List$cons,
-					A5($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arcTo, x, y, x2, y2, radius),
-					cmds);
-			case 'BezierCurveTo':
-				var _v3 = segment.a;
-				var cp1x = _v3.a;
-				var cp1y = _v3.b;
-				var _v4 = segment.b;
-				var cp2x = _v4.a;
-				var cp2y = _v4.b;
-				var _v5 = segment.c;
-				var x = _v5.a;
-				var y = _v5.b;
-				return A2(
-					$elm$core$List$cons,
-					A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$bezierCurveTo, cp1x, cp1y, cp2x, cp2y, x, y),
-					cmds);
-			case 'LineTo':
-				var _v6 = segment.a;
-				var x = _v6.a;
-				var y = _v6.b;
-				return A2(
-					$elm$core$List$cons,
-					A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$lineTo, x, y),
-					cmds);
-			case 'MoveTo':
-				var _v7 = segment.a;
-				var x = _v7.a;
-				var y = _v7.b;
-				return A2(
-					$elm$core$List$cons,
-					A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-					cmds);
-			default:
-				var _v8 = segment.a;
-				var cpx = _v8.a;
-				var cpy = _v8.b;
-				var _v9 = segment.b;
-				var x = _v9.a;
-				var y = _v9.b;
-				return A2(
-					$elm$core$List$cons,
-					A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$quadraticCurveTo, cpx, cpy, x, y),
-					cmds);
-		}
-	});
-var $elm$core$Basics$sin = _Basics_sin;
-var $joakin$elm_canvas$Canvas$renderShape = F2(
-	function (shape, cmds) {
-		switch (shape.$) {
-			case 'Rect':
-				var _v1 = shape.a;
-				var x = _v1.a;
-				var y = _v1.b;
-				var w = shape.b;
-				var h = shape.c;
-				return A2(
-					$elm$core$List$cons,
-					A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$rect, x, y, w, h),
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-						cmds));
-			case 'Circle':
-				var _v2 = shape.a;
-				var x = _v2.a;
-				var y = _v2.b;
-				var r = shape.b;
-				return A2(
-					$elm$core$List$cons,
-					A3($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$circle, x, y, r),
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x + r, y),
-						cmds));
-			case 'Path':
-				var _v3 = shape.a;
-				var x = _v3.a;
-				var y = _v3.b;
-				var segments = shape.b;
-				return A3(
-					$elm$core$List$foldl,
-					$joakin$elm_canvas$Canvas$renderLineSegment,
-					A2(
-						$elm$core$List$cons,
-						A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo, x, y),
-						cmds),
-					segments);
-			default:
-				var _v4 = shape.a;
-				var x = _v4.a;
-				var y = _v4.b;
-				var radius = shape.b;
-				var startAngle = shape.c;
-				var endAngle = shape.d;
-				var anticlockwise = shape.e;
-				return A2(
-					$elm$core$List$cons,
-					A2(
-						$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo,
-						x + (radius * $elm$core$Basics$cos(endAngle)),
-						y + (radius * $elm$core$Basics$sin(endAngle))),
-					A2(
-						$elm$core$List$cons,
-						A6($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$arc, x, y, radius, startAngle, endAngle, anticlockwise),
-						A2(
-							$elm$core$List$cons,
-							A2(
-								$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$moveTo,
-								x + (radius * $elm$core$Basics$cos(startAngle)),
-								y + (radius * $elm$core$Basics$sin(startAngle))),
-							cmds)));
-		}
-	});
-var $avh4$elm_color$Color$black = A4($avh4$elm_color$Color$RgbaSpace, 0 / 255, 0 / 255, 0 / 255, 1.0);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$NonZero = {$: 'NonZero'};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillRuleToString = function (fillRule) {
-	if (fillRule.$ === 'NonZero') {
-		return 'nonzero';
-	} else {
-		return 'evenodd';
-	}
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fill = function (fillRule) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-		'fill',
-		_List_fromArray(
-			[
-				$elm$json$Json$Encode$string(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillRuleToString(fillRule))
-			]));
-};
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field = F2(
-	function (name, value) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'type',
-					$elm$json$Json$Encode$string('field')),
-					_Utils_Tuple2(
-					'name',
-					$elm$json$Json$Encode$string(name)),
-					_Utils_Tuple2('value', value)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle = function (color) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'fillStyle',
-		$elm$json$Json$Encode$string(
-			$avh4$elm_color$Color$toCssString(color)));
-};
-var $joakin$elm_canvas$Canvas$renderShapeFill = F2(
-	function (c, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fill($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$NonZero),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle(c),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$stroke = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'stroke', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle = function (color) {
-	return A2(
-		$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$field,
-		'strokeStyle',
-		$elm$json$Json$Encode$string(
-			$avh4$elm_color$Color$toCssString(color)));
-};
-var $joakin$elm_canvas$Canvas$renderShapeStroke = F2(
-	function (c, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$stroke,
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle(c),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$renderShapeDrawOp = F2(
-	function (drawOp, cmds) {
-		switch (drawOp.$) {
-			case 'NotSpecified':
-				return A2($joakin$elm_canvas$Canvas$renderShapeFill, $avh4$elm_color$Color$black, cmds);
-			case 'Fill':
-				var c = drawOp.a;
-				return A2($joakin$elm_canvas$Canvas$renderShapeFill, c, cmds);
-			case 'Stroke':
-				var c = drawOp.a;
-				return A2($joakin$elm_canvas$Canvas$renderShapeStroke, c, cmds);
-			default:
-				var fc = drawOp.a;
-				var sc = drawOp.b;
-				return A2(
-					$joakin$elm_canvas$Canvas$renderShapeStroke,
-					sc,
-					A2($joakin$elm_canvas$Canvas$renderShapeFill, fc, cmds));
-		}
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillText = F4(
-	function (text, x, y, maybeMaxWidth) {
-		if (maybeMaxWidth.$ === 'Nothing') {
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'fillText',
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
 				_List_fromArray(
 					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y)
-					]));
-		} else {
-			var maxWidth = maybeMaxWidth.a;
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'fillText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y),
-						$elm$json$Json$Encode$float(maxWidth)
-					]));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderTextFill = F5(
-	function (txt, x, y, color, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillText, txt.text, x, y, txt.maxWidth),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fillStyle(color),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeText = F4(
-	function (text, x, y, maybeMaxWidth) {
-		if (maybeMaxWidth.$ === 'Nothing') {
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'strokeText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y)
-					]));
-		} else {
-			var maxWidth = maybeMaxWidth.a;
-			return A2(
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-				'strokeText',
-				_List_fromArray(
-					[
-						$elm$json$Json$Encode$string(text),
-						$elm$json$Json$Encode$float(x),
-						$elm$json$Json$Encode$float(y),
-						$elm$json$Json$Encode$float(maxWidth)
-					]));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderTextStroke = F5(
-	function (txt, x, y, color, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			A4($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeText, txt.text, x, y, txt.maxWidth),
-			A2(
-				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$strokeStyle(color),
-				cmds));
-	});
-var $joakin$elm_canvas$Canvas$renderTextDrawOp = F3(
-	function (drawOp, txt, cmds) {
-		var _v0 = txt.point;
-		var x = _v0.a;
-		var y = _v0.b;
-		switch (drawOp.$) {
-			case 'NotSpecified':
-				return A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, $avh4$elm_color$Color$black, cmds);
-			case 'Fill':
-				var c = drawOp.a;
-				return A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, c, cmds);
-			case 'Stroke':
-				var c = drawOp.a;
-				return A5($joakin$elm_canvas$Canvas$renderTextStroke, txt, x, y, c, cmds);
-			default:
-				var fc = drawOp.a;
-				var sc = drawOp.b;
-				return A5(
-					$joakin$elm_canvas$Canvas$renderTextStroke,
-					txt,
-					x,
-					y,
-					sc,
-					A5($joakin$elm_canvas$Canvas$renderTextFill, txt, x, y, fc, cmds));
-		}
-	});
-var $joakin$elm_canvas$Canvas$renderText = F3(
-	function (drawOp, txt, cmds) {
-		return A3($joakin$elm_canvas$Canvas$renderTextDrawOp, drawOp, txt, cmds);
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage = F9(
-	function (sx, sy, sw, sh, dx, dy, dw, dh, imageObj) {
-		return A2(
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn,
-			'drawImage',
-			_List_fromArray(
-				[
-					imageObj,
-					$elm$json$Json$Encode$float(sx),
-					$elm$json$Json$Encode$float(sy),
-					$elm$json$Json$Encode$float(sw),
-					$elm$json$Json$Encode$float(sh),
-					$elm$json$Json$Encode$float(dx),
-					$elm$json$Json$Encode$float(dy),
-					$elm$json$Json$Encode$float(dw),
-					$elm$json$Json$Encode$float(dh)
-				]));
-	});
-var $joakin$elm_canvas$Canvas$Internal$Texture$drawTexture = F4(
-	function (x, y, t, cmds) {
-		return A2(
-			$elm$core$List$cons,
-			function () {
-				if (t.$ === 'TImage') {
-					var image = t.a;
-					return A9($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage, 0, 0, image.width, image.height, x, y, image.width, image.height, image.json);
-				} else {
-					var sprite = t.a;
-					var image = t.b;
-					return A9($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$drawImage, sprite.x, sprite.y, sprite.width, sprite.height, x, y, sprite.width, sprite.height, image.json);
-				}
-			}(),
-			cmds);
-	});
-var $joakin$elm_canvas$Canvas$renderTexture = F3(
-	function (_v0, t, cmds) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return A4($joakin$elm_canvas$Canvas$Internal$Texture$drawTexture, x, y, t, cmds);
-	});
-var $joakin$elm_canvas$Canvas$renderDrawable = F3(
-	function (drawable, drawOp, cmds) {
-		switch (drawable.$) {
-			case 'DrawableText':
-				var txt = drawable.a;
-				return A3($joakin$elm_canvas$Canvas$renderText, drawOp, txt, cmds);
-			case 'DrawableShapes':
-				var ss = drawable.a;
-				return A2(
-					$joakin$elm_canvas$Canvas$renderShapeDrawOp,
-					drawOp,
-					A3(
-						$elm$core$List$foldl,
-						$joakin$elm_canvas$Canvas$renderShape,
-						A2($elm$core$List$cons, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$beginPath, cmds),
-						ss));
-			case 'DrawableTexture':
-				var p = drawable.a;
-				var t = drawable.b;
-				return A3($joakin$elm_canvas$Canvas$renderTexture, p, t, cmds);
-			default:
-				var p = drawable.a;
-				var w = drawable.b;
-				var h = drawable.c;
-				return A4($joakin$elm_canvas$Canvas$renderClear, p, w, h, cmds);
-		}
-	});
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$restore = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'restore', _List_Nil);
-var $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$save = A2($joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$fn, 'save', _List_Nil);
-var $joakin$elm_canvas$Canvas$renderOne = F2(
-	function (_v0, cmds) {
-		var data = _v0.a;
-		var commands = data.commands;
-		var drawable = data.drawable;
-		var drawOp = data.drawOp;
-		return A2(
-			$elm$core$List$cons,
-			$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$restore,
-			A3(
-				$joakin$elm_canvas$Canvas$renderDrawable,
-				drawable,
-				drawOp,
+						$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(40)),
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(40))
+					]),
 				_Utils_ap(
-					commands,
-					A2($elm$core$List$cons, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$save, cmds))));
+					function () {
+						if (side.$ === 'Left') {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 0, topLeft: 20, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 0, left: 4, right: 0, top: 4})
+								]);
+						} else {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 0, topLeft: 0, topRight: 20}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 0, left: 0, right: 4, top: 4})
+								]);
+						}
+					}(),
+					attr)),
+			$mdgriffith$elm_ui$Element$none);
 	});
-var $joakin$elm_canvas$Canvas$render = function (entities) {
-	return A3($elm$core$List$foldl, $joakin$elm_canvas$Canvas$renderOne, $joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$empty, entities);
-};
-var $joakin$elm_canvas$Canvas$Internal$Texture$TImage = function (a) {
-	return {$: 'TImage', a: a};
-};
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $joakin$elm_canvas$Canvas$Internal$Texture$decodeTextureImage = A2(
-	$elm$json$Json$Decode$andThen,
-	function (image) {
-		return A4(
-			$elm$json$Json$Decode$map3,
-			F3(
-				function (tagName, width, height) {
-					return (tagName === 'IMG') ? $elm$core$Maybe$Just(
-						$joakin$elm_canvas$Canvas$Internal$Texture$TImage(
-							{height: height, json: image, width: width})) : $elm$core$Maybe$Nothing;
-				}),
-			A2($elm$json$Json$Decode$field, 'tagName', $elm$json$Json$Decode$string),
-			A2($elm$json$Json$Decode$field, 'width', $elm$json$Json$Decode$float),
-			A2($elm$json$Json$Decode$field, 'height', $elm$json$Json$Decode$float));
-	},
-	$elm$json$Json$Decode$value);
-var $joakin$elm_canvas$Canvas$Internal$Texture$decodeImageLoadEvent = A2($elm$json$Json$Decode$field, 'target', $joakin$elm_canvas$Canvas$Internal$Texture$decodeTextureImage);
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm$html$Html$Attributes$src = function (url) {
+var $author$project$Pages$Flow_buildr$cornerOut = F2(
+	function (side, attr) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$orange),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(20)),
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(140))
+					]),
+				_Utils_ap(
+					function () {
+						if (side.$ === 'Left') {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 0, bottomRight: 20, topLeft: 0, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 4, left: 0, right: 4, top: 0})
+								]);
+						} else {
+							return _List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Border$roundEach(
+									{bottomLeft: 20, bottomRight: 0, topLeft: 0, topRight: 0}),
+									$mdgriffith$elm_ui$Element$Border$widthEach(
+									{bottom: 4, left: 4, right: 0, top: 0})
+								]);
+						}
+					}(),
+					attr)),
+			$mdgriffith$elm_ui$Element$none);
+	});
+var $author$project$Colors$lightGrey = A3($mdgriffith$elm_ui$Element$rgb255, 244, 243, 246);
+var $mdgriffith$elm_ui$Element$moveLeft = function (x) {
 	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveX,
+		$mdgriffith$elm_ui$Internal$Model$MoveX(-x));
 };
-var $joakin$elm_canvas$Canvas$renderTextureSource = function (textureSource) {
-	var url = textureSource.a;
-	var onLoad = textureSource.b;
-	return _Utils_Tuple2(
-		url,
+var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cursorPointer);
+var $author$project$Component$Canvas$render = F4(
+	function (model, count, width, height) {
+		return A2($mdgriffith$elm_ui$Element$column, _List_Nil, _List_Nil);
+	});
+var $author$project$Component$Canvas$ResetZoom = {$: 'ResetZoom'};
+var $author$project$Component$Canvas$ZoomIn = {$: 'ZoomIn'};
+var $author$project$Component$Canvas$ZoomOut = {$: 'ZoomOut'};
+var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
+var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
+var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
+var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
+var $mdgriffith$elm_ui$Element$Input$enter = 'Enter';
+var $mdgriffith$elm_ui$Element$Input$focusDefault = function (attrs) {
+	return A2($elm$core$List$any, $mdgriffith$elm_ui$Element$Input$hasFocusStyle, attrs) ? $mdgriffith$elm_ui$Internal$Model$NoAttribute : $mdgriffith$elm_ui$Internal$Model$htmlClass('focusable');
+};
+var $mdgriffith$elm_ui$Element$Events$onClick = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onClick);
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$html$Html$Events$preventDefaultOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
+	});
+var $mdgriffith$elm_ui$Element$Input$onKeyLookup = function (lookup) {
+	var decode = function (code) {
+		var _v0 = lookup(code);
+		if (_v0.$ === 'Nothing') {
+			return $elm$json$Json$Decode$fail('No key matched');
+		} else {
+			var msg = _v0.a;
+			return $elm$json$Json$Decode$succeed(msg);
+		}
+	};
+	var isKey = A2(
+		$elm$json$Json$Decode$andThen,
+		decode,
+		A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+	return $mdgriffith$elm_ui$Internal$Model$Attr(
 		A2(
-			$elm$html$Html$img,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$src(url),
-					A2($elm$html$Html$Attributes$attribute, 'crossorigin', 'anonymous'),
-					A2($elm$html$Html$Attributes$style, 'display', 'none'),
-					A2(
-					$elm$html$Html$Events$on,
-					'load',
-					A2($elm$json$Json$Decode$map, onLoad, $joakin$elm_canvas$Canvas$Internal$Texture$decodeImageLoadEvent)),
-					A2(
-					$elm$html$Html$Events$on,
-					'error',
-					$elm$json$Json$Decode$succeed(
-						onLoad($elm$core$Maybe$Nothing)))
-				]),
-			_List_Nil));
+			$elm$html$Html$Events$preventDefaultOn,
+			'keydown',
+			A2(
+				$elm$json$Json$Decode$map,
+				function (fired) {
+					return _Utils_Tuple2(fired, true);
+				},
+				isKey)));
 };
-var $elm$html$Html$Attributes$width = function (n) {
+var $mdgriffith$elm_ui$Element$Input$space = ' ';
+var $elm$html$Html$Attributes$tabindex = function (n) {
 	return A2(
 		_VirtualDom_attribute,
-		'width',
+		'tabIndex',
 		$elm$core$String$fromInt(n));
 };
-var $joakin$elm_canvas$Canvas$toHtmlWith = F3(
-	function (options, attrs, entities) {
-		return A3(
-			$elm$html$Html$Keyed$node,
-			'elm-canvas',
+var $mdgriffith$elm_ui$Element$Input$button = F2(
+	function (attrs, _v0) {
+		var onPress = _v0.onPress;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
 			A2(
 				$elm$core$List$cons,
-				$joakin$elm_canvas$Canvas$Internal$CustomElementJsonApi$commands(
-					$joakin$elm_canvas$Canvas$render(entities)),
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
 				A2(
 					$elm$core$List$cons,
-					$elm$html$Html$Attributes$height(options.height),
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
 					A2(
 						$elm$core$List$cons,
-						$elm$html$Html$Attributes$width(options.width),
-						attrs))),
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.seButton + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.noTextSelection)))))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$pointer,
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$Input$focusDefault(attrs),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Button),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											$elm$html$Html$Attributes$tabindex(0)),
+										function () {
+											if (onPress.$ === 'Nothing') {
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Internal$Model$Attr(
+														$elm$html$Html$Attributes$disabled(true)),
+													attrs);
+											} else {
+												var msg = onPress.a;
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Element$Events$onClick(msg),
+													A2(
+														$elm$core$List$cons,
+														$mdgriffith$elm_ui$Element$Input$onKeyLookup(
+															function (code) {
+																return _Utils_eq(code, $mdgriffith$elm_ui$Element$Input$enter) ? $elm$core$Maybe$Just(msg) : (_Utils_eq(code, $mdgriffith$elm_ui$Element$Input$space) ? $elm$core$Maybe$Just(msg) : $elm$core$Maybe$Nothing);
+															}),
+														attrs));
+											}
+										}()))))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
+var $icidasset$elm_material_icons$Material$Icons$zoom_in = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
 			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2('__canvas', $joakin$elm_canvas$Canvas$cnvs),
-				A2($elm$core$List$map, $joakin$elm_canvas$Canvas$renderTextureSource, options.textures)));
-	});
-var $joakin$elm_canvas$Canvas$toHtml = F3(
-	function (_v0, attrs, entities) {
-		var w = _v0.a;
-		var h = _v0.b;
-		return A3(
-			$joakin$elm_canvas$Canvas$toHtmlWith,
-			{height: h, textures: _List_Nil, width: w},
-			attrs,
-			entities);
-	});
-var $author$project$Component$Canvas$renderCanvas = F2(
-	function (viewWidth, _v0) {
-		var count = _v0.count;
-		var viewHeight = _v0.viewHeight;
-		var width = viewWidth;
-		var height = viewHeight;
-		return $mdgriffith$elm_ui$Element$html(
-			A3(
-				$joakin$elm_canvas$Canvas$toHtml,
-				_Utils_Tuple2(viewWidth, viewHeight),
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$zoom_out = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z')
+				]),
+			_List_Nil)
+		]));
+var $icidasset$elm_material_icons$Material$Icons$Round$zoom_out_map = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$viewBox('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$elm$svg$Svg$Attributes$fill('none')
+				]),
+			_List_Nil),
+			A2(
+			$elm$svg$Svg$path,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M15.85 3.85L17.3 5.3l-2.18 2.16c-.39.39-.39 1.03 0 1.42.39.39 1.03.39 1.42 0L18.7 6.7l1.45 1.45c.31.31.85.09.85-.36V3.5c0-.28-.22-.5-.5-.5h-4.29c-.45 0-.67.54-.36.85zm-12 4.3L5.3 6.7l2.16 2.18c.39.39 1.03.39 1.42 0 .39-.39.39-1.03 0-1.42L6.7 5.3l1.45-1.45c.31-.31.09-.85-.36-.85H3.5c-.28 0-.5.22-.5.5v4.29c0 .45.54.67.85.36zm4.3 12L6.7 18.7l2.18-2.16c.39-.39.39-1.03 0-1.42-.39-.39-1.03-.39-1.42 0L5.3 17.3l-1.45-1.45c-.31-.31-.85-.09-.85.36v4.29c0 .28.22.5.5.5h4.29c.45 0 .67-.54.36-.85zm12-4.3L18.7 17.3l-2.16-2.18c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.03 0 1.42l2.18 2.16-1.45 1.45c-.31.31-.09.85.36.85h4.29c.28 0 .5-.22.5-.5v-4.29c0-.45-.54-.67-.85-.36z')
+				]),
+			_List_Nil)
+		]));
+var $author$project$Component$Canvas$viewChrome = function (model) {
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$alignBottom,
+				$mdgriffith$elm_ui$Element$alignLeft,
+				$mdgriffith$elm_ui$Element$moveUp(30),
+				$mdgriffith$elm_ui$Element$moveRight(40),
+				$mdgriffith$elm_ui$Element$spacing(12)
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'display', 'flex')
+						$mdgriffith$elm_ui$Element$padding(6),
+						$mdgriffith$elm_ui$Element$Border$rounded(6),
+						$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+						$mdgriffith$elm_ui$Element$Border$shadow(
+						{
+							blur: 6,
+							color: A2($author$project$Colors$withAlpha, 0.2, $author$project$Colors$black),
+							offset: _Utils_Tuple2(0, 3),
+							size: 1
+						})
+					]),
+				A2(
+					$mdgriffith$elm_ui$Element$Input$button,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$padding(2),
+							$mdgriffith$elm_ui$Element$Border$rounded(2)
+						]),
+					{
+						label: A2(
+							$author$project$MaterialIcons$material,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+							{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$Round$zoom_out_map, size: 22}),
+						onPress: $elm$core$Maybe$Just($author$project$Component$Canvas$ResetZoom)
+					})),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+						$mdgriffith$elm_ui$Element$padding(6),
+						$mdgriffith$elm_ui$Element$spacing(6),
+						$mdgriffith$elm_ui$Element$Border$rounded(6),
+						$mdgriffith$elm_ui$Element$Border$shadow(
+						{
+							blur: 6,
+							color: A2($author$project$Colors$withAlpha, 0.2, $author$project$Colors$black),
+							offset: _Utils_Tuple2(0, 3),
+							size: 1
+						})
 					]),
 				_List_fromArray(
 					[
-						A2($author$project$Component$Canvas$clearScreen, width, height),
-						A3($author$project$Component$Canvas$render, count, width, height)
-					])));
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$padding(2),
+								$mdgriffith$elm_ui$Element$Border$rounded(2)
+							]),
+						{
+							label: A2(
+								$author$project$MaterialIcons$material,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_in, size: 24}),
+							onPress: (model.scale > 1.6) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just($author$project$Component$Canvas$ZoomIn)
+						}),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(20)),
+								$mdgriffith$elm_ui$Element$centerX,
+								$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$grey),
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(1))
+							]),
+						$mdgriffith$elm_ui$Element$none),
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$padding(2),
+								$mdgriffith$elm_ui$Element$Border$rounded(2)
+							]),
+						{
+							label: A2(
+								$author$project$MaterialIcons$material,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								{color: $author$project$Colors$grey, icon: $icidasset$elm_material_icons$Material$Icons$zoom_out, size: 24}),
+							onPress: (model.scale < 0.7) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just($author$project$Component$Canvas$ZoomOut)
+						})
+					]))
+			]));
+};
+var $author$project$Component$Canvas$renderCanvas = F3(
+	function (viewWidth, canvasModel, _v0) {
+		var count = _v0.count;
+		var viewHeight = _v0.viewHeight;
+		var _v1 = canvasModel;
+		var model = _v1.a;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$pointer,
+					$mdgriffith$elm_ui$Element$inFront(
+					$author$project$Component$Canvas$viewChrome(model))
+				]),
+			A4($author$project$Component$Canvas$render, model, count, $mdgriffith$elm_ui$Element$width, $mdgriffith$elm_ui$Element$height));
 	});
 var $mdgriffith$elm_ui$Element$Background$tiled = function (src) {
 	return $mdgriffith$elm_ui$Internal$Model$Attr(
 		A2($elm$virtual_dom$VirtualDom$style, 'background', 'url(\"' + (src + '\") repeat')));
 };
+var $author$project$Pages$Flow_buildr$verticalLine = A2(
+	$mdgriffith$elm_ui$Element$el,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width(
+			$mdgriffith$elm_ui$Element$px(4)),
+			$mdgriffith$elm_ui$Element$height(
+			$mdgriffith$elm_ui$Element$px(40)),
+			$mdgriffith$elm_ui$Element$centerX,
+			$mdgriffith$elm_ui$Element$moveUp(1),
+			$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$orange)
+		]),
+	$mdgriffith$elm_ui$Element$none);
 var $icidasset$elm_material_icons$Material$Icons$arrow_right = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -21007,6 +20557,8 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 			[
 				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$paddingEach(
+				{bottom: 30, left: 24, right: 24, top: 90}),
 				$mdgriffith$elm_ui$Element$htmlAttribute(
 				A2($elm$html$Html$Attributes$style, 'z-index', '1')),
 				$mdgriffith$elm_ui$Element$behindContent(
@@ -21030,19 +20582,102 @@ var $author$project$Pages$Flow_buildr$viewCanvas = function (model) {
 							$mdgriffith$elm_ui$Element$Background$tiled('dist/DotGrid.png')
 						]),
 					$mdgriffith$elm_ui$Element$none)),
-				$mdgriffith$elm_ui$Element$Border$innerShadow(
-				{
-					blur: 2,
-					color: $author$project$Colors$black,
-					offset: _Utils_Tuple2(-2, 0),
-					size: 0
-				}),
 				$mdgriffith$elm_ui$Element$inFront(
-				A2($author$project$Component$Canvas$renderCanvas, (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth, model)),
+				A2(
+					$mdgriffith$elm_ui$Element$map,
+					$author$project$Pages$Flow_buildr$CanvasMsg,
+					A3($author$project$Component$Canvas$renderCanvas, (model.viewWidth - $author$project$Pages$Flow_buildr$actionBarWidth) - $author$project$UI$sidebarWidth, model.canvasState, model))),
 				$mdgriffith$elm_ui$Element$inFront(
 				$author$project$Pages$Flow_buildr$viewCanvasHeader(model))
 			]),
-		$mdgriffith$elm_ui$Element$none);
+		A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(60)
+				]),
+			_List_fromArray(
+				[
+					$author$project$Pages$Flow_buildr$circle(
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$below(
+							A2(
+								$mdgriffith$elm_ui$Element$column,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								_List_fromArray(
+									[
+										$author$project$Pages$Flow_buildr$verticalLine,
+										A2(
+										$mdgriffith$elm_ui$Element$row,
+										_List_fromArray(
+											[
+												$mdgriffith$elm_ui$Element$centerX,
+												$mdgriffith$elm_ui$Element$spacing(-4),
+												$mdgriffith$elm_ui$Element$moveUp(1)
+											]),
+										_List_fromArray(
+											[
+												A2($author$project$Pages$Flow_buildr$cornerOut, $author$project$Pages$Flow_buildr$Left, _List_Nil),
+												A2($author$project$Pages$Flow_buildr$cornerOut, $author$project$Pages$Flow_buildr$Right, _List_Nil)
+											]))
+									])))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$centerX,
+							$mdgriffith$elm_ui$Element$spacing(-4),
+							$mdgriffith$elm_ui$Element$moveUp(1)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveUp(4),
+									$mdgriffith$elm_ui$Element$moveRight(10)
+								]),
+							_List_fromArray(
+								[
+									A2($author$project$Pages$Flow_buildr$cornerDown, $author$project$Pages$Flow_buildr$Left, _List_Nil),
+									$author$project$Pages$Flow_buildr$circle(
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$moveLeft(24)
+										]))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(280 - 4))
+								]),
+							$mdgriffith$elm_ui$Element$none),
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveUp(4)
+								]),
+							_List_fromArray(
+								[
+									A2($author$project$Pages$Flow_buildr$cornerDown, $author$project$Pages$Flow_buildr$Right, _List_Nil),
+									$author$project$Pages$Flow_buildr$circle(
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$moveRight(11)
+										]))
+								]))
+						]))
+				])));
 };
 var $author$project$Pages$Flow_buildr$view = function (model) {
 	return {
@@ -21460,6 +21095,7 @@ var $elm$svg$Svg$Attributes$id = _VirtualDom_attribute('id');
 var $elm$svg$Svg$Attributes$in2 = _VirtualDom_attribute('in2');
 var $elm$svg$Svg$Attributes$in_ = _VirtualDom_attribute('in');
 var $elm$svg$Svg$Attributes$mode = _VirtualDom_attribute('mode');
+var $elm$svg$Svg$Attributes$operator = _VirtualDom_attribute('operator');
 var $elm$svg$Svg$Attributes$result = _VirtualDom_attribute('result');
 var $elm$svg$Svg$Attributes$stdDeviation = _VirtualDom_attribute('stdDeviation');
 var $elm$svg$Svg$Attributes$values = function (value) {
@@ -21507,7 +21143,7 @@ var $author$project$UI$VisualEffects$addGooFilter = $mdgriffith$elm_ui$Element$i
 										_List_fromArray(
 											[
 												$elm$svg$Svg$Attributes$in_('SourceGraphic'),
-												$elm$svg$Svg$Attributes$stdDeviation('14'),
+												$elm$svg$Svg$Attributes$stdDeviation('8'),
 												$elm$svg$Svg$Attributes$result('blur')
 											]),
 										_List_Nil),
@@ -21526,7 +21162,8 @@ var $author$project$UI$VisualEffects$addGooFilter = $mdgriffith$elm_ui$Element$i
 										_List_fromArray(
 											[
 												$elm$svg$Svg$Attributes$in_('SourceGraphic'),
-												$elm$svg$Svg$Attributes$in2('goo')
+												$elm$svg$Svg$Attributes$in2('goo'),
+												$elm$svg$Svg$Attributes$operator('atop')
 											]),
 										_List_Nil)
 									]))
@@ -21808,8 +21445,7 @@ var $author$project$View$toBrowserDocument = function (view) {
 						[
 							$mdgriffith$elm_ui$Element$focusStyle(
 							{
-								backgroundColor: $elm$core$Maybe$Just(
-									A3($mdgriffith$elm_ui$Element$rgb, 0.1, 0.1, 0.1)),
+								backgroundColor: $elm$core$Maybe$Just($author$project$Colors$lightGrey),
 								borderColor: $elm$core$Maybe$Nothing,
 								shadow: $elm$core$Maybe$Nothing
 							})
@@ -21879,4 +21515,4 @@ var $author$project$Main$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangedUrl, onUrlRequest: $author$project$Main$ClickedLink, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Gen.Pages.Msg":{"args":[],"type":"Gen.Msg.Msg"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.Flow_buildr.Location":{"args":[],"type":"( Basics.Float, Basics.Float )"},"Pages.Flow_buildr.Path":{"args":[],"type":"{ start : Pages.Flow_buildr.Location, current : Pages.Flow_buildr.Location }"}},"unions":{"Main.Msg":{"args":[],"tags":{"ChangedUrl":["Url.Url"],"ClickedLink":["Browser.UrlRequest"],"Shared":["Shared.Msg"],"Page":["Gen.Pages.Msg"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Gen.Msg.Msg":{"args":[],"tags":{"A":["Pages.A.Msg"],"Flow_buildr":["Pages.Flow_buildr.Msg"]}},"Shared.Msg":{"args":[],"tags":{"NoOp":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Pages.A.Msg":{"args":[],"tags":{"ReplaceMe":[]}},"Pages.Flow_buildr.Msg":{"args":[],"tags":{"NoOp":[],"Frame":["Basics.Float"],"GotWindowSize":["Basics.Int","Basics.Int"],"CanvasMsg":["Component.Canvas.Msg"],"ClickedDownOnFlowAction":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Location"],"MovedFlowActionTo":["Pages.Flow_buildr.FlowAction","Pages.Flow_buildr.Path"],"ReleasedFlowAction":[]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"Pages.Flow_buildr.FlowAction":{"args":[],"tags":{"FlowAction":["Basics.Int"]}},"Component.Canvas.Msg":{"args":[],"tags":{"ZoomIn":[],"ZoomOut":[],"ResetZoom":[]}}}}})}});}(this));
