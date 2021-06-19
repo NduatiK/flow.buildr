@@ -2,7 +2,6 @@ module Pages.Flow_buildr exposing (Model, Msg, page)
 
 import Browser.Events
 import Colors
-import Component.Canvas as CanvasComponent
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -158,13 +157,6 @@ update msg ({ canvas } as model) =
             ( { model | canvas = { canvas | scale = 1 } }
             , Effect.none
             )
-
-
-updateWithCanvasMsg : CanvasComponent.Msg -> Model -> ( Model, Effect Msg )
-updateWithCanvasMsg msg model =
-    case msg of
-        _ ->
-            ( model, Effect.none )
 
 
 
