@@ -1,12 +1,13 @@
 module UI.VisualEffects exposing (..)
 
 import Element
+import Html.Attributes
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
 
-addGooFilter : Element.Attribute msg
-addGooFilter =
+setupGooFilter : Element.Attribute msg
+setupGooFilter =
     Element.inFront
         (Element.el [ Element.width (Element.px 0), Element.height (Element.px 0) ] <|
             Element.html <|
@@ -36,3 +37,7 @@ addGooFilter =
                         ]
                     ]
         )
+
+
+gooey =
+    Element.htmlAttribute (Html.Attributes.class "gooey")

@@ -1,7 +1,11 @@
 module Pages.Flow_buildr exposing (Model, Msg, page)
 
+import Animator
+import Animator.Css
+import Animator.Inline
 import Browser.Events
 import Colors
+import Dict
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -24,7 +28,10 @@ import Request
 import Shared
 import Svg
 import Svg.Attributes
+import Time
 import UI
+import UI.Css as Css
+import UI.VisualEffects
 import View exposing (View)
 
 
@@ -50,11 +57,27 @@ type alias Model =
     , pickedUpFlowAction : Maybe ( FlowAction, Path )
     , canvas : CanvasModel
     , tree : Node
+    , animationDragState : Animator.Timeline DragState
+
+    -- , animationData : Maybe AnimationData
     }
+
+
+type alias DragState =
+    -- { items :
+    --  List Int
+    -- }
+    Dict.Dict Int Path
 
 
 type alias CanvasModel =
     { scale : Float
+    }
+
+
+type alias AnimationData =
+    { pageWidth : Float
+    , bookOffset : Float
     }
 
 
@@ -65,6 +88,8 @@ init req =
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
+      , animationDragState =
+            Animator.init Dict.empty
       , tree =
             Node (NodeAttr Colors.purple True)
                 [ Node (NodeAttr Colors.green True) []
@@ -123,13 +148,29 @@ type alias Location =
     ( Float, Float )
 
 
+animator : Animator.Animator Model
+animator =
+    Animator.animator
+        |> Animator.watchingWith .animationDragState
+            (\newState model ->
+                let
+                    _ =
+                        Debug.log "" (Animator.current newState)
+                in
+                { model | animationDragState = newState }
+            )
+            (\state ->
+                not (Dict.isEmpty state)
+            )
+
+
 
 -- UPDATE
 
 
 type Msg
     = NoOp
-    | Frame Float
+    | Tick Time.Posix
     | GotWindowSize Int Int
       ---
     | ZoomIn
@@ -138,7 +179,7 @@ type Msg
       ---
     | ClickedDownOnFlowAction FlowAction Location
     | MovedFlowActionTo FlowAction Path
-    | ReleasedFlowAction
+    | ReleasedFlowAction FlowAction
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -147,8 +188,11 @@ update msg ({ canvas } as model) =
         NoOp ->
             ( model, Effect.none )
 
-        Frame _ ->
-            ( { model | count = model.count + 0.01 }, Effect.none )
+        Tick newTime ->
+            ( model
+                |> Animator.update newTime animator
+            , Effect.none
+            )
 
         GotWindowSize w h ->
             ( { model
@@ -158,25 +202,39 @@ update msg ({ canvas } as model) =
             , Effect.none
             )
 
-        ClickedDownOnFlowAction flowAction startLocation ->
+        ClickedDownOnFlowAction ((FlowAction index) as flowAction) startLocation ->
             ( { model
                 | pickedUpFlowAction = Just ( flowAction, Path startLocation startLocation )
+                , animationDragState =
+                    model.animationDragState
+                        |> Animator.go Animator.veryQuickly
+                            (Dict.insert index (Path startLocation startLocation) (Animator.current model.animationDragState))
               }
             , Effect.none
             )
 
-        MovedFlowActionTo flowAction path ->
+        MovedFlowActionTo ((FlowAction index) as flowAction) path ->
             ( { model
                 | pickedUpFlowAction =
                     model.pickedUpFlowAction
                         |> Maybe.map (\_ -> ( flowAction, path ))
+                , animationDragState =
+                    model.animationDragState
+                        |> Animator.go Animator.veryQuickly
+                            (Dict.update index (Maybe.map (always path)) (Animator.current model.animationDragState))
               }
             , Effect.none
             )
 
-        ReleasedFlowAction ->
+        ReleasedFlowAction ((FlowAction index) as removedAction) ->
             -- ( model
-            ( { model | pickedUpFlowAction = Nothing }
+            ( { model
+                | pickedUpFlowAction = Nothing
+                , animationDragState =
+                    model.animationDragState
+                        |> Animator.go Animator.veryQuickly
+                            (Dict.remove index (Animator.current model.animationDragState))
+              }
             , Effect.none
             )
 
@@ -212,13 +270,13 @@ subscriptions model =
                 Browser.Events.onVisibilityChange
                     (\x ->
                         if x == Browser.Events.Hidden then
-                            ReleasedFlowAction
+                            ReleasedFlowAction flowAction
 
                         else
                             NoOp
                     )
-
-        -- , Browser.Events.onAnimationFrameDelta Frame
+        , animator
+            |> Animator.toSubscription Tick model
         ]
 
 
@@ -262,7 +320,7 @@ view model =
                             -- Browser.Events.onMouseMove MovedFlowActionTo
                             [ Html.Events.Extra.Mouse.onMove (.pagePos >> (\x -> { old | current = x }) >> MovedFlowActionTo flowAction)
                                 |> htmlAttribute
-                            , Html.Events.Extra.Mouse.onUp (always ReleasedFlowAction)
+                            , Html.Events.Extra.Mouse.onUp (always (ReleasedFlowAction flowAction))
                                 |> htmlAttribute
                             ]
                     ]
@@ -356,15 +414,15 @@ viewActionBar model =
                         , el [ Font.size 15, Font.medium ] (text title)
                         ]
                 )
-                [ Actions.PhoneCall
-                , Actions.Wait
-                , Actions.Say
-                , Actions.Redirect
-                , Actions.PhoneKeyboard
-                , Actions.RecordCallAudio
-                , Actions.Translate
-                , Actions.UnsubscribeFromGroup
-                , Actions.MakePayment
+                [--     Actions.PhoneCall
+                 -- , Actions.Wait
+                 -- , Actions.Say
+                 -- , Actions.Redirect
+                 -- , Actions.PhoneKeyboard
+                 -- , Actions.RecordCallAudio
+                 -- , Actions.Translate
+                 -- , Actions.UnsubscribeFromGroup
+                 -- , Actions.MakePayment
                 ]
             )
         , el
@@ -503,49 +561,67 @@ renderDragableAction model defaultSize i ( color, icon ) =
         ]
     <|
         el
-            [ width (px parentSize)
+            [ UI.VisualEffects.gooey
+            , width (px parentSize)
             , height (px parentSize)
             , Border.rounded 50
             , Background.color color
-            , htmlAttribute
-                (Html.Attributes.style "transform"
-                    (String.join
-                        ""
-                        [ "translate3d("
-                        , String.fromFloat offsetV.x
-                        , "px,"
-                        , String.fromFloat offsetV.y
-                        , "px,0px)"
-                        ]
-                    )
-                )
-            , htmlAttribute
-                (Html.Attributes.style "filter"
-                    "url('#goo')"
-                )
-            , htmlAttribute
-                (Html.Attributes.style "-webkit-filter"
-                    "url('#goo')"
-                )
-            , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease-out, width 0.1s ease,height 0.1s ease")
-            , htmlAttribute (Html.Attributes.style "transition" "box-shadow 0.1s ease, transform 0.2s ease-out, width 0.3s ease,height 0.3s ease")
+
+            -- , Css.translateXY offsetV.x offsetV.y
+            , htmlAttribute <|
+                Animator.Inline.xy model.animationDragState <|
+                    \state ->
+                        let
+                            _ =
+                                ( i, state )
+                        in
+                        case Dict.get i state of
+                            Just path ->
+                                { y = Animator.at moveDownDist
+                                , x =
+                                    Animator.at
+                                        ((Tuple.first path.current
+                                            - Tuple.first path.start
+                                         )
+                                            |> (\x ->
+                                                    if x < 100 then
+                                                        x
+
+                                                    else
+                                                        x
+                                               )
+                                        )
+                                }
+
+                            Nothing ->
+                                { y = Animator.at offset
+                                , x = Animator.at offset
+                                }
+
+            -- { x = Animator.withWobble 1 (Animator.at offsetV.x)
+            -- , y = Animator.withWobble 1 (Animator.at offsetV.y)
+            -- }
+            -- , htmlAttribute (Html.Attributes.style "-webkit-transition" "box-shadow 0.1s ease, transform 0.1s ease-out, width 0.1s ease,height 0.1s ease")
+            -- , Css.transition
+            --     [ ( Css.Shadow, 100, "ease" )
+            --     , ( Css.Translation, 500, "ease-out" )
+            --     , ( Css.Width, 300, "ease-out" )
+            --     , ( Css.Height, 300, "ease-out" )
+            --     ]
             , behindContent
                 -- , inFront
                 (el
-                    [ width (px childSize)
+                    [ UI.VisualEffects.gooey
+                    , width (px childSize)
                     , height (px childSize)
-                    , htmlAttribute
-                        (Html.Attributes.style "transform"
-                            (String.join
-                                ""
-                                [ "translate3d("
-                                , String.fromFloat offsetChild.x
-                                , "px,"
-                                , String.fromFloat offsetChild.y
-                                , "px,0px)"
-                                ]
-                            )
-                        )
+                    , htmlAttribute <|
+                        Animator.Inline.xy model.animationDragState <|
+                            \state ->
+                                { x = Animator.at offsetChild.x
+                                , y = Animator.at offsetChild.y
+                                }
+
+                    -- Css.translateXY offsetChild.x offsetChild.y
                     , if useFilter then
                         Border.glow color 1
 
@@ -556,16 +632,8 @@ renderDragableAction model defaultSize i ( color, icon ) =
                     , Background.color color
 
                     -- , Background.color Colors.black
-                    , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease-out")
-                    , htmlAttribute (Html.Attributes.style "transition" "transform 0.2s ease-out")
-                    , htmlAttribute
-                        (Html.Attributes.style "filter"
-                            "url('#goo')"
-                        )
-                    , htmlAttribute
-                        (Html.Attributes.style "-webkit-filter"
-                            "url('#goo')"
-                        )
+                    -- , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease-out")
+                    , Css.transition [ ( Css.Translation, 200, "ease-out" ) ]
                     ]
                     none
                 )

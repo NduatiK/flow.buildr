@@ -63,7 +63,7 @@ toBrowserDocument view =
                 ]
             , Background.color Colors.white
             , Font.color Colors.black
-            , UI.VisualEffects.addGooFilter
+            , UI.VisualEffects.setupGooFilter
             ]
           <|
             column [ width fill, height fill ]

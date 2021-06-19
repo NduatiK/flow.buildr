@@ -26,6 +26,7 @@
             "ianmackenzie/elm-geometry-svg": "3.0.0",
             "ianmackenzie/elm-units": "2.9.0",
             "icidasset/elm-material-icons": "5.0.0",
+            "mdgriffith/elm-animator": "1.1.1",
             "mdgriffith/elm-ui": "1.1.8",
             "mpizenberg/elm-pointer-events": "4.0.1",
             "ryannhg/elm-spa": "6.0.0"
