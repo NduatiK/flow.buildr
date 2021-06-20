@@ -2,7 +2,7 @@
 > 🌳  built with [elm-spa](https://elm-spa.dev)
 
 So far
-![](screenshots/Screenshot%202021-06-20%20at%207.03.26%20AM.png)
+![](screenshots/Screenshot%202021-06-20%20at%2012.08.59%20PM.png)
 
 Target and inspiration by [Oğuz Yağız Kara](https://dribbble.com/shots/11275807-Flow-Builder)
 
