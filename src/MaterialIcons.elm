@@ -1,4 +1,4 @@
-module MaterialIcons exposing (material, colorToMaterialColor)
+module MaterialIcons exposing (colorToMaterialColor, material)
 
 import Color as MaterialColor
 import Element exposing (..)
@@ -21,17 +21,17 @@ material : List (Attribute msg) -> { icon : Icon msg, size : Int, color : Color 
 material attr { icon, size, color } =
     let
         materialColor =
-            colorToMaterialColor color
+            Color <| colorToMaterialColor color
     in
     icon size materialColor
         |> html
         |> el ([] ++ attr)
 
 
-colorToMaterialColor : Color -> Coloring
+colorToMaterialColor : Element.Color -> MaterialColor.Color
 colorToMaterialColor color =
     let
         colorParts =
             toRgb color
     in
-    Color <| MaterialColor.rgba colorParts.red colorParts.green colorParts.blue colorParts.alpha
+    MaterialColor.rgba colorParts.red colorParts.green colorParts.blue colorParts.alpha

@@ -20,13 +20,20 @@ import Material.Icons.Types
 import MaterialIcons
 import Model.Actions as Actions exposing (Actions(..))
 import Page
+import Particle exposing (Particle)
+import Particle.System as System exposing (System)
 import Process
+import Random
+import Random.Extra
+import Random.Float
 import Request
+import Set
 import Shared
 import Svg
 import Svg.Attributes
 import Task
 import UI
+import UI.Confetti
 import UI.Css as Css
 import UI.VisualEffects
 import View exposing (View)
@@ -58,6 +65,8 @@ type alias Model =
     , sideOptions : SideOptions
     , uid : Int
     , lastDroppedUid : Int
+    , lastCreatedUids : Set.Set Int
+    , confetti : System UI.Confetti.Firework
     }
 
 
@@ -159,7 +168,9 @@ init req =
       , sideOptions = sideOptions
       , tree = tree
       , uid = uid
+      , confetti = System.init (Random.initialSeed 0)
       , lastDroppedUid = -1
+      , lastCreatedUids = Set.empty
       , canvas =
             { scale = 1
             }
@@ -216,6 +227,9 @@ type Msg
     | DraggedAboveZoneFor FlowAction
     | NoLongerAboveZoneFor FlowAction
     | ClearLastDroppedUID
+    | ClearLastCreatedUID Int
+      ---
+    | ParticleMsg (System.Msg UI.Confetti.Firework)
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -253,10 +267,10 @@ update msg ({ canvas } as model) =
 
         ReleasedFlowAction ->
             let
-                ( newUid, newTree, newSideOptions ) =
+                ( updated, newTree, newSideOptions ) =
                     case ( model.dropZoneFlowAction, model.pickedUpFlowAction ) of
                         ( Just (FlowAction dropId), Just ( Node dropAttr _, path ) ) ->
-                            ( model.uid + 2
+                            ( True
                             , findAndUpdateNode dropId
                                 (\(Node attr children) ->
                                     Node attr (children ++ [ Node { dropAttr | index = model.uid } [] ])
@@ -266,18 +280,50 @@ update msg ({ canvas } as model) =
                             )
 
                         _ ->
-                            ( model.uid, model.tree, model.sideOptions )
+                            ( False, model.tree, model.sideOptions )
             in
             ( { model
                 | pickedUpFlowAction = Nothing
                 , tree = newTree
-                , uid = newUid
+                , uid =
+                    if updated then
+                        model.uid + 2
+
+                    else
+                        model.uid
                 , sideOptions = newSideOptions
+                , confetti =
+                    if updated then
+                        System.burst
+                            (Random.Extra.andThen3 UI.Confetti.fireworkAt
+                                (Random.constant
+                                    (model.pickedUpFlowAction
+                                        |> Maybe.map (Tuple.first >> (\(Node attr _) -> (Actions.config attr.action).color))
+                                        |> Maybe.withDefault Colors.purple
+                                    )
+                                )
+                                (Random.constant 40)
+                                (Random.constant 40)
+                            )
+                            model.confetti
+
+                    else
+                        model.confetti
                 , dropZoneFlowAction = Nothing
                 , lastDroppedUid = model.uid + 1
+                , lastCreatedUids = Set.insert model.uid model.lastCreatedUids
               }
-            , Effect.fromCmd
-                (Process.sleep 400 |> Task.perform (\_ -> ClearLastDroppedUID))
+            , Effect.batch
+                [ Effect.fromCmd
+                    (Process.sleep 400 |> Task.perform (\_ -> ClearLastDroppedUID))
+                , Effect.fromCmd
+                    (Process.sleep 3000 |> Task.perform (\_ -> ClearLastCreatedUID model.uid))
+                ]
+            )
+
+        ClearLastCreatedUID index ->
+            ( { model | lastCreatedUids = Set.remove index model.lastCreatedUids }
+            , Effect.none
             )
 
         ClearLastDroppedUID ->
@@ -316,6 +362,24 @@ update msg ({ canvas } as model) =
             , Effect.none
             )
 
+        ParticleMsg innerMg ->
+            ( { model
+                | confetti =
+                    System.update innerMg model.confetti
+              }
+            , Effect.none
+            )
+
+        -- Detonate ->
+        --     ( System.burst
+        --         (Random.Extra.andThen3 fireworkAt
+        --             (Random.uniform Red [ Green, Blue ])
+        --             (normal 300 100)
+        --             (normal 300 100)
+        --         )
+        --         model
+        --     , Cmd.none
+        --     )
         ZoomIn ->
             ( { model | canvas = { canvas | scale = canvas.scale + 0.1 } }
             , Effect.none
@@ -382,6 +446,7 @@ subscriptions model =
                         else
                             NoOp
                     )
+        , System.sub [] ParticleMsg model.confetti
 
         -- , Browser.Events.onAnimationFrameDelta Frame
         ]
@@ -969,6 +1034,10 @@ viewHtmlTree ({ pickedUpFlowAction, dropZoneFlowAction } as model) { hasParent, 
 
                 Nothing ->
                     False
+
+        shouldConfetti =
+            -- only happens if just dropped into space
+            Set.member index model.lastCreatedUids && not dropNode
     in
     column
         [ height fill
@@ -1026,7 +1095,16 @@ viewHtmlTree ({ pickedUpFlowAction, dropZoneFlowAction } as model) { hasParent, 
 
               else
                 none
-            , circle []
+            , circle
+                [ behindContent
+                    (if shouldConfetti then
+                        html
+                            (UI.Confetti.view model.confetti)
+
+                     else
+                        none
+                    )
+                ]
                 -- , circle [ inFront (text label) ]
                 { node = node
                 , icon = Material.Icons.rotate_left
