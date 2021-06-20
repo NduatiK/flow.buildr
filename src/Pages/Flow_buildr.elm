@@ -49,10 +49,17 @@ type alias Model =
     , count : Float
     , viewWidth : Int
     , viewHeight : Int
-    , pickedUpFlowAction : Maybe ( FlowAction, Path )
+    , pickedUpFlowAction : Maybe ( Node, Path )
+    , dropZoneFlowAction : Maybe FlowAction
     , canvas : CanvasModel
     , tree : Node
+    , sideOptions : SideOptions
+    , uid : Int
     }
+
+
+type alias SideOptions =
+    { head : ( String, List Node ), tail : List ( String, List Node ) }
 
 
 type alias CanvasModel =
@@ -62,53 +69,111 @@ type alias CanvasModel =
 
 init : Request.With Params -> ( Model, Effect Msg )
 init req =
+    let
+        tree =
+            Node (NodeAttr Actions.PhoneCall 0 True False)
+                [ Node (NodeAttr Actions.Wait 1 True False) []
+                ]
+
+        -- [ Node (NodeAttr Colors.green 2 True True) []
+        -- , Node (NodeAttr Colors.green 3 False False)
+        --     [ Node (NodeAttr Colors.green 4 True False) []
+        --     , Node (NodeAttr Colors.green 5 True False) []
+        --     ]
+        -- , Node (NodeAttr Colors.darkBlue 6 True False)
+        --     [ Node (NodeAttr Colors.green 7 True False) []
+        --     , Node (NodeAttr Colors.green 8 True False)
+        --         [ Node (NodeAttr Colors.green 9 True False) []
+        --         ]
+        --     , Node (NodeAttr Colors.grey 10 True False) []
+        --     , Node (NodeAttr Colors.grey 11 False False)
+        --         [ Node (NodeAttr Colors.darkBlue 12 True False)
+        --             [ Node (NodeAttr Colors.green 13 True False) []
+        --             , Node (NodeAttr Colors.green 14 True False)
+        --                 [ Node (NodeAttr Colors.green 15 True False) []
+        --                 ]
+        --             , Node (NodeAttr Colors.grey 16 True False) []
+        --             , Node (NodeAttr Colors.grey 17 True False) []
+        --             ]
+        --         , Node (NodeAttr Colors.blue 18 True False)
+        --             [ Node (NodeAttr Colors.green 19 True False) []
+        --             , Node (NodeAttr Colors.green 20 True False) []
+        --             , Node (NodeAttr Colors.grey 21 True False) []
+        --             , Node (NodeAttr Colors.grey 22 True False) []
+        --             ]
+        --         ]
+        --     ]
+        -- , Node (NodeAttr Colors.blue 23 True False)
+        --     [ Node (NodeAttr Colors.green 24 True False) []
+        --     , Node (NodeAttr Colors.green 25 True False) []
+        --     ]
+        -- , Node (NodeAttr Colors.green 26 True False) []
+        -- ]
+        treeSize =
+            countChildren tree
+
+        sideOptions =
+            { head =
+                ( "USED"
+                , [ defaultNodeForAction Actions.PhoneCall 2
+                  , defaultNodeForAction Actions.Say 3
+                  , defaultNodeForAction Actions.PhoneKeyboard 4
+                  ]
+                )
+            , tail =
+                [ ( "AVAILABLE"
+                  , [ defaultNodeForAction Actions.PhoneCall 5
+                    , defaultNodeForAction Actions.Wait 6
+                    , defaultNodeForAction Actions.Say 7
+                    , defaultNodeForAction Actions.Redirect 8
+                    , defaultNodeForAction Actions.PhoneKeyboard 9
+                    , defaultNodeForAction Actions.RecordCallAudio 10
+                    , defaultNodeForAction Actions.Translate 11
+                    , defaultNodeForAction Actions.UnsubscribeFromGroup 12
+                    , defaultNodeForAction Actions.MakePayment 13
+                    ]
+                  )
+                ]
+            }
+
+        uid =
+            treeSize
+                + List.length (Tuple.second sideOptions.head)
+                + List.sum
+                    (List.map
+                        (\x ->
+                            List.length (Tuple.second x)
+                        )
+                        sideOptions.tail
+                    )
+    in
     ( { req = req
       , count = 0
       , viewWidth = 800
       , viewHeight = 800
       , pickedUpFlowAction = Nothing
-      , tree =
-            Node (NodeAttr Colors.purple 1 True False)
-                [ Node (NodeAttr Colors.green 2 True True) []
-                , Node (NodeAttr Colors.green 3 False False)
-                    [ Node (NodeAttr Colors.green 4 True False) []
-                    , Node (NodeAttr Colors.green 5 True False) []
-                    ]
-                , Node (NodeAttr Colors.darkBlue 6 True False)
-                    [ Node (NodeAttr Colors.green 7 True False) []
-                    , Node (NodeAttr Colors.green 8 True False)
-                        [ Node (NodeAttr Colors.green 9 True False) []
-                        ]
-                    , Node (NodeAttr Colors.grey 10 True False) []
-                    , Node (NodeAttr Colors.grey 11 False False)
-                        [ Node (NodeAttr Colors.darkBlue 12 True False)
-                            [ Node (NodeAttr Colors.green 13 True False) []
-                            , Node (NodeAttr Colors.green 14 True False)
-                                [ Node (NodeAttr Colors.green 15 True False) []
-                                ]
-                            , Node (NodeAttr Colors.grey 16 True False) []
-                            , Node (NodeAttr Colors.grey 17 True False) []
-                            ]
-                        , Node (NodeAttr Colors.blue 18 True False)
-                            [ Node (NodeAttr Colors.green 19 True False) []
-                            , Node (NodeAttr Colors.green 20 True False) []
-                            , Node (NodeAttr Colors.grey 21 True False) []
-                            , Node (NodeAttr Colors.grey 22 True False) []
-                            ]
-                        ]
-                    ]
-                , Node (NodeAttr Colors.blue 23 True False)
-                    [ Node (NodeAttr Colors.green 24 True False) []
-                    , Node (NodeAttr Colors.green 25 True False) []
-                    ]
-                , Node (NodeAttr Colors.green 26 True False) []
-                ]
+      , dropZoneFlowAction = Nothing
+      , sideOptions = sideOptions
+      , tree = tree
+      , uid = uid
       , canvas =
             { scale = 1
             }
       }
     , Effect.fromCmd (UI.getSizeOfWindow GotWindowSize)
     )
+
+
+defaultNodeForAction action id =
+    Node (NodeAttr action id True False) []
+
+
+countChildren tree =
+    countChildren_ 1 tree
+
+
+countChildren_ total (Node _ children) =
+    total + List.sum (List.map countChildren children)
 
 
 type FlowAction
@@ -140,9 +205,12 @@ type Msg
       ---
     | ToggleExpandOnNode Int
       ---
-    | ClickedDownOnFlowAction FlowAction Location
-    | MovedFlowActionTo FlowAction Path
+    | ClickedDownOnFlowAction Node Location
+    | MovedFlowActionTo Node Path
     | ReleasedFlowAction
+      ---
+    | DraggedAboveZoneFor FlowAction
+    | NoLongerAboveZoneFor FlowAction
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -179,8 +247,29 @@ update msg ({ canvas } as model) =
             )
 
         ReleasedFlowAction ->
-            -- ( model
-            ( { model | pickedUpFlowAction = Nothing }
+            let
+                ( newUid, newTree, newSideOptions ) =
+                    case ( model.dropZoneFlowAction, model.pickedUpFlowAction ) of
+                        ( Just (FlowAction dropId), Just ( Node dropAttr _, path ) ) ->
+                            ( model.uid + 2
+                            , findAndUpdateNode dropId
+                                (\(Node attr children) ->
+                                    Node attr (children ++ [ Node { dropAttr | index = model.uid } [] ])
+                                )
+                                model.tree
+                            , updateSubOptionNode dropAttr.index (\(Node attr children) -> Node { attr | index = model.uid + 1 } children) model.sideOptions
+                            )
+
+                        _ ->
+                            ( model.uid, model.tree, model.sideOptions )
+            in
+            ( { model
+                | pickedUpFlowAction = Nothing
+                , tree = newTree
+                , uid = newUid
+                , sideOptions = newSideOptions
+                , dropZoneFlowAction = Nothing
+              }
             , Effect.none
             )
 
@@ -192,6 +281,25 @@ update msg ({ canvas } as model) =
                             Node { attr | expanded = not attr.expanded } children
                         )
                         model.tree
+              }
+            , Effect.none
+            )
+
+        DraggedAboveZoneFor flowAction ->
+            ( { model
+                | dropZoneFlowAction = Just flowAction
+              }
+            , Effect.none
+            )
+
+        NoLongerAboveZoneFor flowAction ->
+            ( { model
+                | dropZoneFlowAction =
+                    if model.dropZoneFlowAction == Just flowAction then
+                        Nothing
+
+                    else
+                        model.dropZoneFlowAction
               }
             , Effect.none
             )
@@ -218,6 +326,27 @@ findAndUpdateNode nodeId_ updateFn ((Node attr children) as tree) =
 
     else
         Node attr (List.map (findAndUpdateNode nodeId_ updateFn) children)
+
+
+updateSubOptionNode nodeId_ updateFn { head, tail } =
+    { head =
+        Tuple.mapSecond (updateSubOptionNodeList nodeId_ updateFn) head
+    , tail =
+        tail
+            |> List.map (Tuple.mapSecond (updateSubOptionNodeList nodeId_ updateFn))
+    }
+
+
+updateSubOptionNodeList nodeId_ updateFn list =
+    list
+        |> List.map
+            (\((Node attr children) as node) ->
+                if attr.index == nodeId_ then
+                    updateFn node
+
+                else
+                    node
+            )
 
 
 
@@ -305,6 +434,7 @@ actionBarWidth =
     300
 
 
+viewActionBar : Model -> Element Msg
 viewActionBar model =
     column
         [ height fill
@@ -328,6 +458,7 @@ viewActionBar model =
         --             (Debug.toString
         --                 { count = model.count
         --                 , pickedUpFlowAction = model.pickedUpFlowAction
+        --                 , dropZoneFlowAction = model.dropZoneFlowAction
         --                 }
         --             )
         --         ]
@@ -345,51 +476,49 @@ viewActionBar model =
             , text = ""
             }
         , el [ height (px 30) ] none
-        , el [ Font.size 13, Font.medium, Font.color Colors.grey ] <| text "USED"
+        , el [ Font.size 13, Font.medium, Font.color Colors.grey ] <| text (Tuple.first model.sideOptions.head)
         , el [ height (px 16) ] none
         , row
             [ spacing 8
             ]
           <|
-            List.indexedMap
-                (renderDragableAction model 54)
-                [ ( Colors.purple, Material.Icons.smartphone )
-                , ( Colors.blue, Material.Icons.message )
-                , ( Colors.green, Material.Icons.dialpad )
-                ]
+            List.map
+                (\((Node { action } _) as node) ->
+                    renderDragableAction model 54 node
+                )
+                (Tuple.second model.sideOptions.head)
         , el [ height (px 20) ] none
-        , el [ Font.size 13, Font.medium, Font.color Colors.grey ] <| text "AVAILABLE"
-        , el [ height (px 16) ] none
-        , column [ spacing 12 ]
-            (List.indexedMap
-                (\i action ->
-                    let
-                        { color, icon, title } =
-                            Actions.config action
-                    in
-                    row
-                        [ spacing 12
+        , column [ width fill ]
+            (List.map
+                (\optionsGroup ->
+                    column [ width fill ]
+                        [ el [ Font.size 13, Font.medium, Font.color Colors.grey ] <| text (Tuple.first optionsGroup)
+                        , el [ height (px 16) ] none
+                        , column [ spacing 12 ]
+                            (List.map
+                                (\((Node { action } _) as node) ->
+                                    let
+                                        { title } =
+                                            Actions.config action
+                                    in
+                                    row
+                                        [ spacing 12
 
-                        -- , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
-                        --     htmlAttribute (Html.Attributes.style "z-index" "11")
-                        --   else
-                        --     spacing 12
-                        ]
-                    <|
-                        [ renderDragableAction model 44 (i + 3) ( color, icon )
-                        , el [ Font.size 15, Font.medium ] (text title)
+                                        -- , if Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                                        --     htmlAttribute (Html.Attributes.style "z-index" "11")
+                                        --   else
+                                        --     spacing 12
+                                        ]
+                                    <|
+                                        [ renderDragableAction model 44 node
+                                        , el [ Font.size 15, Font.medium ] (text title)
+                                        ]
+                                )
+                                (Tuple.second optionsGroup)
+                            )
                         ]
                 )
-                [ Actions.PhoneCall
-                , Actions.Wait
-                , Actions.Say
-                , Actions.Redirect
-                , Actions.PhoneKeyboard
-                , Actions.RecordCallAudio
-                , Actions.Translate
-                , Actions.UnsubscribeFromGroup
-                , Actions.MakePayment
-                ]
+                model.sideOptions.tail
             )
         , el
             [ width (px 56)
@@ -422,7 +551,7 @@ type State
 
 calculateOffset defaultSize mids i pickedUpFlowAction =
     case pickedUpFlowAction of
-        Just ( FlowAction selI, path ) ->
+        Just ( Node { index } _, path ) ->
             let
                 calcDelta fn =
                     let
@@ -433,7 +562,7 @@ calculateOffset defaultSize mids i pickedUpFlowAction =
                     , offset + mids
                     )
             in
-            if selI == i then
+            if index == i then
                 case ( calcDelta Tuple.first, calcDelta Tuple.second ) of
                     ( ( _, x ), ( True, y ) ) ->
                         ( ( x, y ), False )
@@ -451,10 +580,17 @@ calculateOffset defaultSize mids i pickedUpFlowAction =
             ( ( mids, mids ), False )
 
 
-renderDragableAction model defaultSize i ( color, icon ) =
+renderDragableAction : Model -> Int -> Node -> Element Msg
+renderDragableAction model defaultSize ((Node attr _) as node) =
     let
+        nodeIndex =
+            attr.index
+
+        actionConfig =
+            Actions.config attr.action
+
         ( ( moveRightDist, moveDownDist ), useFilter ) =
-            calculateOffset (toFloat defaultSize) centerDist i model.pickedUpFlowAction
+            calculateOffset (toFloat defaultSize) centerDist nodeIndex model.pickedUpFlowAction
 
         centerDist =
             (toFloat defaultSize - toFloat childSize) / 2
@@ -470,17 +606,17 @@ renderDragableAction model defaultSize i ( color, icon ) =
             round (toFloat defaultSize * 40 / 54)
 
         colorExploded =
-            Element.toRgb color
+            Element.toRgb actionConfig.color
 
         offsetV =
             { y =
-                if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                if not useFilter && isSelected then
                     moveDownDist
 
                 else
                     offset
             , x =
-                if not useFilter && Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i) then
+                if not useFilter && isSelected then
                     moveRightDist
 
                 else
@@ -503,7 +639,12 @@ renderDragableAction model defaultSize i ( color, icon ) =
             }
 
         isSelected =
-            Maybe.map Tuple.first model.pickedUpFlowAction == Just (FlowAction i)
+            case model.pickedUpFlowAction of
+                Just ( Node { index } _, _ ) ->
+                    index == nodeIndex
+
+                Nothing ->
+                    False
     in
     el
         [ width (px defaultSize)
@@ -540,11 +681,15 @@ renderDragableAction model defaultSize i ( color, icon ) =
             , height (px parentSize)
             , Border.rounded 50
             , Css.ignoreMouse isSelected
-            , Background.color color
+            , Background.color actionConfig.color
             , Css.translateXY offsetV.x offsetV.y
             , Css.transition
                 [ ( Css.Shadow, 100, "ease" )
-                , ( Css.Translation, 200, "ease-out" )
+                , if isSelected then
+                    ( Css.Translation, 200, "ease-out" )
+
+                  else
+                    ( Css.Shadow, 200, "ease-out" )
                 , ( Css.Width, 300, "ease-out" )
                 , ( Css.Height, 300, "ease-out" )
                 ]
@@ -560,14 +705,14 @@ renderDragableAction model defaultSize i ( color, icon ) =
                     , blur = 4 * 2
                     , color =
                         if useFilter then
-                            color
+                            actionConfig.color
 
                         else
                             Colors.withAlpha 0.1 Colors.black
                     }
 
               else
-                Border.glow color 0
+                Border.glow actionConfig.color 0
             , behindContent
                 -- , inFront
                 (el
@@ -577,13 +722,13 @@ renderDragableAction model defaultSize i ( color, icon ) =
                     , height (px childSize)
                     , Css.translateXY offsetChild.x offsetChild.y
                     , if isSelected then
-                        Border.glow color 1
+                        Border.glow actionConfig.color 1
 
                       else
-                        Border.glow color 0
-                    , Border.color color
+                        Border.glow actionConfig.color 0
+                    , Border.color actionConfig.color
                     , Border.rounded 22
-                    , Background.color color
+                    , Background.color actionConfig.color
 
                     -- , Background.color Colors.black
                     -- , htmlAttribute (Html.Attributes.style "-webkit-transition" "transform 0.1s ease-out")
@@ -600,7 +745,7 @@ renderDragableAction model defaultSize i ( color, icon ) =
                           -- - Tuple.second x.offsetPos
                         )
                      )
-                        >> ClickedDownOnFlowAction (FlowAction i)
+                        >> ClickedDownOnFlowAction node
                     )
                     |> htmlAttribute
 
@@ -609,7 +754,7 @@ renderDragableAction model defaultSize i ( color, icon ) =
             ]
             -- (el [ centerX, centerY ] (UI.customIcon icon 20 Colors.white))
             (MaterialIcons.material [ centerX, centerY ]
-                { icon = icon
+                { icon = actionConfig.icon
                 , size = 20
                 , color = Colors.white
                 }
@@ -661,7 +806,7 @@ type Node
 
 
 type alias NodeAttr =
-    { color : Color
+    { action : Actions
     , index : Int
     , expanded : Bool
     , dropNode : Bool
@@ -681,20 +826,39 @@ numberOfChildren node =
 
 
 numberOfChildren_ : Node -> Int
-numberOfChildren_ (Node { expanded } children) =
+numberOfChildren_ (Node { expanded, action } children) =
     if not expanded || children == [] then
         1
 
     else
-        children
-            |> List.map numberOfChildren_
-            |> List.sum
+        (if ((Actions.config action).maxChildren - List.length children) <= 0 then
+            0
+
+         else
+            -- Takes parent index
+            1
+        )
+            + (children
+                |> List.map numberOfChildren_
+                |> List.sum
+              )
 
 
 viewHtmlTree_ model offset tree =
     el
         [ alignLeft
-        , Background.tiled "dist/DotGrid.png"
+        , behindContent
+            (el
+                [ alignLeft
+                , Background.tiled "dist/DotGrid.png"
+                , alpha 0.4
+                , htmlAttribute (Html.Attributes.style "width" "auto")
+                , htmlAttribute (Html.Attributes.style "min-width" "100%")
+                , height fill
+                ]
+                none
+            )
+        , Background.color Colors.lightGrey
         , htmlAttribute (Html.Attributes.style "width" "auto")
         , htmlAttribute (Html.Attributes.style "min-width" "100%")
         , height fill
@@ -737,13 +901,30 @@ viewHtmlTree :
         }
     -> Node
     -> Element Msg
-viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded, dropNode } children) as node) =
+viewHtmlTree ({ pickedUpFlowAction, dropZoneFlowAction } as model) { hasParent, hasSibling, parentWidth, widthOfLeftSiblings, siblingCount } ((Node { expanded, dropNode, index, action } children) as node) =
     let
-        nodeWidth =
-            numberOfChildren node
+        -- The number of spaces occupied by the entirity of this branch
+        branchWidth =
+            max (numberOfChildren node) childCount
+
+        -- (numberOfChildren node + List.length spaces)
+        actionConfig =
+            Actions.config action
+
+        childCount =
+            List.length children + List.length spaces
+
+        spaces =
+            if dropNode || (actionConfig.maxChildren - List.length children) <= 0 then
+                []
+
+            else
+                -- Takes parent index
+                [ Node (NodeAttr Actions.PhoneCall index True True) [] ]
 
         locationRelativeToParent =
-            toFloat widthOfLeftSiblings + (toFloat (nodeWidth + 1) / 2)
+            toFloat widthOfLeftSiblings
+                + (toFloat (branchWidth + 1) / 2)
 
         onSide =
             if locationRelativeToParent == (toFloat (parentWidth + 1) / 2) then
@@ -756,7 +937,7 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
                 Right
 
         label =
-            String.fromInt nodeWidth
+            String.fromInt branchWidth
                 ++ "-s"
                 ++ String.fromInt widthOfLeftSiblings
                 ++ "-p"
@@ -764,6 +945,14 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
                 ++ "("
                 ++ String.fromFloat locationRelativeToParent
                 ++ ")"
+
+        isAboveNode =
+            case dropZoneFlowAction of
+                Just (FlowAction id) ->
+                    id == index
+
+                Nothing ->
+                    False
     in
     column
         [ height fill
@@ -822,19 +1011,21 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
               else
                 none
             , circle []
+                -- , circle [ inFront (text label) ]
                 { node = node
                 , icon = Material.Icons.rotate_left
-                , dragging = pickedUpFlowAction /= Nothing
+                , isDragging = pickedUpFlowAction /= Nothing
+                , isAbove = isAboveNode
                 }
             ]
-        , case ( expanded, children ) of
+        , case ( expanded, childCount ) of
             ( False, _ ) ->
                 none
 
-            ( _, [] ) ->
+            ( _, 0 ) ->
                 none
 
-            ( _, [ oneChild ] ) ->
+            ( _, 1 ) ->
                 verticalLine 50
 
             _ ->
@@ -851,6 +1042,10 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
             none
 
           else
+            let
+                renderedChildren =
+                    children ++ spaces
+            in
             row [ centerX, spacing -4, moveUp 1 ] <|
                 List.intersperse (el [ width (px siblingPadding) ] none) <|
                     List.reverse <|
@@ -861,8 +1056,8 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
                                     , numberOfChildren sibling
                                     , viewHtmlTree model
                                         { hasParent = True
-                                        , hasSibling = List.length children > 1
-                                        , parentWidth = nodeWidth
+                                        , hasSibling = List.length renderedChildren > 1
+                                        , parentWidth = branchWidth
                                         , widthOfLeftSiblings = leftSiblingsWidth
                                         , widthOfLeftSibling = leftSiblingWidth
                                         , siblingCount = List.length children
@@ -872,7 +1067,7 @@ viewHtmlTree ({ pickedUpFlowAction } as model) { hasParent, hasSibling, parentWi
                                     )
                                 )
                                 ( 0, 0, [] )
-                                children
+                                renderedChildren
 
         -- [ column [ moveUp 4, moveRight 10 ]
         --     [ cornerDown Left []
@@ -1071,10 +1266,13 @@ circleWidth =
     64
 
 
-circle attr { node, icon, dragging } =
+circle attr { node, icon, isDragging, isAbove } =
     let
-        (Node { expanded, color, dropNode, index } children) =
+        (Node { expanded, action, dropNode, index } children) =
             node
+
+        actionConfig =
+            Actions.config action
 
         scaler =
             16
@@ -1166,12 +1364,14 @@ circle attr { node, icon, dragging } =
                  , centerX
                  , centerY
                  ]
-                    ++ (if dropNode && dragging then
+                    ++ (if dropNode && isDragging then
                             [ mouseOver
                                 [ scale 1.1
                                 , moveUp (circleWidth / 2)
                                 ]
                             , Css.transition [ ( Css.Scale, 150, "ease 100ms" ) ]
+                            , htmlAttribute (Html.Events.onMouseEnter (DraggedAboveZoneFor (FlowAction index)))
+                            , htmlAttribute (Html.Events.onMouseLeave (NoLongerAboveZoneFor (FlowAction index)))
                             ]
 
                         else
@@ -1189,7 +1389,7 @@ circle attr { node, icon, dragging } =
 
                         -- , ( Css.BorderColor, 1500, "ease" )
                         ]
-                     , Background.color color
+                     , Background.color actionConfig.color
                      , Border.shadow
                         { offset = ( 0, 4 )
                         , size = 4
@@ -1232,7 +1432,7 @@ circle attr { node, icon, dragging } =
                         Material.Icons.add
 
                     else
-                        icon
+                        actionConfig.icon
                 , size = 24
                 , color =
                     if dropNode then
@@ -1248,7 +1448,7 @@ circle attr { node, icon, dragging } =
                     h =
                         round ((scaler / 2) - 1)
                 in
-                el [ height (px h), width (px 4), centerX, Background.color Colors.white, moveUp (toFloat h), moveLeft 2 ] none
+                el [ height (px h), width (px 4), centerX, Background.color Colors.white, moveUp (toFloat h), moveLeft 0 ] none
 
              else
                 none
@@ -1264,9 +1464,15 @@ circle attr { node, icon, dragging } =
                     ]
                 <|
                     el
-                        [ Css.slowSpinner
-                        , Css.animationDuration 10
-                        ]
+                        (if isAbove then
+                            [ Css.slowSpinner, Css.animationDuration 10 ]
+
+                         else
+                            [ Css.animationDuration 10
+
+                            -- , alpha 0
+                            ]
+                        )
                     <|
                         html
                             (Svg.svg
@@ -1289,17 +1495,6 @@ circle attr { node, icon, dragging } =
                                     []
                                 ]
                             )
-                -- el
-                --     [ width (px (circleWidth + 16))
-                --     , height (px (circleWidth + 16))
-                --     , Border.rounded circleWidth
-                --     , Border.dashed
-                --     , Border.width 2
-                --     , Css.slowSpinner
-                --     -- , Background.color Colors.blue
-                --     , centerY
-                --     ]
-                --     none
 
              else
                 none

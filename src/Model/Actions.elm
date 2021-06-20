@@ -40,10 +40,10 @@ type alias Config msg =
 config action =
     case action of
         PhoneCall ->
-            { icon = Material.Icons.smartphone
+            { icon = Material.Icons.phonelink_ring
             , color = Colors.purple
             , title = "Phone Call"
-            , maxChildren = 1
+            , maxChildren = 3
             , minChildren = 0
             , defaultChildren = []
             , inputs =
