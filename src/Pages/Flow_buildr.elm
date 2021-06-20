@@ -20,10 +20,12 @@ import Material.Icons.Types
 import MaterialIcons
 import Model.Actions as Actions exposing (Actions(..))
 import Page
+import Process
 import Request
 import Shared
 import Svg
 import Svg.Attributes
+import Task
 import UI
 import UI.Css as Css
 import UI.VisualEffects
@@ -55,6 +57,7 @@ type alias Model =
     , tree : Node
     , sideOptions : SideOptions
     , uid : Int
+    , lastDroppedUid : Int
     }
 
 
@@ -156,6 +159,7 @@ init req =
       , sideOptions = sideOptions
       , tree = tree
       , uid = uid
+      , lastDroppedUid = -1
       , canvas =
             { scale = 1
             }
@@ -211,6 +215,7 @@ type Msg
       ---
     | DraggedAboveZoneFor FlowAction
     | NoLongerAboveZoneFor FlowAction
+    | ClearLastDroppedUID
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -269,7 +274,14 @@ update msg ({ canvas } as model) =
                 , uid = newUid
                 , sideOptions = newSideOptions
                 , dropZoneFlowAction = Nothing
+                , lastDroppedUid = model.uid + 1
               }
+            , Effect.fromCmd
+                (Process.sleep 400 |> Task.perform (\_ -> ClearLastDroppedUID))
+            )
+
+        ClearLastDroppedUID ->
+            ( { model | lastDroppedUid = -1 }
             , Effect.none
             )
 
@@ -645,6 +657,10 @@ renderDragableAction model defaultSize ((Node attr _) as node) =
 
                 Nothing ->
                     False
+
+        shouldAnimateTranslation =
+            -- only happens if just dropped into space
+            nodeIndex /= model.lastDroppedUid
     in
     el
         [ width (px defaultSize)
@@ -685,7 +701,7 @@ renderDragableAction model defaultSize ((Node attr _) as node) =
             , Css.translateXY offsetV.x offsetV.y
             , Css.transition
                 [ ( Css.Shadow, 100, "ease" )
-                , if isSelected then
+                , if shouldAnimateTranslation then
                     ( Css.Translation, 200, "ease-out" )
 
                   else
