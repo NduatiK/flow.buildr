@@ -2,6 +2,7 @@ module Pages.Flow_buildr exposing (Model, Msg, page)
 
 import Browser.Events
 import Colors
+import Dict
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
@@ -66,7 +67,7 @@ type alias Model =
     , uid : Int
     , lastDroppedUid : Int
     , lastCreatedUids : Set.Set Int
-    , confetti : System UI.Confetti.Firework
+    , confetti : Dict.Dict Int (System UI.Confetti.Firework)
     }
 
 
@@ -168,7 +169,7 @@ init req =
       , sideOptions = sideOptions
       , tree = tree
       , uid = uid
-      , confetti = System.init (Random.initialSeed 0)
+      , confetti = Dict.empty
       , lastDroppedUid = -1
       , lastCreatedUids = Set.empty
       , canvas =
@@ -229,7 +230,7 @@ type Msg
     | ClearLastDroppedUID
     | ClearLastCreatedUID Int
       ---
-    | ParticleMsg (System.Msg UI.Confetti.Firework)
+    | ParticleMsg Int (System.Msg UI.Confetti.Firework)
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -294,16 +295,19 @@ update msg ({ canvas } as model) =
                 , sideOptions = newSideOptions
                 , confetti =
                     if updated then
-                        System.burst
-                            (Random.Extra.andThen3 UI.Confetti.fireworkAt
-                                (Random.constant
-                                    (model.pickedUpFlowAction
-                                        |> Maybe.map (Tuple.first >> (\(Node attr _) -> (Actions.config attr.action).color))
-                                        |> Maybe.withDefault Colors.purple
+                        Dict.insert model.uid
+                            (System.burst
+                                (Random.Extra.andThen3 UI.Confetti.fireworkAt
+                                    (Random.constant
+                                        (model.pickedUpFlowAction
+                                            |> Maybe.map (Tuple.first >> (\(Node attr _) -> (Actions.config attr.action).color))
+                                            |> Maybe.withDefault Colors.purple
+                                        )
                                     )
+                                    (Random.constant 40)
+                                    (Random.constant 40)
                                 )
-                                (Random.constant 40)
-                                (Random.constant 40)
+                                (System.init (Random.initialSeed 0))
                             )
                             model.confetti
 
@@ -322,7 +326,10 @@ update msg ({ canvas } as model) =
             )
 
         ClearLastCreatedUID index ->
-            ( { model | lastCreatedUids = Set.remove index model.lastCreatedUids }
+            ( { model
+                | lastCreatedUids = Set.remove index model.lastCreatedUids
+                , confetti = Dict.remove index model.confetti
+              }
             , Effect.none
             )
 
@@ -362,10 +369,15 @@ update msg ({ canvas } as model) =
             , Effect.none
             )
 
-        ParticleMsg innerMg ->
+        ParticleMsg index innerMg ->
             ( { model
                 | confetti =
-                    System.update innerMg model.confetti
+                    Dict.update index
+                        (\x ->
+                            x
+                                |> Maybe.map (\confetti -> System.update innerMg confetti)
+                        )
+                        model.confetti
               }
             , Effect.none
             )
@@ -446,7 +458,13 @@ subscriptions model =
                         else
                             NoOp
                     )
-        , System.sub [] ParticleMsg model.confetti
+        , model.confetti
+            |> Dict.toList
+            |> List.map
+                (\( k, v ) ->
+                    System.sub [] (ParticleMsg k) v
+                )
+            |> Sub.batch
 
         -- , Browser.Events.onAnimationFrameDelta Frame
         ]
@@ -1034,10 +1052,6 @@ viewHtmlTree ({ pickedUpFlowAction, dropZoneFlowAction } as model) { hasParent, 
 
                 Nothing ->
                     False
-
-        shouldConfetti =
-            -- only happens if just dropped into space
-            Set.member index model.lastCreatedUids && not dropNode
     in
     column
         [ height fill
@@ -1097,12 +1111,12 @@ viewHtmlTree ({ pickedUpFlowAction, dropZoneFlowAction } as model) { hasParent, 
                 none
             , circle
                 [ behindContent
-                    (if shouldConfetti then
-                        html
-                            (UI.Confetti.view model.confetti)
+                    (case ( Dict.get index model.confetti, not dropNode ) of
+                        ( Just confetti, True ) ->
+                            html (UI.Confetti.view confetti)
 
-                     else
-                        none
+                        _ ->
+                            none
                     )
                 ]
                 -- , circle [ inFront (text label) ]
@@ -1542,7 +1556,7 @@ circle attr { node, icon, isDragging, isAbove } =
                     h =
                         round ((scaler / 2) - 1)
                 in
-                el [ height (px h), width (px 4), centerX, Background.color Colors.white, moveUp (toFloat h), moveLeft 0 ] none
+                el [ height (px h), width (px 4), centerX, Background.color Colors.lightGrey, moveUp (toFloat h), moveLeft 0 ] none
 
              else
                 none
